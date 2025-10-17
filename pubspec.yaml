@@ -1,0 +1,114 @@
+name: mystrip25
+description: "Application de gestion des activités de vol pour pilotes"
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # ============================================
+  # CORE DEPENDENCIES
+  # ============================================
+  cupertino_icons: ^1.0.8
+
+  # ============================================
+  # STATE MANAGEMENT & ROUTING
+  # ============================================
+  get: ^4.7.2 # GetX - State management, routing & dependency injection
+  get_storage: ^2.1.1 # Simple key-value storage
+
+  # ============================================
+  # DATABASE & PERSISTENCE
+  # ============================================
+  objectbox: ^5.0.0 # NoSQL database for Flutter
+  objectbox_flutter_libs: ^5.0.0 # ObjectBox native libraries
+  flutter_secure_storage: ^9.2.4 # Secure storage for sensitive data
+  cryptography: ^2.7.0 # Cryptographic operations
+
+  # ============================================
+  # UI COMPONENTS & STYLING
+  # ============================================
+  flutter_screenutil: ^5.9.3 # Responsive UI for different screen sizes
+  curved_navigation_bar: ^1.0.6 # Custom navigation bar
+  hexcolor: ^3.0.1 # Hex color support
+  scrollable_positioned_list: ^0.3.8 # Advanced list scrolling
+
+  # ============================================
+  # UTILITIES & HELPERS
+  # ============================================
+  adhan_dart: ^1.1.2 # Prayer times & sunrise/sunset calculations
+  collection: ^1.19.1 # Collection utilities
+  excel: ^4.0.6 # Excel file processing
+  intl: ^0.20.2 # Internationalization & date formatting
+
+  # ============================================
+  # FILE SYSTEM & STORAGE
+  # ============================================
+  path: ^1.9.1 # Path manipulation
+  path_provider: ^2.1.5 # Access to file system directories
+  file_picker: ^10.3.3 # File picker dialog
+
+  # ============================================
+  # NETWORK & CONNECTIVITY
+  # ============================================
+  connectivity_plus: ^7.0.0 # Network connectivity status
+  http: ^1.5.0 # HTTP requests
+
+  # ============================================
+  # WEBVIEW (Platform Specific)
+  # ============================================
+  webview_flutter: ^4.13.0
+  webview_flutter_android: ^4.10.5
+  webview_flutter_platform_interface: ^2.14.0
+  webview_flutter_wkwebview: ^3.23.1
+
+  # ============================================
+  # DEVELOPMENT TOOLS
+  # ============================================
+  change_app_package_name: ^1.5.0
+  flutter_launcher_icons: ^0.14.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # ============================================
+  # CODE QUALITY & LINTING
+  # ============================================
+  flutter_lints: ^6.0.0 # Recommended lints for Flutter
+
+  # ============================================
+  # CODE GENERATION
+  # ============================================
+  build_runner: ^2.7.1 # Build system for code generation
+  objectbox_generator: ^5.0.0 # ObjectBox code generator
+
+# ============================================
+# FLUTTER CONFIGURATION
+# ============================================
+flutter:
+  uses-material-design: true
+
+  # Assets
+  assets:
+    - assets/
+    - assets/excel/
+    - assets/iconsacts/
+    - assets/images/
+    - assets/jsons/
+
+# ============================================
+# LAUNCHER ICONS CONFIGURATION
+# ============================================
+# To generate launcher icons, run: dart run flutter_launcher_icons
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/iconluanch.jpeg"
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/iconluanch.jpeg"

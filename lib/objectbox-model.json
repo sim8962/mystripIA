@@ -1,0 +1,841 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:4284993639188966518",
+      "lastPropertyId": "9:7886607517188494381",
+      "name": "AeroportModel",
+      "properties": [
+        {
+          "id": "1:1898355380133034674",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4675911980449452810",
+          "name": "icao",
+          "type": 9
+        },
+        {
+          "id": "3:8383249995591403391",
+          "name": "iata",
+          "type": 9
+        },
+        {
+          "id": "4:7699091937409174945",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "5:8535439497796383950",
+          "name": "city",
+          "type": 9
+        },
+        {
+          "id": "6:9007524106793190419",
+          "name": "country",
+          "type": 9
+        },
+        {
+          "id": "7:5852619642863166811",
+          "name": "latitude",
+          "type": 8
+        },
+        {
+          "id": "8:1101922228281989116",
+          "name": "longitude",
+          "type": 8
+        },
+        {
+          "id": "9:7886607517188494381",
+          "name": "altitude",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:9133119771250773719",
+      "lastPropertyId": "9:8734828892144025033",
+      "name": "Crew",
+      "properties": [
+        {
+          "id": "1:3375875135035320618",
+          "name": "myEtapeId",
+          "indexId": "1:5965054829093158798",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "MyEtape"
+        },
+        {
+          "id": "2:5521775267701570519",
+          "name": "myDutyId",
+          "indexId": "2:1143523934415270206",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "MyDuty"
+        },
+        {
+          "id": "3:1431288268430097098",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "4:2801914836043350351",
+          "name": "crewId",
+          "type": 9
+        },
+        {
+          "id": "5:7696704791837238221",
+          "name": "firstname",
+          "type": 9
+        },
+        {
+          "id": "6:869208520212952696",
+          "name": "lastname",
+          "type": 9
+        },
+        {
+          "id": "7:8559346993464584255",
+          "name": "matricule",
+          "type": 9
+        },
+        {
+          "id": "8:4450300001438791799",
+          "name": "pos",
+          "type": 9
+        },
+        {
+          "id": "9:8734828892144025033",
+          "name": "base",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:5329376351001909663",
+      "lastPropertyId": "3:6385521583544589037",
+      "name": "ForfaitListModel",
+      "properties": [
+        {
+          "id": "1:655033706533054759",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:358368090076526703",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:6385521583544589037",
+          "name": "date",
+          "type": 10
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:518193151061533152",
+          "name": "forfaits",
+          "targetId": "4:6376167480663367816"
+        }
+      ]
+    },
+    {
+      "id": "4:6376167480663367816",
+      "lastPropertyId": "11:588787552599325038",
+      "name": "ForfaitModel",
+      "properties": [
+        {
+          "id": "1:5696038714843015416",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6442133008560455530",
+          "name": "cle",
+          "type": 9
+        },
+        {
+          "id": "3:3122605427127306295",
+          "name": "saison",
+          "type": 9
+        },
+        {
+          "id": "4:897930570093233003",
+          "name": "secteur",
+          "type": 9
+        },
+        {
+          "id": "5:7044984625633395450",
+          "name": "depICAO",
+          "type": 9
+        },
+        {
+          "id": "6:1021401291048556353",
+          "name": "arrICAO",
+          "type": 9
+        },
+        {
+          "id": "7:257040864622334220",
+          "name": "depIATA",
+          "type": 9
+        },
+        {
+          "id": "8:7337701729166382514",
+          "name": "arrIATA",
+          "type": 9
+        },
+        {
+          "id": "9:5508416513644004714",
+          "name": "forfait",
+          "type": 9
+        },
+        {
+          "id": "10:7018480142034489544",
+          "name": "table",
+          "type": 9
+        },
+        {
+          "id": "11:588787552599325038",
+          "name": "dateForfait",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:4477501197733779732",
+      "lastPropertyId": "5:1871625104648271802",
+      "name": "MyDownLoad",
+      "properties": [
+        {
+          "id": "1:8700745739563674762",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7639021864892206846",
+          "name": "jsonContent",
+          "type": 9
+        },
+        {
+          "id": "3:6850045905759472216",
+          "name": "htmlContent",
+          "type": 9
+        },
+        {
+          "id": "4:8937105008668848659",
+          "name": "downloadTime",
+          "type": 10
+        },
+        {
+          "id": "5:1871625104648271802",
+          "name": "userId",
+          "indexId": "3:6801213809385975985",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "UserModel"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:2450374181879001840",
+      "lastPropertyId": "8:2825894120016527937",
+      "name": "MyDuty",
+      "properties": [
+        {
+          "id": "1:6160124486903242114",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:2171488053467485524",
+          "name": "myMonth",
+          "type": 10
+        },
+        {
+          "id": "3:5358887482036845417",
+          "name": "startTime",
+          "type": 10
+        },
+        {
+          "id": "4:2538879693249734632",
+          "name": "endTime",
+          "type": 10
+        },
+        {
+          "id": "5:4646581989506267378",
+          "name": "dateLabel",
+          "type": 9
+        },
+        {
+          "id": "6:8575933116766713277",
+          "name": "typeLabel",
+          "type": 9
+        },
+        {
+          "id": "7:1951343325186351486",
+          "name": "detailLabel",
+          "type": 9
+        },
+        {
+          "id": "8:2825894120016527937",
+          "name": "typId",
+          "indexId": "4:1481102666868604503",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "Typ"
+        }
+      ],
+      "relations": [
+        {
+          "id": "2:8982384080943522554",
+          "name": "vols",
+          "targetId": "10:4911528948522166683"
+        }
+      ]
+    },
+    {
+      "id": "7:3426766608560581517",
+      "lastPropertyId": "8:4728081608132273743",
+      "name": "MyEtape",
+      "properties": [
+        {
+          "id": "1:7838496666313441658",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:5389005964426926744",
+          "name": "startTime",
+          "type": 10
+        },
+        {
+          "id": "3:8773966342730771282",
+          "name": "dateLabel",
+          "type": 9
+        },
+        {
+          "id": "4:1265806173373883997",
+          "name": "typeLabel",
+          "type": 9
+        },
+        {
+          "id": "5:2677007592453055887",
+          "name": "detailLabel",
+          "type": 9
+        },
+        {
+          "id": "6:1289132721717957621",
+          "name": "volTransitId",
+          "indexId": "5:6744914164418850612",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "VolModel"
+        },
+        {
+          "id": "7:9152662059320326582",
+          "name": "typId",
+          "indexId": "6:2730951191379688758",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "Typ"
+        },
+        {
+          "id": "8:4728081608132273743",
+          "name": "myDutyId",
+          "indexId": "7:3167810811112933047",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "MyDuty"
+        }
+      ],
+      "relations": [
+        {
+          "id": "3:8365986269834329840",
+          "name": "crews",
+          "targetId": "2:9133119771250773719"
+        }
+      ]
+    },
+    {
+      "id": "8:7040788214811071395",
+      "lastPropertyId": "4:5740774173345793194",
+      "name": "Typ",
+      "properties": [
+        {
+          "id": "1:8085986616724075656",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:4844674664213380605",
+          "name": "typ",
+          "type": 9
+        },
+        {
+          "id": "3:7038168244218687608",
+          "name": "color",
+          "type": 9
+        },
+        {
+          "id": "4:5740774173345793194",
+          "name": "icon",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "9:4222097423145443936",
+      "lastPropertyId": "7:3228876673509742628",
+      "name": "UserModel",
+      "properties": [
+        {
+          "id": "1:2438144686377755813",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6457043268913413779",
+          "name": "matricule",
+          "type": 6
+        },
+        {
+          "id": "3:2749364912893251504",
+          "name": "email",
+          "type": 9
+        },
+        {
+          "id": "4:1234759008742394445",
+          "name": "isRam",
+          "type": 1
+        },
+        {
+          "id": "5:9109825319393500880",
+          "name": "isPnt",
+          "type": 1
+        },
+        {
+          "id": "6:8684975374977079497",
+          "name": "isMoyenC",
+          "type": 1
+        },
+        {
+          "id": "7:3228876673509742628",
+          "name": "users",
+          "type": 27
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "10:4911528948522166683",
+      "lastPropertyId": "22:5611245742225271488",
+      "name": "VolModel",
+      "properties": [
+        {
+          "id": "1:3850350166140906016",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:1254767335862193091",
+          "name": "cle",
+          "type": 9
+        },
+        {
+          "id": "3:407282332873674746",
+          "name": "typ",
+          "type": 9
+        },
+        {
+          "id": "4:2702338602972199440",
+          "name": "nVol",
+          "type": 9
+        },
+        {
+          "id": "5:4680177869392860941",
+          "name": "dtDebut",
+          "type": 10
+        },
+        {
+          "id": "6:8999056228055110708",
+          "name": "depIata",
+          "type": 9
+        },
+        {
+          "id": "7:462468079430241497",
+          "name": "depIcao",
+          "type": 9
+        },
+        {
+          "id": "8:6499287129508283578",
+          "name": "arrIata",
+          "type": 9
+        },
+        {
+          "id": "9:8651247068638402591",
+          "name": "arrIcao",
+          "type": 9
+        },
+        {
+          "id": "10:8748767425910273578",
+          "name": "dtFin",
+          "type": 10
+        },
+        {
+          "id": "11:1338279286476661019",
+          "name": "label",
+          "type": 9
+        },
+        {
+          "id": "12:7083730514850490954",
+          "name": "sAvion",
+          "type": 9
+        },
+        {
+          "id": "13:2809806663546467363",
+          "name": "sDureevol",
+          "type": 9
+        },
+        {
+          "id": "14:7308606427010997832",
+          "name": "arrForfait",
+          "type": 10
+        },
+        {
+          "id": "15:3660697937401597663",
+          "name": "sunrise",
+          "type": 10
+        },
+        {
+          "id": "16:6337231909803139385",
+          "name": "sunset",
+          "type": 10
+        },
+        {
+          "id": "17:8950323219620543675",
+          "name": "sNuitVol",
+          "type": 9
+        },
+        {
+          "id": "18:323280742883499560",
+          "name": "sDureeForfait",
+          "type": 9
+        },
+        {
+          "id": "19:4541947045496742811",
+          "name": "sNuitForfait",
+          "type": 9
+        },
+        {
+          "id": "20:3008049601987488374",
+          "name": "sDureeMep",
+          "type": 9
+        },
+        {
+          "id": "21:7049654130532908537",
+          "name": "arrMepForfait",
+          "type": 10
+        },
+        {
+          "id": "22:5611245742225271488",
+          "name": "sMepForfait",
+          "type": 9
+        }
+      ],
+      "relations": [
+        {
+          "id": "4:7601733697120016965",
+          "name": "crews",
+          "targetId": "2:9133119771250773719"
+        }
+      ]
+    },
+    {
+      "id": "11:7749331338208926034",
+      "lastPropertyId": "30:914253255291244363",
+      "name": "VolTraiteModel",
+      "properties": [
+        {
+          "id": "1:7520673271943498956",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "3:3410475754437422942",
+          "name": "typ",
+          "type": 9
+        },
+        {
+          "id": "4:5367674099441132972",
+          "name": "nVol",
+          "type": 9
+        },
+        {
+          "id": "5:5837597482833726511",
+          "name": "dtDebut",
+          "type": 10
+        },
+        {
+          "id": "6:1470870307559014231",
+          "name": "dtFin",
+          "type": 10
+        },
+        {
+          "id": "7:6512315370842156796",
+          "name": "depIata",
+          "type": 9
+        },
+        {
+          "id": "8:8723214349423516787",
+          "name": "arrIata",
+          "type": 9
+        },
+        {
+          "id": "9:5348948054121588265",
+          "name": "sAvion",
+          "type": 9
+        },
+        {
+          "id": "10:3981893843509746985",
+          "name": "sDureeBrute",
+          "type": 9
+        },
+        {
+          "id": "11:8916416985070255510",
+          "name": "sDureevol",
+          "type": 9
+        },
+        {
+          "id": "12:5893435205316552298",
+          "name": "sDureeMep",
+          "type": 9
+        },
+        {
+          "id": "13:1069881488339205433",
+          "name": "sDureeForfait",
+          "type": 9
+        },
+        {
+          "id": "14:7854967569275879609",
+          "name": "sMepForfait",
+          "type": 9
+        },
+        {
+          "id": "15:5476948763508234304",
+          "name": "sNuitVol",
+          "type": 9
+        },
+        {
+          "id": "16:2969315487084233368",
+          "name": "sNuitForfait",
+          "type": 9
+        },
+        {
+          "id": "17:4538532055940596440",
+          "name": "sCumulDureeVol",
+          "type": 9
+        },
+        {
+          "id": "18:8862730622734969922",
+          "name": "sCumulDureeMep",
+          "type": 9
+        },
+        {
+          "id": "19:6258847362108648947",
+          "name": "sCumulDureeForfait",
+          "type": 9
+        },
+        {
+          "id": "20:3372279409196302599",
+          "name": "sCumulMepForfait",
+          "type": 9
+        },
+        {
+          "id": "21:9179032731324659443",
+          "name": "sCumulNuitVol",
+          "type": 9
+        },
+        {
+          "id": "22:4052611419278714765",
+          "name": "sCumulNuitForfait",
+          "type": 9
+        },
+        {
+          "id": "23:6890112214765324595",
+          "name": "arrForfait",
+          "type": 10
+        },
+        {
+          "id": "24:691893552299954893",
+          "name": "arrMepForfait",
+          "type": 10
+        },
+        {
+          "id": "25:1582872213158404861",
+          "name": "sunrise",
+          "type": 10
+        },
+        {
+          "id": "26:5814753637556422176",
+          "name": "sunset",
+          "type": 10
+        },
+        {
+          "id": "27:2873268312537355211",
+          "name": "dateTraitement",
+          "type": 10
+        },
+        {
+          "id": "28:2045894204856255144",
+          "name": "moisReference",
+          "type": 9
+        },
+        {
+          "id": "29:6151043133961770454",
+          "name": "depIcao",
+          "type": 9
+        },
+        {
+          "id": "30:914253255291244363",
+          "name": "arrIcao",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "12:1938811687117709668",
+      "lastPropertyId": "17:580409135656480561",
+      "name": "VolTraiteMoisModel",
+      "properties": [
+        {
+          "id": "1:4997127988628861439",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:7961644977691499131",
+          "name": "premierJourMois",
+          "indexId": "8:8057750887614540348",
+          "type": 10,
+          "flags": 40
+        },
+        {
+          "id": "3:4552094678482662848",
+          "name": "moisReference",
+          "type": 9
+        },
+        {
+          "id": "4:1610261955243043772",
+          "name": "annee",
+          "type": 6
+        },
+        {
+          "id": "5:1016652522183114355",
+          "name": "mois",
+          "type": 6
+        },
+        {
+          "id": "6:4753334089645614755",
+          "name": "cumulTotalDureeVol",
+          "type": 9
+        },
+        {
+          "id": "7:7905959699002432748",
+          "name": "cumulTotalDureeMep",
+          "type": 9
+        },
+        {
+          "id": "8:3883350589084698054",
+          "name": "cumulTotalDureeForfait",
+          "type": 9
+        },
+        {
+          "id": "9:7123453463548530922",
+          "name": "cumulTotalMepForfait",
+          "type": 9
+        },
+        {
+          "id": "10:5450050440349930827",
+          "name": "cumulTotalNuitVol",
+          "type": 9
+        },
+        {
+          "id": "11:6770235381459078153",
+          "name": "cumulTotalNuitForfait",
+          "type": 9
+        },
+        {
+          "id": "12:1939950237484261932",
+          "name": "nombreVolsTotal",
+          "type": 6
+        },
+        {
+          "id": "13:8509486128424215153",
+          "name": "nombreVolsVol",
+          "type": 6
+        },
+        {
+          "id": "14:1353476467704617722",
+          "name": "nombreVolsMep",
+          "type": 6
+        },
+        {
+          "id": "15:8404324702005938977",
+          "name": "nombreVolsTax",
+          "type": 6
+        },
+        {
+          "id": "16:1330726622754350485",
+          "name": "dateTraitement",
+          "type": 10
+        },
+        {
+          "id": "17:580409135656480561",
+          "name": "estAJour",
+          "type": 1
+        }
+      ],
+      "relations": [
+        {
+          "id": "5:2819046059499769564",
+          "name": "volsTraites",
+          "targetId": "11:7749331338208926034"
+        }
+      ]
+    }
+  ],
+  "lastEntityId": "12:1938811687117709668",
+  "lastIndexId": "8:8057750887614540348",
+  "lastRelationId": "5:2819046059499769564",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [
+    1298125939183346584
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}
