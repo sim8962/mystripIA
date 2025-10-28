@@ -28,6 +28,9 @@ class AppColors {
   // Add the hardcoded color here
   static const Color myCustomColor = Color(0xFF4CC9F0);
 
+  // Couleurs pour les cartes de vol
+  static const Color volCardText = Color.fromARGB(255, 17, 89, 167); // Bleu foncé pour texte
+
   static const ColorScheme colorSchemelight = ColorScheme.light(
     primary: errorColor, // Bleu moyen (color01)
     onPrimary: colorWhite, // Blanc (colorWhite)

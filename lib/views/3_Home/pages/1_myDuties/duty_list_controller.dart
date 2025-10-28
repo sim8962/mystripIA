@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import '../../../Models/ActsModels/myduty.dart';
-import '../../controllers/database_controller.dart';
+import '../../../../../Models/ActsModels/myduty.dart';
+import '../../../../controllers/database_controller.dart';
 
 class DutyListController extends GetxController {
   static DutyListController get instance => Get.find();

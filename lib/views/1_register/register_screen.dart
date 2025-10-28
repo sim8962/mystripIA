@@ -26,6 +26,13 @@ class RegisterScreen extends GetView<RegisterController> {
       builder: (_) {
         //return oldSc(_formKey);
         return BackgroundContainer(
+          // isButton: FloatingActionButton(
+          //   onPressed: () {
+          //     SettingsService.instance.showSettingsMenu(context);
+          //   },
+          //   backgroundColor: AppTheme.isDark ? AppColors.darkBackground : AppColors.primaryLightColor,
+          //   child: Icon(Icons.settings, color: AppTheme.isDark ? AppColors.errorColor : Colors.white),
+          // ),
           child: Padding(
             // height: MyStyling.myHeight,
             padding: EdgeInsets.all(AppTheme.getheight(iphoneSize: 24, ipadsize: 24)),

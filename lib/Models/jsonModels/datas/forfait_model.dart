@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:intl/intl.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/services.dart';
 
@@ -191,6 +191,9 @@ class ForfaitModel {
 
           // Check if Aeroport.icao in forfaits box existe in airports box
           await AeroportModel.addAeroportFromFrorfait();
+          await DatabaseController.instance.exportAeroportToJson(
+            fileName: 'aeropors_${DateFormat('ddMMyyyy').format(DateTime.now())}.json',
+          );
         }
       }
     } catch (e) {

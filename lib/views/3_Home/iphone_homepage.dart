@@ -6,14 +6,16 @@ import '../../routes/app_routes.dart';
 import '../../theming/app_color.dart';
 import '../../theming/app_theme.dart';
 
-import '../4_myDuties/duty_list_screen.dart';
-import '../5_activities/vol_screen.dart';
-import '../6_myDownloads/downloads_list_screen.dart';
+import 'pages/1_myDuties/duty_list_screen.dart';
+import 'pages/2_volsDetails/vol_screen.dart';
+import 'pages/2_volsDetails/vot_controller.dart';
 
 import '../widgets/background_container.dart';
 import '../widgets/mydialogue.dart';
 import 'home_ctl.dart';
-import 'pages/setting_page.dart';
+import 'pages/4_setting/setting_page.dart';
+import '../../services/settings_service.dart';
+import 'pages/3_calendrier/calender_screen.dart';
 
 class HomeIphoneScreen extends GetView<HomeController> {
   HomeIphoneScreen({super.key});
@@ -21,33 +23,31 @@ class HomeIphoneScreen extends GetView<HomeController> {
 
   final List<IconData> myIcons = [
     Icons.home_filled,
-    Icons.calendar_month,
-    Icons.bar_chart_rounded,
     Icons.list,
-    Icons.upload_rounded,
+    Icons.calendar_month,
     Icons.download_rounded,
-    // Icons.file_copy,
+    Icons.file_copy,
+    Icons.settings,
+    //Icons.bar_chart_rounded,
+
     // Icons.list_alt,
   ];
 
   // Screens are created as getters to ensure fresh instances when navigating
-  List<Widget> get screens => [
-    const DutyListScreen(),
-    const VolScreen(),
-
-    const DownloadsListScreen(),
-    const SettingPage(),
-  ];
+  List<Widget> get screens => [const DutyListScreen(), VolScreen(), MyCalenderScreen(), const SettingPage()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          VolController.instance.loadVolTraites();
+          SettingsService.instance.showSettingsMenu(context);
+        },
+        backgroundColor: AppTheme.isDark ? AppColors.darkBackground : AppColors.primaryLightColor,
+        child: Icon(Icons.settings, color: AppTheme.isDark ? AppColors.errorColor : Colors.white),
+      ),
 
-      //   },
-      //   child: Icon(Icons.add),
-      // ),
       body: Obx(() {
         if (HomeController.instance.shouldRefreshPage) {
           return const SizedBox();
@@ -95,22 +95,20 @@ class HomeIphoneScreen extends GetView<HomeController> {
   void _handleNavigationTap(int index) {
     switch (index) {
       case 0:
+        //DutyListScreen()
         HomeController.instance.iphonePageIndex = 0;
-        // WebViewEcreenController.instance.remplisVoltraites();
+
         break;
       case 1:
+        //VolScreen()
         HomeController.instance.iphonePageIndex = 1;
         break;
       case 2:
+        // MyCalenderScreen()
         HomeController.instance.iphonePageIndex = 2;
         break;
       case 3:
-        HomeController.instance.iphonePageIndex = 3;
-        break;
-      case 4:
-        HomeController.instance.iphonePageIndex = 4;
-        break;
-      case 5:
+        // DownloadsListScreen()
         MyDialogue.dialogue(
           title: 'dialog_download_strip'.tr,
           action1: 'button_download_strip'.tr,
@@ -120,9 +118,16 @@ class HomeIphoneScreen extends GetView<HomeController> {
           },
         );
         break;
-      case 6:
-        HomeController.instance.iphonePageIndex = 5;
+
+      // case 4:
+      //   Routes.toPdfScreen();
+      //   break;
+      case 4:
+        HomeController.instance.iphonePageIndex = 3;
         break;
+      // case 6:
+      //   HomeController.instance.iphonePageIndex = 5;
+      //   break;
       // case 6:
       //   HomeController.instance.iphonePageIndex = 5;
       //   break;

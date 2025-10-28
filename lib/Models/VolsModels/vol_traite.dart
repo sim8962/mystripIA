@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'package:mystrip25/Models/ActsModels/typ_const.dart';
 import 'package:objectbox/objectbox.dart';
 import 'vol.dart';
+import '../../helpers/fct.dart';
 
 /// Modèle ObjectBox pour stocker les données traitées d'un vol
 /// Contient tous les champs calculés et cumuls pour optimiser les performances
@@ -28,6 +30,12 @@ class VolTraiteModel {
   @Property(type: PropertyType.date)
   final DateTime dtFin;
 
+  /// Date et heure de début (format string HH:mm)
+  final String sDebut;
+
+  /// Date et heure de fin (format string HH:mm)
+  final String sFin;
+
   /// Code IATA départ
   final String depIata;
 
@@ -42,6 +50,12 @@ class VolTraiteModel {
 
   /// Avion
   final String sAvion;
+
+  /// Position du vol dans la période TSV ("debut tsv", "fin tsv", "dans tsv")
+  final String tsv;
+
+  /// Crews (stored as JSON string)
+  final String crews;
 
   // ========== DURÉES CALCULÉES (format "XXhYY") ==========
 
@@ -86,29 +100,24 @@ class VolTraiteModel {
   /// Cumul mensuel nuit forfait Vol
   final String sCumulNuitForfait;
 
-  // ========== DATES CALCULÉES ==========
+  // ========== DATES CALCULÉES (format string) ==========
 
-  /// Heure d'arrivée forfait Vol
-  @Property(type: PropertyType.date)
-  final DateTime? arrForfait;
+  /// Heure d'arrivée forfait Vol (format string HH:mm)
+  final String sArrForfait;
 
-  /// Heure d'arrivée forfait MEP
-  @Property(type: PropertyType.date)
-  final DateTime? arrMepForfait;
+  /// Heure d'arrivée forfait MEP (format string HH:mm)
+  final String sArrMepForfait;
 
-  /// Lever du soleil
-  @Property(type: PropertyType.date)
-  final DateTime? sunrise;
+  /// Lever du soleil (format string HH:mm)
+  final String sSunrise;
 
-  /// Coucher du soleil
-  @Property(type: PropertyType.date)
-  final DateTime? sunset;
+  /// Coucher du soleil (format string HH:mm)
+  final String sSunset;
 
   // ========== MÉTADONNÉES ==========
 
-  /// Date de calcul/traitement
-  @Property(type: PropertyType.date)
-  final DateTime dateTraitement;
+  /// Date de calcul/traitement (format string)
+  final String sDateTraitement;
 
   /// Mois de référence pour les cumuls (format YYYY-MM)
   final String moisReference;
@@ -120,11 +129,15 @@ class VolTraiteModel {
     required this.nVol,
     required this.dtDebut,
     required this.dtFin,
+    required this.sDebut,
+    required this.sFin,
     required this.depIata,
     required this.arrIata,
     required this.depIcao,
     required this.arrIcao,
     required this.sAvion,
+    required this.tsv,
+    required this.crews,
     required this.sDureeBrute,
     required this.sDureevol,
     required this.sDureeMep,
@@ -138,11 +151,11 @@ class VolTraiteModel {
     required this.sCumulMepForfait,
     required this.sCumulNuitVol,
     required this.sCumulNuitForfait,
-    this.arrForfait,
-    this.arrMepForfait,
-    this.sunrise,
-    this.sunset,
-    required this.dateTraitement,
+    required this.sArrForfait,
+    required this.sArrMepForfait,
+    required this.sSunrise,
+    required this.sSunset,
+    required this.sDateTraitement,
     required this.moisReference,
   });
 
@@ -156,16 +169,24 @@ class VolTraiteModel {
     final cumulNuitVol = VolModel.calculateCumulNuitVol(allVols, volModel);
     final cumulNuitForfait = VolModel.calculateCumulNuitForfait(allVols, volModel);
 
-    // Calculer la durée brute
+    // Calculer la durée brute (utilise Fct.durationToString)
     final dureeBrute = volModel.dureeBrute;
-    final hours = dureeBrute.inHours;
-    final minutes = dureeBrute.inMinutes.remainder(60);
-    final sDureeBrute = '${hours.toString().padLeft(2, '0')}h${minutes.toString().padLeft(2, '0')}';
+    final sDureeBrute = Fct.durationToString(dureeBrute);
 
-    // Mois de référence
-    final moisRef =
-        '${volModel.dtDebut.year.toString().padLeft(4, '0')}-${volModel.dtDebut.month.toString().padLeft(2, '0')}';
+    // Mois de référence (utilise Fct.formatMonthReference)
+    final moisRef = Fct.formatMonthReference(volModel.dtDebut);
 
+    // Formater les dates en strings (utilise Fct.formatTimeToString)
+    final sDebut = Fct.formatTimeToString(volModel.dtDebut);
+    final sFin = Fct.formatTimeToString(volModel.dtFin);
+    final sArrForfait = volModel.arrForfait != null ? Fct.formatTimeToString(volModel.arrForfait!) : '';
+    final sArrMepForfait = volModel.arrMepForfait != null ? Fct.formatTimeToString(volModel.arrMepForfait!) : '';
+    final sSunrise = volModel.sunrise != null ? Fct.formatTimeToString(volModel.sunrise!) : '';
+    final sSunset = volModel.sunset != null ? Fct.formatTimeToString(volModel.sunset!) : '';
+    final now = DateTime.now();
+    final sDateTraitement = Fct.formatDateTimeFullToString(now);
+    final List<Map<String, String>> crewsList = VolModel.getCrews(volModel.crews);
+    final String crewsJson = jsonEncode(crewsList);
     return VolTraiteModel(
       id: 0,
       // volModelId: volModel.id,
@@ -173,12 +194,15 @@ class VolTraiteModel {
       nVol: volModel.nVol,
       dtDebut: volModel.dtDebut,
       dtFin: volModel.dtFin,
+      sDebut: sDebut,
+      sFin: sFin,
       depIata: volModel.depIata,
       arrIata: volModel.arrIata,
       depIcao: volModel.depIcao,
       arrIcao: volModel.arrIcao,
-
       sAvion: volModel.sAvion,
+      tsv: volModel.tsv,
+      crews: crewsJson,
       sDureeBrute: sDureeBrute,
       sDureevol: volModel.sDureevol ?? '',
       sDureeMep: volModel.sDureeMep ?? '',
@@ -192,11 +216,11 @@ class VolTraiteModel {
       sCumulMepForfait: cumulMepForfait,
       sCumulNuitVol: cumulNuitVol,
       sCumulNuitForfait: cumulNuitForfait,
-      arrForfait: volModel.arrForfait,
-      arrMepForfait: volModel.arrMepForfait,
-      sunrise: volModel.sunrise,
-      sunset: volModel.sunset,
-      dateTraitement: DateTime.now(),
+      sArrForfait: sArrForfait,
+      sArrMepForfait: sArrMepForfait,
+      sSunrise: sSunrise,
+      sSunset: sSunset,
+      sDateTraitement: sDateTraitement,
       moisReference: moisRef,
     );
   }
@@ -214,6 +238,16 @@ class VolTraiteModel {
   /// Vérifie si le vol est de type MEP ou TAX
   bool get isMepOrTaxType {
     return typ == tMEP.typ || typ == tTAX.typ;
+  }
+
+  /// Décode les crews depuis le JSON
+  List<Map<String, String>> get crewsList {
+    try {
+      final decoded = jsonDecode(crews);
+      return (decoded as List).map((item) => Map<String, String>.from(item as Map)).toList();
+    } catch (e) {
+      return [];
+    }
   }
 
   @override

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../routes/app_routes.dart';
-import '../../../theming/app_theme.dart';
+import '../../../../routes/app_routes.dart';
+import '../../../../theming/app_theme.dart';
 
-import '../../widgets/background_container.dart';
-import '../../widgets/mybutton.dart';
+import '../../../widgets/background_container.dart';
+import '../../../widgets/mybutton.dart';
 
-import '../../widgets/mytext.dart';
-import '../home_ctl.dart';
+import '../../../widgets/mydialogue.dart';
+import '../../../widgets/mytext.dart';
+import '../../home_ctl.dart';
 
 //COMMENT Ecran d'accueil avec un timer affichage image .
 class SettingPage extends GetView<HomeController> {
@@ -37,7 +38,16 @@ class SettingPage extends GetView<HomeController> {
                     children: [
                       MyButton(
                         label: 'menu_history'.tr,
-                        func: () {},
+                        func: () {
+                          MyDialogue.dialogue(
+                            title: 'Historique Telechargement',
+                            action1: 'affiche',
+                            smiddleText: '',
+                            func: () {
+                              Routes.toDownloadsScreen();
+                            },
+                          );
+                        },
 
                         width: AppTheme.getWidth(iphoneSize: 280, ipadsize: 180),
                       ),
@@ -59,7 +69,9 @@ class SettingPage extends GetView<HomeController> {
                       ),
                       MyButton(
                         label: 'menu_import_strip'.tr,
-                        func: () {},
+                        func: () {
+                          Routes.toImportRosterScreen();
+                        },
                         width: AppTheme.getWidth(iphoneSize: 280, ipadsize: 180),
                       ),
                     ],

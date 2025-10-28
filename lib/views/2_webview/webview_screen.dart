@@ -5,6 +5,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../../helpers/myerrorinfo.dart';
 
 import '../../routes/app_routes.dart';
+
 import '../../theming/app_color.dart';
 import '../../theming/app_theme.dart';
 import '../../theming/apptheme_constant.dart';
@@ -23,6 +24,13 @@ class Webviewscreen extends GetView<WebViewEcreenController> {
       },
       builder: (_) {
         return BackgroundContainer(
+          // isButton: FloatingActionButton(
+          //   onPressed: () {
+          //     SettingsService.instance.showSettingsMenu(context);
+          //   },
+          //   backgroundColor: AppTheme.isDark ? AppColors.darkBackground : AppColors.primaryLightColor,
+          //   child: Icon(Icons.settings, color: AppTheme.isDark ? AppColors.errorColor : Colors.white),
+          // ),
           child: Padding(
             padding: EdgeInsets.all(AppTheme.getheight(iphoneSize: 10, ipadsize: 10)),
             child: Obx(

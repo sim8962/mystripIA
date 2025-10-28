@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 import '../../helpers/constants.dart';
 import '../../helpers/myerrorinfo.dart';
@@ -55,16 +54,13 @@ class AcceuilController extends GetxController {
     try {
       final dbController = DatabaseController.instance;
       dbController.getAllDatas();
-      //dbController.clearAllData();
+      // dbController.clearAllData();
       // Check if airports box is empty and load from JSON if needed
 
       await AeroportModel.fillAirportModelsIfEmpty();
       // Check if forfaits box is empty and load from JSON if needed
       await ForfaitModel.fillForfaitModelBoxIfEmpty();
 
-      await DatabaseController.instance.exportAeroportToJson(
-        fileName: 'aeropors_${DateFormat('ddMMyyyy').format(DateTime.now())}.json',
-      );
       if (dbController.users.isEmpty) {
         // No users found, navigate to register screen
         Routes.toRegister();
@@ -72,7 +68,8 @@ class AcceuilController extends GetxController {
         if (dbController.duties.isEmpty) {
           Routes.toWebview();
         } else {
-          Routes.toHome();
+          // Routes.toHome();
+          Routes.toImportRosterScreen();
           // Routes.toHomePage();
         }
       } else {

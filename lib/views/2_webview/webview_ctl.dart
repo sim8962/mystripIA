@@ -16,7 +16,6 @@ import '../../Models/jsonModels/mystripjson/mystrip_model.dart';
 import '../../Models/userModel/my_download.dart';
 import '../../controllers/database_controller.dart';
 import '../../helpers/fct.dart';
-import '../../services/objectbox_service.dart';
 import '../../services/strip_processor.dart';
 import '../../helpers/constants.dart';
 
@@ -160,7 +159,7 @@ class WebViewEcreenController extends GetxController {
       }
     } catch (e) {
       MyErrorInfo.erreurInos(label: 'onPageFinish', content: 'onPageFinish: ${e.toString()}');
-      sEtape = 'erreur pendant le traitement';
+      sEtape = 'status_error_processing'.tr;
     }
   }
 
@@ -173,7 +172,7 @@ class WebViewEcreenController extends GetxController {
       return;
     }
     // Update UI state to show processing
-    sEtape = 'traitement en cours..';
+    sEtape = 'status_processing'.tr;
     try {
       await _performLogout(controller);
       await _clearBrowserCache(controller);
@@ -181,7 +180,7 @@ class WebViewEcreenController extends GetxController {
     } catch (e) {
       MyErrorInfo.erreurInos(label: 'onUrlChange', content: 'onUrlChange: ${e.toString()}');
       // Reset state in case of error
-      sEtape = 'erreur pendant le traitement';
+      sEtape = 'status_error_processing'.tr;
     }
   }
 
@@ -195,7 +194,7 @@ class WebViewEcreenController extends GetxController {
   /// Perform logout sequence
   Future<void> _performLogout(WebViewController controller) async {
     visibleenregistre = true;
-    sEtape = 'traitement termine.';
+    sEtape = 'status_processing_complete'.tr;
     Future.delayed(const Duration(seconds: 3)).then((_) => loadBaseUrl(mycontroller: controller));
     await Future.delayed(Duration(seconds: 1));
 
@@ -224,51 +223,7 @@ class WebViewEcreenController extends GetxController {
 
   Future<void> _deconnexionIpadClick({required WebViewController myController}) async {
     try {
-      await myController.runJavaScript('''
-      function deconnexionIpadClick() {
-        // Get all menu buttons
-          const menuButtons = document.querySelectorAll('[class="cds-icon-button cds-icon-button_menu"]');
-        
-        // Check if there are any menu buttons
-          if (menuButtons.length > 0) {
-            // Click the first menu button (no need to click twice)
-            menuButtons[0].click();
-        
-            // Get the menu drawer
-            const menu = document.querySelector('[class="cds-drawer__menus"]');
-        
-            // Check if the menu drawer exists
-            if (menu) {
-              // Get all menu items
-              const menuItemButtons = menu.querySelectorAll('[class="cds-menu__item"]');
-        
-              // Find the logout button
-              let logoutButton = null;
-              for (let i = 0; i < menuItemButtons.length; i++) {
-                const menuText = menuItemButtons[i].querySelector('[class="cds-menu__text"]');
-                if (menuText && menuText.innerText === "Logout") {  // Use strict equality (===)
-                  console.log("Logout button text:", menuText.innerText);
-                  logoutButton = menuText;
-                  break;
-                }
-              }
-        
-              // Click the logout button if found
-              if (logoutButton) {
-                console.log("Logout button found:", logoutButton);
-                logoutButton.click();
-              } else {
-                console.log("Logout button not found in the menu.");
-              }
-            } else {
-              console.log("Menu drawer not found!");
-            }
-          } else {
-            console.log("No menu buttons found.");
-          }
-        }
-    deconnexionIpadClick();   
-    ''');
+      await myController.runJavaScript(logoutIpadJavaScriptFunction);
     } catch (e) {
       MyErrorInfo.erreurInos(label: "Error executing deconnexionClick", content: " ${e.toString()}");
     }
@@ -289,20 +244,11 @@ class WebViewEcreenController extends GetxController {
     await _getCredentiel();
     await Future.delayed(const Duration(seconds: 1), () async {
       try {
-        await controller.runJavaScript(_buildLoginScript(login: rxUser.value, mdp: rxPass.value));
+        await controller.runJavaScript(buildLoginScript(login: rxUser.value, mdp: rxPass.value));
       } catch (e) {
         MyErrorInfo.erreurInos(label: 'UsersExist', content: 'Error auto-filling credentials: $e');
       }
     });
-  }
-
-  /// Build login JavaScript
-  String _buildLoginScript({required String login, required String mdp}) {
-    return """
-      document.getElementById('userNameInput').value ='$login'; 
-      document.getElementById('passwordInput').value ='$mdp';
-      document.getElementById('submitButton').click();         
-    """;
   }
 
   /// Load a URL in the WebView
@@ -311,8 +257,7 @@ class WebViewEcreenController extends GetxController {
     bool hasConnection = getConnexion;
     if (!hasConnection) {
       getConnexion = hasConnection;
-      sEtape = 'Aucune connexion Internet';
-      // sEtape = 'Connexion Internet requise pour charger l\'URL';
+      sEtape = 'status_no_internet'.tr;
       return;
     }
 
@@ -326,18 +271,18 @@ class WebViewEcreenController extends GetxController {
     // Check connectivity before fetching data
     bool hasConnection = getConnexion;
     if (!hasConnection) {
-      sEtape = 'Connexion Internet requise pour récupérer les données';
+      sEtape = 'status_internet_required_fetch'.tr;
       return;
     }
 
     jsonString = await fetchJsonData(controller: controller);
 
     if (jsonString?.isNotEmpty ?? false) {
-      sEtape = 'traitement en cours';
+      sEtape = 'status_processing_in_progress'.tr;
       ijson = 3;
     } else {
       MyErrorInfo.erreurInos(label: 'fetchJsonData', content: 'Empty or null JSON data received');
-      sEtape = 'erreur: données JSON vides';
+      sEtape = 'status_error_empty_json'.tr;
     }
   }
 
@@ -348,7 +293,7 @@ class WebViewEcreenController extends GetxController {
 
     try {
       await Future.delayed(const Duration(seconds: 1), () async {
-        data = await controller.runJavaScriptReturningResult("document.body.innerHTML") as String;
+        data = await controller.runJavaScriptReturningResult(getBodyHtmlJavaScript) as String;
       });
 
       if (data != null) {
@@ -379,7 +324,7 @@ class WebViewEcreenController extends GetxController {
     // Check connectivity before loading base URL
     bool hasConnection = getConnexion;
     if (!hasConnection) {
-      sEtape = 'Connexion Internet requise pour charger la page de base';
+      sEtape = 'status_internet_required_base'.tr;
       return;
     }
 
@@ -402,11 +347,11 @@ class WebViewEcreenController extends GetxController {
       int userId = DatabaseController.instance.currentUser!.id;
       DatabaseController.instance.duties.assignAll(processedDuties);
       DatabaseController.instance.addDownloadToUser(userId, myDownLoad);
-      DatabaseController.instance.addDuties(DatabaseController.instance.duties);
+      DatabaseController.instance.replaceAllDuties(DatabaseController.instance.duties);
 
       // Générer les VolModel
-      List<VolModel> allVolModels = DatabaseController.instance.getVolFromDuties();
-      DatabaseController.instance.addVolTransits(allVolModels);
+      List<VolModel> allVolModels = DatabaseController.instance.getVolFromDuties(consolidatedDuties);
+      DatabaseController.instance.volModels.assignAll(allVolModels);
 
       // Générer les VolTraiteModel à partir des VolModel
       _genererVolsTraites(allVolModels);
@@ -417,14 +362,14 @@ class WebViewEcreenController extends GetxController {
   }
 
   void remplisVoltraites() {
-    List<VolModel> allVolModels = DatabaseController.instance.vols;
+    List<VolModel> allVolModels = DatabaseController.instance.volModels;
     // Générer les VolTraiteModel à partir des VolModel
     _genererVolsTraites(allVolModels);
   }
 
   /// Génère les VolTraiteModel et VolTraiteMoisModel à partir des VolModel
   void _genererVolsTraites(List<VolModel> allVolModels) {
-    final objectBox = Get.find<ObjectBoxService>();
+    final dbController = DatabaseController.instance;
 
     // 1. Créer tous les VolTraiteModel
     final volsTraites = <VolTraiteModel>[];
@@ -433,10 +378,7 @@ class WebViewEcreenController extends GetxController {
       volsTraites.add(volTraite);
     }
 
-    // 2. Sauvegarder les VolTraiteModel
-    objectBox.addVolTraites(volsTraites);
-
-    // 3. Grouper les vols par mois
+    // 2. Grouper les vols par mois
     final volsParMois = <String, List<VolTraiteModel>>{};
     for (var volTraite in volsTraites) {
       final moisRef = volTraite.moisReference;
@@ -446,8 +388,8 @@ class WebViewEcreenController extends GetxController {
       volsParMois[moisRef]!.add(volTraite);
     }
 
-    // 4. Supprimer les anciens VolTraiteMoisModel et créer les nouveaux
-    final volsTraiteMois = <VolTraiteMoisModel>[];
+    // 3. Créer les nouveaux VolTraiteMoisModel
+    final nouveauxVolTraiteMois = <VolTraiteMoisModel>[];
     for (var entry in volsParMois.entries) {
       final moisRef = entry.key;
       final volsDuMois = entry.value;
@@ -457,24 +399,17 @@ class WebViewEcreenController extends GetxController {
       final year = int.parse(parts[0]);
       final month = int.parse(parts[1]);
 
-      // Supprimer l'ancien VolTraiteMoisModel de ce mois s'il existe
-      final ancienMois = objectBox.getVolTraiteMoisByMoisReference(moisRef);
-      if (ancienMois != null) {
-        objectBox.deleteVolTraiteMois(ancienMois.id);
-        // print('🗑️  Supprimé ancien mois: $moisRef');
-      }
-
       // Créer le nouveau modèle mensuel
-      final moisModel = VolTraiteMoisModel.fromVolsTraites(year, month, volsDuMois);
-      volsTraiteMois.add(moisModel);
+      final newVolTraiteMois = VolTraiteMoisModel.fromVolsTraites(year, month, volsDuMois);
+      nouveauxVolTraiteMois.add(newVolTraiteMois);
     }
 
-    // 5. Sauvegarder les nouveaux VolTraiteMoisModel
-    for (var moisModel in volsTraiteMois) {
-      objectBox.addVolTraiteMois(moisModel);
-    }
+    // 4. Remplacer tous les VolTraiteMoisModel dans ObjectBox
+    dbController.replaceAllVolTraiteMois(nouveauxVolTraiteMois);
 
-    // print('✅ Généré ${volsTraites.length} vols traités dans ${volsTraiteMois.length} mois');
+    // print('✅ Généré ${volsTraites.length} vols traités dans ${nouveauxVolTraiteMois.length} mois');
+    // print('📊 DatabaseController.volTraites.length = ${dbController.volTraites.length}');
+    // print('📊 DatabaseController.volTraiteMois.length = ${dbController.volTraiteMois.length}');
   }
 
   /// Reset the WebView state
@@ -482,14 +417,14 @@ class WebViewEcreenController extends GetxController {
     // Check connectivity before resetting WebView
     bool hasConnection = getConnexion;
     if (!hasConnection) {
-      sEtape = 'Connexion Internet requise pour réinitialiser';
+      sEtape = 'status_internet_required_reset'.tr;
       visibleWeb = false;
       return;
     }
 
     visibleenregistre = false;
     visibleWeb = true;
-    sEtape = 'telechargement en cours';
+    sEtape = 'status_downloading'.tr;
     ijson = 0;
     await loadBaseUrl(mycontroller: mycontroller);
   }

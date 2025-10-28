@@ -1,6 +1,9 @@
 import 'package:mystrip25/Models/ActsModels/typ_const.dart';
 import 'package:objectbox/objectbox.dart';
 import 'vol_traite.dart';
+import 'vol.dart';
+import '../volpdfs/vol_pdf_list.dart';
+import '../../helpers/fct.dart';
 
 /// Modèle ObjectBox pour stocker les cumuls mensuels de tous les vols
 /// Contient les totaux mensuels et une relation vers tous les VolTraiteModel du mois
@@ -99,7 +102,7 @@ class VolTraiteMoisModel {
     final premierJour = DateTime(year, month, 1);
     final moisRef = '${year.toString().padLeft(4, '0')}-${month.toString().padLeft(2, '0')}';
 
-    // Calculer les cumuls totaux en additionnant les Duration
+    // Calculer les cumuls totaux en additionnant les durées BRUTES (pas les cumuls mensuels)
     Duration totalDureeVol = Duration.zero;
     Duration totalDureeMep = Duration.zero;
     Duration totalDureeForfait = Duration.zero;
@@ -114,22 +117,26 @@ class VolTraiteMoisModel {
     int countVolsTax = 0;
 
     for (var vol in volsTraitesDuMois) {
-      // Additionner les durées
-      totalDureeVol += _parseDuration(vol.sCumulDureeVol);
-      totalDureeMep += _parseDuration(vol.sCumulDureeMep);
-      totalDureeForfait += _parseDuration(vol.sCumulDureeForfait);
-      totalMepForfait += _parseDuration(vol.sCumulMepForfait);
-      totalNuitVol += _parseDuration(vol.sCumulNuitVol);
-      totalNuitForfait += _parseDuration(vol.sCumulNuitForfait);
-
-      // Compter par type
+      // Additionner les durées BRUTES (sDureeBrute) pas les cumuls mensuels
+      // sDureeBrute = dtFin - dtDebut (durée réelle du vol)
+      // Les champs sDureevol, sDureeMep, etc. sont vides pour certains types
+      // Les cumuls mensuels (sCumulDureeVol, etc.) sont des cumuls jusqu'au vol courant (inutilisables)
       if (vol.typ == tVol.typ) {
+        totalDureeVol += _parseDuration(vol.sDureeBrute);
+        totalDureeForfait += _parseDuration(vol.sDureeForfait);
+        totalNuitVol += _parseDuration(vol.sNuitVol);
+        totalNuitForfait += _parseDuration(vol.sNuitForfait);
         countVolsVol++;
       } else if (vol.typ == tMEP.typ) {
+        totalDureeMep += _parseDuration(vol.sDureeBrute);
+        totalMepForfait += _parseDuration(vol.sMepForfait);
         countVolsMep++;
       } else if (vol.typ == tTAX.typ) {
+        totalDureeMep += _parseDuration(vol.sDureeBrute);
+        totalMepForfait += _parseDuration(vol.sMepForfait);
         countVolsTax++;
       }
+      // Note: Les autres types (HTL, Conge, RV, etc.) ne sont pas comptabilisés
     }
 
     // Créer le modèle
@@ -158,29 +165,43 @@ class VolTraiteMoisModel {
     return model;
   }
 
-  /// Parse une chaîne "XXhYY" en Duration
-  static Duration _parseDuration(String? durationString) {
-    if (durationString == null || durationString.isEmpty) return Duration.zero;
-
-    try {
-      final parts = durationString.toLowerCase().split('h');
-      if (parts.length == 2) {
-        final hours = int.tryParse(parts[0]) ?? 0;
-        final minutes = int.tryParse(parts[1]) ?? 0;
-        return Duration(hours: hours, minutes: minutes);
+  /// Crée un VolTraiteMoisModel à partir d'une VolPdfList
+  /// Convertit les VolPdf en VolModel, puis en VolTraiteModel
+  factory VolTraiteMoisModel.fromVolPdfList(VolPdfList volPdfList, List<VolModel> allVolModels) {
+    // Convertir les VolPdf en VolModel
+    final volModels = <VolModel>[];
+    for (var volPdf in volPdfList.volPdfs) {
+      try {
+        final volModel = VolModel.fromVolPdf(volPdf);
+        volModels.add(volModel);
+      } catch (e) {
+        // Ignorer les VolPdf invalides
+        continue;
       }
-    } catch (e) {
-      return Duration.zero;
     }
-    return Duration.zero;
+
+    // Convertir les VolModel en VolTraiteModel
+    final volsTraites = <VolTraiteModel>[];
+    for (var volModel in volModels) {
+      final volTraite = VolTraiteModel.fromVolModel(volModel, allVolModels);
+      volsTraites.add(volTraite);
+    }
+
+    // Créer le VolTraiteMoisModel
+    if (volsTraites.isEmpty) {
+      throw ArgumentError('Aucun vol valide dans VolPdfList');
+    }
+
+    final year = volPdfList.month.year;
+    final month = volPdfList.month.month;
+    return VolTraiteMoisModel.fromVolsTraites(year, month, volsTraites);
   }
 
-  /// Formate une Duration en chaîne "XXhYY"
-  static String _formatDuration(Duration duration) {
-    final hours = duration.inHours;
-    final minutes = duration.inMinutes.remainder(60);
-    return '${hours.toString().padLeft(2, '0')}h${minutes.toString().padLeft(2, '0')}';
-  }
+  /// Parse une chaîne "XXhYY" en Duration (utilise Fct.stringToDuration)
+  static Duration _parseDuration(String? durationString) => Fct.stringToDuration(durationString);
+
+  /// Formate une Duration en chaîne "XXhYY" (utilise Fct.durationToString)
+  static String _formatDuration(Duration duration) => Fct.durationToString(duration);
 
   /// Recalcule les cumuls à partir des vols de la relation
   void recalculerCumuls() {
@@ -196,20 +217,24 @@ class VolTraiteMoisModel {
     int countVolsTax = 0;
 
     for (var vol in volsTraites) {
-      totalDureeVol += _parseDuration(vol.sCumulDureeVol);
-      totalDureeMep += _parseDuration(vol.sCumulDureeMep);
-      totalDureeForfait += _parseDuration(vol.sCumulDureeForfait);
-      totalMepForfait += _parseDuration(vol.sCumulMepForfait);
-      totalNuitVol += _parseDuration(vol.sCumulNuitVol);
-      totalNuitForfait += _parseDuration(vol.sCumulNuitForfait);
-
-      if (vol.typ == 'Vol') {
+      // Additionner les durées BRUTES (sDureeBrute) pas les cumuls mensuels
+      // sDureeBrute = dtFin - dtDebut (durée réelle du vol)
+      if (vol.typ == tVol.typ) {
+        totalDureeVol += _parseDuration(vol.sDureeBrute);
+        totalDureeForfait += _parseDuration(vol.sDureeForfait);
+        totalNuitVol += _parseDuration(vol.sNuitVol);
+        totalNuitForfait += _parseDuration(vol.sNuitForfait);
         countVolsVol++;
-      } else if (vol.typ == 'MEP') {
+      } else if (vol.typ == tMEP.typ) {
+        totalDureeMep += _parseDuration(vol.sDureeBrute);
+        totalMepForfait += _parseDuration(vol.sMepForfait);
         countVolsMep++;
-      } else if (vol.typ == 'TAX') {
+      } else if (vol.typ == tTAX.typ) {
+        totalDureeMep += _parseDuration(vol.sDureeBrute);
+        totalMepForfait += _parseDuration(vol.sMepForfait);
         countVolsTax++;
       }
+      // Note: Les autres types (HTL, Conge, RV, etc.) ne sont pas comptabilisés
     }
 
     cumulTotalDureeVol = _formatDuration(totalDureeVol);

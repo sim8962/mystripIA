@@ -5,7 +5,6 @@ import '../../../Models/jsonModels/datas/airport_model.dart';
 import '../../../helpers/myerrorinfo.dart';
 import '../../widgets/mydialogue.dart';
 import 'aeroport_controller.dart';
-
 import '../../../routes/app_routes.dart';
 import '../../../theming/app_theme.dart';
 import '../../widgets/background_container.dart';
@@ -43,33 +42,7 @@ class AeroportScreen extends GetView<AerportService> {
                   child: MyTextWidget(label: 'crud_airport_title'.tr),
                 ),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // MyButton(
-                    //   width: AppTheme.getWidth(iphoneSize: 140, ipadsize: 180),
-                    //   label: 'button_import'.tr,
-                    //   func: () async {
-                    //     try {
-                    //       //await JsonController.instance.addAeroportsToBox();
-                    //       Get.snackbar('success'.tr, 'success_airport_imported'.tr);
-                    //     } catch (e) {
-                    //       //print('Error importing forfaits: $e');
-                    //       Get.snackbar('error'.tr, 'error_import_failed'.tr);
-                    //     }
-                    //   },
-                    // ),
-                    MyButton(
-                      width: AppTheme.getWidth(iphoneSize: 140, ipadsize: 180),
-                      label: 'button_return'.tr,
-                      func: () {
-                        Routes.toHome();
-                      },
-                    ),
-                  ],
-                ),
-                SizedBox(height: AppTheme.getheight(iphoneSize: 20, ipadsize: 15)),
-                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: []),
+                // SizedBox(height: AppTheme.getheight(iphoneSize: 20, ipadsize: 15)),
                 Expanded(
                   child: SizedBox(
                     child: Form(
@@ -116,64 +89,76 @@ class AeroportScreen extends GetView<AerportService> {
                               ),
                             ],
                           ),
-                          MyButton(
-                            width: AppTheme.getWidth(iphoneSize: 140, ipadsize: 180),
-                            label: 'button_search'.tr,
-                            func: () async {
-                              try {
-                                if (_icaoController.text.isEmpty && _iataController.text.isEmpty) {
-                                  MyErrorInfo.erreurInos(
-                                    label: 'AeroportScreen',
-                                    content: 'Veuillez entrer un code ICAO ou IATA pour rechercher',
-                                  );
-                                  return;
-                                }
-                                AeroportModel? aeroportModel = _icaoController.text.isNotEmpty
-                                    ? _airPsrv.getAeroportByIata(
-                                        search: _icaoController.text.trim().toUpperCase(),
-                                      )
-                                    : _airPsrv.getAeroportByIata(
-                                        search: _iataController.text.trim().toUpperCase(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              MyButton(
+                                width: AppTheme.getWidth(iphoneSize: 140, ipadsize: 180),
+                                label: 'button_return'.tr,
+                                func: () {
+                                  Routes.toHome();
+                                },
+                              ),
+                              MyButton(
+                                width: AppTheme.getWidth(iphoneSize: 140, ipadsize: 180),
+                                label: 'button_search'.tr,
+                                func: () async {
+                                  try {
+                                    if (_icaoController.text.isEmpty && _iataController.text.isEmpty) {
+                                      MyErrorInfo.erreurInos(
+                                        label: 'AeroportScreen',
+                                        content: 'Veuillez entrer un code ICAO ou IATA pour rechercher',
                                       );
-
-                                if (aeroportModel != null) {
-                                  updateTextFields(aeroportModel);
-                                  // Get.snackbar('Succès', 'Aéroport trouvé avec succès');
-                                  return;
-                                }
-                                Get.snackbar('Erreur', 'Aéroport non trouvé');
-                                clearTextFields();
-                                MyDialogue.dialogue(
-                                  title: 'telecharger',
-                                  action1: 'button_import'.tr,
-                                  smiddleText: """on recupere les infos de l'aeroport""",
-                                  func: () async {
+                                      return;
+                                    }
                                     AeroportModel? aeroportModel = _icaoController.text.isNotEmpty
-                                        ? await _airPsrv.fetchAirportFromApiByIcao(
-                                            icao: _icaoController.text.trim().toUpperCase(),
+                                        ? _airPsrv.getAeroportByIata(
+                                            search: _icaoController.text.trim().toUpperCase(),
                                           )
-                                        : await _airPsrv.fetchAirportFromApiByIata(
-                                            iata: _icaoController.text.trim().toUpperCase(),
+                                        : _airPsrv.getAeroportByIata(
+                                            search: _iataController.text.trim().toUpperCase(),
                                           );
+
                                     if (aeroportModel != null) {
                                       updateTextFields(aeroportModel);
                                       // Get.snackbar('Succès', 'Aéroport trouvé avec succès');
                                       return;
-                                    } else {
-                                      MyErrorInfo.erreurInos(
-                                        label: 'AeroportScreen',
-                                        content: 'Aucun aeroport trouve avec  code ICAO ou IATA ',
-                                      );
                                     }
-                                  },
-                                );
-                              } catch (e) {
-                                MyErrorInfo.erreurInos(
-                                  label: 'AeroportScreen',
-                                  content: 'Échec de la recherche d\'aéroport ',
-                                );
-                              }
-                            },
+                                    Get.snackbar('Erreur', 'Aéroport non trouvé');
+                                    clearTextFields();
+                                    MyDialogue.dialogue(
+                                      title: 'telecharger',
+                                      action1: 'button_import'.tr,
+                                      smiddleText: """on recupere les infos de l'aeroport""",
+                                      func: () async {
+                                        AeroportModel? aeroportModel = _icaoController.text.isNotEmpty
+                                            ? await _airPsrv.fetchAirportFromApiByIcao(
+                                                icao: _icaoController.text.trim().toUpperCase(),
+                                              )
+                                            : await _airPsrv.fetchAirportFromApiByIata(
+                                                iata: _icaoController.text.trim().toUpperCase(),
+                                              );
+                                        if (aeroportModel != null) {
+                                          updateTextFields(aeroportModel);
+                                          // Get.snackbar('Succès', 'Aéroport trouvé avec succès');
+                                          return;
+                                        } else {
+                                          MyErrorInfo.erreurInos(
+                                            label: 'AeroportScreen',
+                                            content: 'Aucun aeroport trouve avec  code ICAO ou IATA ',
+                                          );
+                                        }
+                                      },
+                                    );
+                                  } catch (e) {
+                                    MyErrorInfo.erreurInos(
+                                      label: 'AeroportScreen',
+                                      content: 'Échec de la recherche d\'aéroport ',
+                                    );
+                                  }
+                                },
+                              ),
+                            ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

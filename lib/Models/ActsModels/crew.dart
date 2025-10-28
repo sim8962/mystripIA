@@ -3,11 +3,13 @@ import 'package:objectbox/objectbox.dart';
 import 'myetape.dart';
 import '../jsonModels/basicModels/assigned_crew.dart';
 import 'myduty.dart';
+import '../VolsModels/vol.dart';
 
 @Entity()
 class Crew {
   final myEtape = ToOne<MyEtape>();
   final myDuty = ToOne<MyDuty>();
+  final volModel = ToOne<VolModel>();
   @Id(assignable: true)
   int id = 0;
   String crewId;

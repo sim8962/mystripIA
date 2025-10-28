@@ -69,7 +69,7 @@ class CardeEtape extends StatelessWidget {
                     child: SizedBox(
                       width: AppTheme.w(x: 228),
                       child: Text(
-                        etape.typeLabel,
+                        etape.translatedTypeLabel,
                         style: AppStylingConstant.titleEtapeStyle,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -79,7 +79,7 @@ class CardeEtape extends StatelessWidget {
                     SizedBox(
                       width: boxGet.read(getDevice) == getIphone ? AppTheme.w(x: 228) : AppTheme.w(x: 240),
                       child: Text(
-                        etape.detailLabel,
+                        etape.translatedDetailLabel,
                         style: AppStylingConstant.titleEtapeStyle,
                         overflow: TextOverflow.ellipsis,
                       ),

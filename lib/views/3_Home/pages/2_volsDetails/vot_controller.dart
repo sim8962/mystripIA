@@ -1,15 +1,17 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import '../../Models/VolsModels/vol_traite.dart';
+import '../../../../Models/VolsModels/vol_traite.dart';
 
-import '../../controllers/database_controller.dart';
+import '../../../../controllers/database_controller.dart';
 
 class VolController extends GetxController {
+  static VolController get instance => Get.find();
   final DatabaseController _databaseController = DatabaseController.instance;
 
   // Reactive lists for UI updates
   final RxList<VolTraiteModel> volsTraites = <VolTraiteModel>[].obs;
   final RxBool isLoading = false.obs;
+  final TextEditingController searchController = TextEditingController();
   final RxString searchQuery = ''.obs;
 
   // Filtered activities based on search
@@ -18,10 +20,30 @@ class VolController extends GetxController {
         ? volsTraites.toList()
         : volsTraites.where((volTraite) {
             final query = searchQuery.value.toLowerCase();
-            return volTraite.depIata.toLowerCase().contains(query) ||
+
+            // Recherche dans les champs de base
+            if (volTraite.depIata.toLowerCase().contains(query) ||
                 volTraite.arrIata.toLowerCase().contains(query) ||
                 volTraite.typ.toLowerCase().contains(query) ||
-                volTraite.nVol.toLowerCase().contains(query);
+                volTraite.nVol.toLowerCase().contains(query)) {
+              return true;
+            }
+
+            // Recherche dans les crews (nom et crewId)
+            try {
+              final crewsList = volTraite.crewsList;
+              for (var crew in crewsList) {
+                final nom = crew['nom']?.toLowerCase() ?? '';
+                final crewId = crew['crewId']?.toLowerCase() ?? '';
+                if (nom.contains(query) || crewId.contains(query)) {
+                  return true;
+                }
+              }
+            } catch (e) {
+              // Ignorer les erreurs de parsing
+            }
+
+            return false;
           }).toList();
 
     // Sort by datetime (oldest first)
@@ -34,35 +56,24 @@ class VolController extends GetxController {
     super.onInit();
     // Set up reactive listener to database controller's vols
     // Note: We'll use a different approach since _volTransits is private
-    loadVolTransits();
+    loadVolTraites();
   }
 
   /// Load all activities from database and process them
-  void loadVolTransits() {
+  void loadVolTraites() {
     try {
       isLoading.value = true;
-      
-      // Load all VolModel from database
-      final allVolTransits = _databaseController.vols;
 
-      // Update missing values for old data
-      for (var volTransit in allVolTransits) {
-        volTransit.updateMissingValues();
-      }
+      // Charger directement les VolTraiteModel depuis DatabaseController
+      // Ils sont déjà extraits et triés par getAllVolTraiteMois()
+      final volsTraitesList = _databaseController.volTraiteModels.toList();
 
-      // Process all vols to create VolTraiteModel
-      final volsTraitesList = <VolTraiteModel>[];
-      for (var vol in allVolTransits) {
-        final volTraite = VolTraiteModel.fromVolModel(vol, allVolTransits);
-        volsTraitesList.add(volTraite);
-      }
-
-      volsTraitesList.sort((a, b) => b.dtDebut.compareTo(a.dtDebut));
-      
       // Update local reactive list
       volsTraites.assignAll(volsTraitesList);
-      
-      // print('Loaded ${volsTraitesList.length} vols traités');
+
+      // print('🔍 VolController.loadVolTraites() - Loaded ${volsTraitesList.length} vols traités');
+      // print('🔍 DatabaseController.volTraites.length = ${_databaseController.volTraites.length}');
+      // print('🔍 DatabaseController.volTraiteMois.length = ${_databaseController.volTraiteMois.length}');
     } catch (e) {
       // print('Error loading activities: $e');
       // Defer snackbar to avoid build phase conflicts
@@ -80,7 +91,7 @@ class VolController extends GetxController {
 
   /// Refresh activities data
   void refreshVolTransits() {
-    loadVolTransits();
+    loadVolTraites();
   }
 
   /// Update search query
@@ -91,24 +102,6 @@ class VolController extends GetxController {
   /// Clear search
   void clearSearch() {
     searchQuery.value = '';
-  }
-
-  /// Get formatted date string
-  String getFormattedDate(DateTime dateTime) {
-    return '${dateTime.day.toString().padLeft(2, '0')}/${dateTime.month.toString().padLeft(2, '0')}/${dateTime.year}';
-  }
-
-  /// Get formatted time string
-  String getFormattedTime(DateTime dateTime) {
-    return '${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
-  }
-
-  /// Get duration between start and end time
-  String getDuration(DateTime start, DateTime end) {
-    final duration = end.difference(start);
-    final hours = duration.inHours;
-    final minutes = duration.inMinutes.remainder(60);
-    return '${hours}h${minutes.toString().padLeft(2, '0')}';
   }
 
   // Les cumuls sont déjà calculés et stockés dans VolTraiteModel

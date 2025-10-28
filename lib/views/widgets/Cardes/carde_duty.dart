@@ -69,7 +69,11 @@ class Cardeduty extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(duty.dateLabel, style: AppStylingConstant.dateLabelStyle, overflow: TextOverflow.fade),
-            Text(duty.typeLabel, style: AppStylingConstant.dutyLabelStyle, overflow: TextOverflow.ellipsis),
+            Text(
+              duty.typ.target?.label ?? duty.typeLabel,
+              style: AppStylingConstant.dutyLabelStyle,
+              overflow: TextOverflow.ellipsis,
+            ),
             SizedBox(
               width: AppTheme.w(x: 186),
               child: Text(

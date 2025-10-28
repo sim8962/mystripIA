@@ -25,7 +25,7 @@ class CardeTsv extends StatelessWidget {
           ),
           Center(
             child: Text(
-              etape.dateLabel,
+              etape.translatedDateLabel,
               style: AppStylingConstant.tsvDateStyle,
               softWrap: true,
               maxLines: 2,

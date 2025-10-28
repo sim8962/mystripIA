@@ -4,7 +4,7 @@ import '../../theming/app_color.dart';
 import '../../theming/app_theme.dart';
 import '../../theming/apptheme_constant.dart';
 import '../1_register/register_ctl.dart';
-import '../7_cruds/forfait_crud/forfait_controller.dart';
+import '../5_cruds/forfait_crud/forfait_controller.dart';
 
 class MySwitch extends StatelessWidget {
   const MySwitch({

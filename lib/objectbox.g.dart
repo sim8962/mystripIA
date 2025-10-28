@@ -97,7 +97,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(2, 9133119771250773719),
     name: 'Crew',
-    lastPropertyId: const obx_int.IdUid(9, 8734828892144025033),
+    lastPropertyId: const obx_int.IdUid(10, 5475991727489001701),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -157,6 +157,14 @@ final _entities = <obx_int.ModelEntity>[
         name: 'base',
         type: 9,
         flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(10, 5475991727489001701),
+        name: 'volModelId',
+        type: 11,
+        flags: 520,
+        indexId: const obx_int.IdUid(9, 6832780167094157730),
+        relationTarget: 'VolModel',
       ),
     ],
     relations: <obx_int.ModelRelation>[],
@@ -556,7 +564,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(10, 4911528948522166683),
     name: 'VolModel',
-    lastPropertyId: const obx_int.IdUid(22, 5611245742225271488),
+    lastPropertyId: const obx_int.IdUid(23, 8248432171896701907),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -691,20 +699,26 @@ final _entities = <obx_int.ModelEntity>[
         type: 9,
         flags: 0,
       ),
-    ],
-    relations: <obx_int.ModelRelation>[
-      obx_int.ModelRelation(
-        id: const obx_int.IdUid(4, 7601733697120016965),
-        name: 'crews',
-        targetId: const obx_int.IdUid(2, 9133119771250773719),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(23, 8248432171896701907),
+        name: 'tsv',
+        type: 9,
+        flags: 0,
       ),
     ],
-    backlinks: <obx_int.ModelBacklink>[],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[
+      obx_int.ModelBacklink(
+        name: 'crews',
+        srcEntity: 'Crew',
+        srcField: 'volModel',
+      ),
+    ],
   ),
   obx_int.ModelEntity(
     id: const obx_int.IdUid(11, 7749331338208926034),
     name: 'VolTraiteModel',
-    lastPropertyId: const obx_int.IdUid(30, 914253255291244363),
+    lastPropertyId: const obx_int.IdUid(39, 6714547670195736461),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -834,36 +848,6 @@ final _entities = <obx_int.ModelEntity>[
         flags: 0,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(23, 6890112214765324595),
-        name: 'arrForfait',
-        type: 10,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(24, 691893552299954893),
-        name: 'arrMepForfait',
-        type: 10,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(25, 1582872213158404861),
-        name: 'sunrise',
-        type: 10,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(26, 5814753637556422176),
-        name: 'sunset',
-        type: 10,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(27, 2873268312537355211),
-        name: 'dateTraitement',
-        type: 10,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
         id: const obx_int.IdUid(28, 2045894204856255144),
         name: 'moisReference',
         type: 9,
@@ -878,6 +862,60 @@ final _entities = <obx_int.ModelEntity>[
       obx_int.ModelProperty(
         id: const obx_int.IdUid(30, 914253255291244363),
         name: 'arrIcao',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(31, 8631428558406331185),
+        name: 'sDebut',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(32, 6395897302247018141),
+        name: 'sFin',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(33, 2526649827397176005),
+        name: 'sArrForfait',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(34, 440399609540135262),
+        name: 'sArrMepForfait',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(35, 6682130475876122980),
+        name: 'sSunrise',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(36, 6084088016868944249),
+        name: 'sSunset',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(37, 5883658264360986403),
+        name: 'sDateTraitement',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(38, 7428716736428564971),
+        name: 'crews',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(39, 6714547670195736461),
+        name: 'tsv',
         type: 9,
         flags: 0,
       ),
@@ -1045,13 +1083,20 @@ obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
     entities: _entities,
     lastEntityId: const obx_int.IdUid(12, 1938811687117709668),
-    lastIndexId: const obx_int.IdUid(8, 8057750887614540348),
+    lastIndexId: const obx_int.IdUid(9, 6832780167094157730),
     lastRelationId: const obx_int.IdUid(5, 2819046059499769564),
     lastSequenceId: const obx_int.IdUid(0, 0),
     retiredEntityUids: const [],
     retiredIndexUids: const [],
-    retiredPropertyUids: const [1298125939183346584],
-    retiredRelationUids: const [],
+    retiredPropertyUids: const [
+      1298125939183346584,
+      6890112214765324595,
+      691893552299954893,
+      1582872213158404861,
+      5814753637556422176,
+      2873268312537355211,
+    ],
+    retiredRelationUids: const [7601733697120016965],
     modelVersion: 5,
     modelVersionParserMinimum: 5,
     version: 1,
@@ -1142,7 +1187,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
     ),
     Crew: obx_int.EntityDefinition<Crew>(
       model: _entities[1],
-      toOneRelations: (Crew object) => [object.myEtape, object.myDuty],
+      toOneRelations: (Crew object) => [
+        object.myEtape,
+        object.myDuty,
+        object.volModel,
+      ],
       toManyRelations: (Crew object) => {},
       getId: (Crew object) => object.id,
       setId: (Crew object, int id) {
@@ -1155,7 +1204,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final matriculeOffset = fbb.writeString(object.matricule);
         final posOffset = fbb.writeString(object.pos);
         final baseOffset = fbb.writeString(object.base);
-        fbb.startTable(10);
+        fbb.startTable(11);
         fbb.addInt64(0, object.myEtape.targetId);
         fbb.addInt64(1, object.myDuty.targetId);
         fbb.addInt64(2, object.id);
@@ -1165,6 +1214,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addOffset(6, matriculeOffset);
         fbb.addOffset(7, posOffset);
         fbb.addOffset(8, baseOffset);
+        fbb.addInt64(9, object.volModel.targetId);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -1218,6 +1268,13 @@ obx_int.ModelDefinition getObjectBoxModel() {
           0,
         );
         object.myDuty.attach(store);
+        object.volModel.targetId = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          22,
+          0,
+        );
+        object.volModel.attach(store);
         return object;
       },
     ),
@@ -1735,7 +1792,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
       model: _entities[9],
       toOneRelations: (VolModel object) => [],
       toManyRelations: (VolModel object) => {
-        obx_int.RelInfo<VolModel>.toMany(4, object.id): object.crews,
+        obx_int.RelInfo<Crew>.toOneBacklink(
+          10,
+          object.id,
+          (Crew srcObject) => srcObject.volModel,
+        ): object.crews,
       },
       getId: (VolModel object) => object.id,
       setId: (VolModel object, int id) {
@@ -1769,7 +1830,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final sMepForfaitOffset = object.sMepForfait == null
             ? null
             : fbb.writeString(object.sMepForfait!);
-        fbb.startTable(23);
+        final tsvOffset = fbb.writeString(object.tsv);
+        fbb.startTable(24);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, cleOffset);
         fbb.addOffset(2, typOffset);
@@ -1792,6 +1854,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addOffset(19, sDureeMepOffset);
         fbb.addInt64(20, object.arrMepForfait?.millisecondsSinceEpoch);
         fbb.addOffset(21, sMepForfaitOffset);
+        fbb.addOffset(22, tsvOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -1857,6 +1920,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final sAvionParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 26, '');
+        final tsvParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 48, '');
         final arrForfaitParam = arrForfaitValue == null
             ? null
             : DateTime.fromMillisecondsSinceEpoch(arrForfaitValue);
@@ -1883,6 +1949,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
                 label: labelParam,
                 cle: cleParam,
                 sAvion: sAvionParam,
+                tsv: tsvParam,
                 arrForfait: arrForfaitParam,
                 arrMepForfait: arrMepForfaitParam,
                 sunrise: sunriseParam,
@@ -1909,7 +1976,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
         obx_int.InternalToManyAccess.setRelInfo<VolModel>(
           object.crews,
           store,
-          obx_int.RelInfo<VolModel>.toMany(4, object.id),
+          obx_int.RelInfo<Crew>.toOneBacklink(
+            10,
+            object.id,
+            (Crew srcObject) => srcObject.volModel,
+          ),
         );
         return object;
       },
@@ -1948,7 +2019,16 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final moisReferenceOffset = fbb.writeString(object.moisReference);
         final depIcaoOffset = fbb.writeString(object.depIcao);
         final arrIcaoOffset = fbb.writeString(object.arrIcao);
-        fbb.startTable(31);
+        final sDebutOffset = fbb.writeString(object.sDebut);
+        final sFinOffset = fbb.writeString(object.sFin);
+        final sArrForfaitOffset = fbb.writeString(object.sArrForfait);
+        final sArrMepForfaitOffset = fbb.writeString(object.sArrMepForfait);
+        final sSunriseOffset = fbb.writeString(object.sSunrise);
+        final sSunsetOffset = fbb.writeString(object.sSunset);
+        final sDateTraitementOffset = fbb.writeString(object.sDateTraitement);
+        final crewsOffset = fbb.writeString(object.crews);
+        final tsvOffset = fbb.writeString(object.tsv);
+        fbb.startTable(40);
         fbb.addInt64(0, object.id);
         fbb.addOffset(2, typOffset);
         fbb.addOffset(3, nVolOffset);
@@ -1970,40 +2050,24 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addOffset(19, sCumulMepForfaitOffset);
         fbb.addOffset(20, sCumulNuitVolOffset);
         fbb.addOffset(21, sCumulNuitForfaitOffset);
-        fbb.addInt64(22, object.arrForfait?.millisecondsSinceEpoch);
-        fbb.addInt64(23, object.arrMepForfait?.millisecondsSinceEpoch);
-        fbb.addInt64(24, object.sunrise?.millisecondsSinceEpoch);
-        fbb.addInt64(25, object.sunset?.millisecondsSinceEpoch);
-        fbb.addInt64(26, object.dateTraitement.millisecondsSinceEpoch);
         fbb.addOffset(27, moisReferenceOffset);
         fbb.addOffset(28, depIcaoOffset);
         fbb.addOffset(29, arrIcaoOffset);
+        fbb.addOffset(30, sDebutOffset);
+        fbb.addOffset(31, sFinOffset);
+        fbb.addOffset(32, sArrForfaitOffset);
+        fbb.addOffset(33, sArrMepForfaitOffset);
+        fbb.addOffset(34, sSunriseOffset);
+        fbb.addOffset(35, sSunsetOffset);
+        fbb.addOffset(36, sDateTraitementOffset);
+        fbb.addOffset(37, crewsOffset);
+        fbb.addOffset(38, tsvOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
       objectFromFB: (obx.Store store, ByteData fbData) {
         final buffer = fb.BufferContext(fbData);
         final rootOffset = buffer.derefObject(0);
-        final arrForfaitValue = const fb.Int64Reader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          48,
-        );
-        final arrMepForfaitValue = const fb.Int64Reader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          50,
-        );
-        final sunriseValue = const fb.Int64Reader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          52,
-        );
-        final sunsetValue = const fb.Int64Reader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          54,
-        );
         final idParam = const fb.Int64Reader().vTableGet(
           buffer,
           rootOffset,
@@ -2022,6 +2086,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final dtFinParam = DateTime.fromMillisecondsSinceEpoch(
           const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0),
         );
+        final sDebutParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 64, '');
+        final sFinParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 66, '');
         final depIataParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 16, '');
@@ -2037,6 +2107,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final sAvionParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 20, '');
+        final tsvParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 80, '');
+        final crewsParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 78, '');
         final sDureeBruteParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 22, '');
@@ -2076,21 +2152,21 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final sCumulNuitForfaitParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 46, '');
-        final arrForfaitParam = arrForfaitValue == null
-            ? null
-            : DateTime.fromMillisecondsSinceEpoch(arrForfaitValue);
-        final arrMepForfaitParam = arrMepForfaitValue == null
-            ? null
-            : DateTime.fromMillisecondsSinceEpoch(arrMepForfaitValue);
-        final sunriseParam = sunriseValue == null
-            ? null
-            : DateTime.fromMillisecondsSinceEpoch(sunriseValue);
-        final sunsetParam = sunsetValue == null
-            ? null
-            : DateTime.fromMillisecondsSinceEpoch(sunsetValue);
-        final dateTraitementParam = DateTime.fromMillisecondsSinceEpoch(
-          const fb.Int64Reader().vTableGet(buffer, rootOffset, 56, 0),
-        );
+        final sArrForfaitParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 68, '');
+        final sArrMepForfaitParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 70, '');
+        final sSunriseParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 72, '');
+        final sSunsetParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 74, '');
+        final sDateTraitementParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 76, '');
         final moisReferenceParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 58, '');
@@ -2100,11 +2176,15 @@ obx_int.ModelDefinition getObjectBoxModel() {
           nVol: nVolParam,
           dtDebut: dtDebutParam,
           dtFin: dtFinParam,
+          sDebut: sDebutParam,
+          sFin: sFinParam,
           depIata: depIataParam,
           arrIata: arrIataParam,
           depIcao: depIcaoParam,
           arrIcao: arrIcaoParam,
           sAvion: sAvionParam,
+          tsv: tsvParam,
+          crews: crewsParam,
           sDureeBrute: sDureeBruteParam,
           sDureevol: sDureevolParam,
           sDureeMep: sDureeMepParam,
@@ -2118,11 +2198,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
           sCumulMepForfait: sCumulMepForfaitParam,
           sCumulNuitVol: sCumulNuitVolParam,
           sCumulNuitForfait: sCumulNuitForfaitParam,
-          arrForfait: arrForfaitParam,
-          arrMepForfait: arrMepForfaitParam,
-          sunrise: sunriseParam,
-          sunset: sunsetParam,
-          dateTraitement: dateTraitementParam,
+          sArrForfait: sArrForfaitParam,
+          sArrMepForfait: sArrMepForfaitParam,
+          sSunrise: sSunriseParam,
+          sSunset: sSunsetParam,
+          sDateTraitement: sDateTraitementParam,
           moisReference: moisReferenceParam,
         );
 
@@ -2379,6 +2459,11 @@ class Crew_ {
 
   /// See [Crew.base].
   static final base = obx.QueryStringProperty<Crew>(_entities[1].properties[8]);
+
+  /// See [Crew.volModel].
+  static final volModel = obx.QueryRelationToOne<Crew, VolModel>(
+    _entities[1].properties[9],
+  );
 }
 
 /// [ForfaitListModel] entity fields to define ObjectBox queries.
@@ -2765,10 +2850,13 @@ class VolModel_ {
     _entities[9].properties[21],
   );
 
-  /// see [VolModel.crews]
-  static final crews = obx.QueryRelationToMany<VolModel, Crew>(
-    _entities[9].relations[0],
+  /// See [VolModel.tsv].
+  static final tsv = obx.QueryStringProperty<VolModel>(
+    _entities[9].properties[22],
   );
+
+  /// see [VolModel.crews]
+  static final crews = obx.QueryBacklinkToMany<Crew, VolModel>(Crew_.volModel);
 }
 
 /// [VolTraiteModel] entity fields to define ObjectBox queries.
@@ -2878,44 +2966,64 @@ class VolTraiteModel_ {
     _entities[10].properties[20],
   );
 
-  /// See [VolTraiteModel.arrForfait].
-  static final arrForfait = obx.QueryDateProperty<VolTraiteModel>(
-    _entities[10].properties[21],
-  );
-
-  /// See [VolTraiteModel.arrMepForfait].
-  static final arrMepForfait = obx.QueryDateProperty<VolTraiteModel>(
-    _entities[10].properties[22],
-  );
-
-  /// See [VolTraiteModel.sunrise].
-  static final sunrise = obx.QueryDateProperty<VolTraiteModel>(
-    _entities[10].properties[23],
-  );
-
-  /// See [VolTraiteModel.sunset].
-  static final sunset = obx.QueryDateProperty<VolTraiteModel>(
-    _entities[10].properties[24],
-  );
-
-  /// See [VolTraiteModel.dateTraitement].
-  static final dateTraitement = obx.QueryDateProperty<VolTraiteModel>(
-    _entities[10].properties[25],
-  );
-
   /// See [VolTraiteModel.moisReference].
   static final moisReference = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[26],
+    _entities[10].properties[21],
   );
 
   /// See [VolTraiteModel.depIcao].
   static final depIcao = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[27],
+    _entities[10].properties[22],
   );
 
   /// See [VolTraiteModel.arrIcao].
   static final arrIcao = obx.QueryStringProperty<VolTraiteModel>(
+    _entities[10].properties[23],
+  );
+
+  /// See [VolTraiteModel.sDebut].
+  static final sDebut = obx.QueryStringProperty<VolTraiteModel>(
+    _entities[10].properties[24],
+  );
+
+  /// See [VolTraiteModel.sFin].
+  static final sFin = obx.QueryStringProperty<VolTraiteModel>(
+    _entities[10].properties[25],
+  );
+
+  /// See [VolTraiteModel.sArrForfait].
+  static final sArrForfait = obx.QueryStringProperty<VolTraiteModel>(
+    _entities[10].properties[26],
+  );
+
+  /// See [VolTraiteModel.sArrMepForfait].
+  static final sArrMepForfait = obx.QueryStringProperty<VolTraiteModel>(
+    _entities[10].properties[27],
+  );
+
+  /// See [VolTraiteModel.sSunrise].
+  static final sSunrise = obx.QueryStringProperty<VolTraiteModel>(
     _entities[10].properties[28],
+  );
+
+  /// See [VolTraiteModel.sSunset].
+  static final sSunset = obx.QueryStringProperty<VolTraiteModel>(
+    _entities[10].properties[29],
+  );
+
+  /// See [VolTraiteModel.sDateTraitement].
+  static final sDateTraitement = obx.QueryStringProperty<VolTraiteModel>(
+    _entities[10].properties[30],
+  );
+
+  /// See [VolTraiteModel.crews].
+  static final crews = obx.QueryStringProperty<VolTraiteModel>(
+    _entities[10].properties[31],
+  );
+
+  /// See [VolTraiteModel.tsv].
+  static final tsv = obx.QueryStringProperty<VolTraiteModel>(
+    _entities[10].properties[32],
   );
 }
 

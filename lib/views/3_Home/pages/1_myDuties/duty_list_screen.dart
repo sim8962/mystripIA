@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../widgets/allduties.dart';
+import '../../../widgets/allduties.dart';
 import 'duty_list_controller.dart';
 
 class DutyListScreen extends GetView<DutyListController> {
@@ -22,10 +22,7 @@ class DutyListScreen extends GetView<DutyListController> {
           child: Obx(
             () => controller.duties.isEmpty
                 ? const Center(child: CircularProgressIndicator())
-                : Allduties(
-                    duties: controller.duties,
-                    scrollController: controller.myDutyScrollController,
-                  ),
+                : Allduties(duties: controller.duties, scrollController: controller.myDutyScrollController),
           ),
         ),
       ],

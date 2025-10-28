@@ -49,11 +49,11 @@ class ForfaitScreen extends GetView<ForfaitController> {
                                   )
                                 : MyButton(
                                     width: AppTheme.getWidth(iphoneSize: 200, ipadsize: 180),
-                                    label: 'button_import'.tr,
+                                    label: 'button_import excel'.tr,
                                     func: () async {
                                       MyDialogue.dialogue(
                                         title: 'import excels',
-                                        action1: 'button_import'.tr,
+                                        action1: 'button_import excel'.tr,
                                         smiddleText: 'les noms des fichiers doivent etre MoisAnne.xlsx',
                                         func: () async {
                                           //await ForfaitController.instance.getForfaitFromAllExcel();
@@ -67,11 +67,11 @@ class ForfaitScreen extends GetView<ForfaitController> {
                       )
                     : MyButton(
                         width: AppTheme.getWidth(iphoneSize: 140, ipadsize: 180),
-                        label: 'button_import'.tr,
+                        label: 'button_import excel'.tr,
                         func: () async {
                           MyDialogue.dialogue(
                             title: 'import excels',
-                            action1: 'button_import'.tr,
+                            action1: 'button_import excel'.tr,
                             smiddleText: 'les noms des fichiers doivent etre MoisAnne.xlsx',
                             func: () async {
                               await ForfaitController.instance.getForfaitFromAllExcelOptimized();

@@ -1,4 +1,5 @@
 import 'package:objectbox/objectbox.dart';
+import 'package:get/get.dart';
 
 import 'typ_const.dart';
 
@@ -52,4 +53,10 @@ class Typ {
 
   @override
   int get hashCode => typ.hashCode ^ color.hashCode ^ icon.hashCode;
+
+  /// Retourne le label traduit du type d'activité
+  String get label {
+    final key = 'type_${typ.toLowerCase()}';
+    return key.tr;
+  }
 }

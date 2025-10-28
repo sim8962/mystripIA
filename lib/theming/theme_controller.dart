@@ -84,8 +84,11 @@ class ThemeController extends GetxController {
     }
 
     // Update GetX theme with proper themes
-    Get.changeTheme(lightTheme);
-    Get.changeTheme(darkTheme);
+    if (_isDarkMode.value) {
+      Get.changeTheme(darkTheme);
+    } else {
+      Get.changeTheme(lightTheme);
+    }
     Get.changeThemeMode(_themeMode.value);
 
     // Update system UI overlay style

@@ -75,7 +75,7 @@ class MydownloadCarde extends StatelessWidget {
                           SizedBox(width: AppTheme.w(x: 4)),
                           Expanded(
                             child: Text(
-                              '${download.downloadTime.day}/${download.downloadTime.month}/${download.downloadTime.year} at ${download.downloadTime.hour.toString().padLeft(2, '0')}:${download.downloadTime.minute.toString().padLeft(2, '0')}',
+                              '${download.downloadTime.day}/${download.downloadTime.month}/${download.downloadTime.year} ${'download_at'.tr} ${download.downloadTime.hour.toString().padLeft(2, '0')}:${download.downloadTime.minute.toString().padLeft(2, '0')}',
                               style: TextStyle(fontSize: AppTheme.s(x: 12), color: Colors.black),
                             ),
                           ),
@@ -110,7 +110,7 @@ class MydownloadCarde extends StatelessWidget {
     Get.dialog(
       AlertDialog(
         title: Text(
-          'Delete Download',
+          'download_delete_title'.tr,
           style: TextStyle(
             fontSize: AppTheme.getfontSize(iphoneSize: 18, ipadsize: 22),
             fontWeight: FontWeight.w600,
@@ -118,7 +118,7 @@ class MydownloadCarde extends StatelessWidget {
           ),
         ),
         content: Text(
-          'Are you sure you want to delete this download? This action cannot be undone.',
+          'download_delete_message'.tr,
           style: TextStyle(
             fontSize: AppTheme.getfontSize(iphoneSize: 14, ipadsize: 16),
             color: AppTheme.isDark ? AppColors.colorWhite : AppColors.colorblack87,
@@ -129,7 +129,7 @@ class MydownloadCarde extends StatelessWidget {
           TextButton(
             onPressed: () => Get.back(),
             child: Text(
-              'Cancel',
+              'download_cancel'.tr,
               style: TextStyle(
                 fontSize: AppTheme.getfontSize(iphoneSize: 14, ipadsize: 16),
                 color: Colors.grey[600],
@@ -142,7 +142,7 @@ class MydownloadCarde extends StatelessWidget {
               controller.deleteDownload(download); // Delete the download
             },
             child: Text(
-              'Delete',
+              'download_delete'.tr,
               style: TextStyle(
                 fontSize: AppTheme.getfontSize(iphoneSize: 14, ipadsize: 16),
                 color: Colors.red[600],
@@ -199,7 +199,7 @@ class MydownloadCarde extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Download Details',
+                            'download_details_title'.tr,
                             style: TextStyle(fontSize: AppTheme.s(x: 18), fontWeight: FontWeight.w600),
                           ),
                           SizedBox(height: AppTheme.h(x: 4)),
@@ -226,7 +226,7 @@ class MydownloadCarde extends StatelessWidget {
                     children: [
                       if (download.jsonContent != null && download.jsonContent!.isNotEmpty) ...[
                         Text(
-                          'JSON Content:',
+                          'download_json_content'.tr,
                           style: TextStyle(fontSize: AppTheme.s(x: 16), fontWeight: FontWeight.w600),
                         ),
                         SizedBox(height: AppTheme.h(x: 8)),
@@ -246,7 +246,7 @@ class MydownloadCarde extends StatelessWidget {
                       ],
                       if (download.htmlContent != null && download.htmlContent!.isNotEmpty) ...[
                         Text(
-                          'HTML Content:',
+                          'download_html_content'.tr,
                           style: TextStyle(fontSize: AppTheme.s(x: 16), fontWeight: FontWeight.w600),
                         ),
                         SizedBox(height: 8.h),

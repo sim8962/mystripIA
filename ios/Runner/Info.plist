@@ -45,5 +45,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Cette application a besoin d'accéder à votre calendrier pour exporter les vols et les événements.</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>Cette application a besoin d'accéder à vos rappels pour gérer les événements du calendrier.</string>
 </dict>
 </plist>

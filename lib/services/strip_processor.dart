@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:collection/collection.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 import '../Models/ActsModels/crew.dart';
 import '../Models/ActsModels/myduty.dart';
@@ -172,6 +172,7 @@ class StripProcessor {
     final List<VolModel> vols = [];
     String titleDetail = '';
     bool isBriefing = true;
+    final Map<Activity, String> tsvPositions = {}; // Map pour stocker les positions TSV
 
     // Build title
     if (isRotationWithLayover) {
@@ -220,11 +221,29 @@ class StripProcessor {
                 : Fct.getDatesDefference(dateDebut: dutie.startTime!, dateFin: dutie.endTime!, inDay: false);
             Duration dt = Fct.getDureeFromString(sDuree: tsvMax);
 
+            // Assigner les positions TSV aux vols dans mylegs
+            for (int i = 0; i < mylegs.length; i++) {
+              final leg = mylegs[i];
+              if (mylegs.length == 1) {
+                // Si un seul vol, assigner "Tsv"
+                tsvPositions[leg] = 'Tsv';
+              } else if (i == 0) {
+                // Premier vol de plusieurs
+                tsvPositions[leg] = 'debut tsv';
+              } else if (i == mylegs.length - 1) {
+                // Dernier vol de plusieurs
+                tsvPositions[leg] = 'fin tsv';
+              } else {
+                // Vols intermédiaires
+                tsvPositions[leg] = 'dans tsv';
+              }
+            }
+
             etape = MyEtape(
               startTime: act.startTime!,
               dateLabel: mylegs.isEmpty
                   ? ''
-                  : "${mylegs.length} Etapes - TSV:$tsv/$tsvMax max. Fin Tsv: ${dateFormatMMM.format(dutie.startTime!.add(dt))}",
+                  : "${mylegs.length} ${'duty_legs'.tr} - TSV:$tsv/$tsvMax ${'duty_tsv_max'.tr} ${'duty_tsv_end'.tr} ${dateFormatMMM.format(dutie.startTime!.add(dt))}",
               typeLabel: '',
               detailLabel: '',
             );
@@ -254,8 +273,8 @@ class StripProcessor {
             startTime: act.startTime!,
             dateLabel:
                 '${dateFormatMMM.format(act.startTime!)} - ${dateFormatMMM.format(act.endTime!)} ( $d)',
-            typeLabel: "Hotel: $htl",
-            detailLabel: "Transport: ${act.hotel?.transport?.name ?? ''}",
+            typeLabel: "${'duty_hotel'.tr} $htl",
+            detailLabel: "${'duty_transport'.tr} ${act.hotel?.transport?.name ?? ''}",
           );
           etape.volTransit.target = volTransit;
           etape.typ.target = typ;
@@ -301,6 +320,7 @@ class StripProcessor {
             dtFin: act.endTime!,
             label: act.statusLabel ?? '',
             sAvion: act.tail ?? '',
+            tsv: tsvPositions[act] ?? '', // Assigner la position TSV si elle existe
             cle:
                 'AT${act.flightNumber!}:${act.startStation!}-${act.endStation!}:${dateFormatDD.format(Fct.uTcDate(dt: act.startTime!))}:${dateFormatDD.format(Fct.uTcDate(dt: act.endTime!))}',
           );
@@ -342,7 +362,7 @@ class StripProcessor {
       endTime: rotation.endTime!,
       dateLabel:
           '${dateFormatMMMm.format(rotation.startTime!)} - ${dateFormatMMMm.format(rotation.endTime!)}',
-      typeLabel: isRotationWithLayover ? tRotation.typ : tVols.typ,
+      typeLabel: isRotationWithLayover ? tRotation.label : tVols.label,
       detailLabel: titleDetail,
     );
 

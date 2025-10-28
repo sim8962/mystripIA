@@ -3,6 +3,8 @@ import 'package:adhan_dart/adhan_dart.dart';
 import '../ActsModels/crew.dart';
 import '../../controllers/database_controller.dart';
 import '../ActsModels/typ_const.dart';
+import '../volpdfs/vol_pdf.dart';
+import '../../helpers/fct.dart';
 
 @Entity()
 class VolModel {
@@ -36,6 +38,9 @@ class VolModel {
   String? sDureeForfait; // Duration between dtDebut and arrForfait for Vol type
   String? sMepForfait; // Duration between dtDebut and arrMepForfait for MEP and TAX types
   String? sNuitForfait; // Night flight time for forfait duration (Vol type only)
+  String tsv; // Position du vol dans la période TSV: "debut tsv", "fin tsv", "dans tsv"
+  
+  @Backlink('volModel')
   final crews = ToMany<Crew>();
 
   VolModel({
@@ -51,6 +56,7 @@ class VolModel {
     this.label = '',
     this.cle = '',
     this.sAvion = '',
+    this.tsv = '',
     String? durationString,
     String? durationMepString,
     DateTime? arrForfait,
@@ -79,9 +85,10 @@ class VolModel {
       this.arrMepForfait = null;
       this.sunrise = sunrise ?? _calculateSunrise(typ, resolvedDepIcao, resolvedArrIcao, dtDebut);
       this.sunset = sunset ?? _calculateSunset(typ, resolvedDepIcao, resolvedArrIcao, dtDebut);
-      
+
       // Calculate night flight time for Vol type
-      sNuitVol = nightFlightString ?? _calculateNightFlightTime(typ, this.sunrise, this.sunset, dtDebut, dtFin);
+      sNuitVol =
+          nightFlightString ?? _calculateNightFlightTime(typ, this.sunrise, this.sunset, dtDebut, dtFin);
       sNuitForfait =
           nightForfaitString ??
           _calculateNightFlightTime(typ, this.sunrise, this.sunset, dtDebut, this.arrForfait);
@@ -136,9 +143,7 @@ class VolModel {
     if (!_requiresFlightCalculations(typ)) return '';
 
     final duration = dtFin.difference(dtDebut);
-    final hours = duration.inHours;
-    final minutes = duration.inMinutes.remainder(60);
-    return '${hours.toString().padLeft(2, '0')}h${minutes.toString().padLeft(2, '0')}';
+    return Fct.durationToString(duration);
   }
 
   // Helper method to get forfait value from ForfaitModel
@@ -177,17 +182,13 @@ class VolModel {
     if (forfait.isEmpty) return null;
 
     try {
-      // Parse forfait string (format: "02h30")
-      final parts = forfait.toLowerCase().split('h');
-      if (parts.length == 2) {
-        final hours = int.tryParse(parts[0]) ?? 0;
-        final minutes = int.tryParse(parts[1]) ?? 0;
-        return dtDebut.add(Duration(hours: hours, minutes: minutes));
-      }
+      // Parse forfait string (format: "02h30") using Fct
+      final duration = Fct.stringToDuration(forfait);
+      if (duration == Duration.zero) return null;
+      return dtDebut.add(duration);
     } catch (e) {
       return null;
     }
-    return null;
   }
 
   // Helper method to get prayer times for an airport
@@ -197,7 +198,12 @@ class VolModel {
       if (airport == null) return null;
 
       final coordinates = Coordinates(airport.latitude, airport.longitude);
-      final params = CalculationMethod.muslimWorldLeague();
+      // Muslim World League: Fajr 18°, Isha 17°
+      final params = CalculationParameters(
+        method: CalculationMethod.muslimWorldLeague,
+        fajrAngle: 18,
+        ishaAngle: 17,
+      );
       return PrayerTimes(coordinates: coordinates, date: date, calculationParameters: params);
     } catch (e) {
       return null;
@@ -282,10 +288,33 @@ class VolModel {
     }
 
     final duration = overlapEnd.difference(overlapStart);
-    final hours = duration.inHours;
-    final minutes = duration.inMinutes.remainder(60);
+    return Fct.durationToString(duration);
+  }
 
-    return '${hours.toString().padLeft(2, '0')}h${minutes.toString().padLeft(2, '0')}';
+  /// Factory pour créer un VolModel à partir d'un VolPdf
+  /// Accepte les champs vides (from, to, activity) qui seront traités ultérieurement
+  factory VolModel.fromVolPdf(VolPdf volPdf) {
+    // Dates de départ et d'arrivée
+    final dtDebut = volPdf.dateVol;
+    final dtFin = VolPdf.parseDateTimeFromString(volPdf.myArrDate, volPdf.dateVol);
+
+    // Codes IATA (peuvent être vides)
+    final depIata = volPdf.from.isNotEmpty ? volPdf.from.toUpperCase() : '';
+    final arrIata = volPdf.to.isNotEmpty ? volPdf.to.toUpperCase() : '';
+
+    // Créer le VolModel
+    return VolModel(
+      id: 0, // ObjectBox génèrera l'ID
+      typ: volPdf.duty.isNotEmpty ? volPdf.duty : '',
+      nVol: volPdf.activity.isNotEmpty ? volPdf.activity : '',
+      dtDebut: dtDebut,
+      depIata: depIata,
+      arrIata: arrIata,
+      dtFin: dtFin,
+      cle: volPdf.cle,
+      sAvion: volPdf.aC.isNotEmpty ? volPdf.aC : '',
+      tsv: '', // À déterminer selon la logique métier
+    );
   }
 
   // Method to update ICAO codes manually if needed
@@ -303,6 +332,7 @@ class VolModel {
       label: label,
       cle: cle,
       sAvion: sAvion,
+      tsv: tsv,
       durationString: sDureevol,
       durationMepString: sDureeMep,
       arrForfait: arrForfait,
@@ -333,7 +363,7 @@ class VolModel {
       // Update night flight time if missing
       sNuitVol ??= _calculateNightFlightTime(typ, sunrise, sunset, dtDebut, dtFin);
       sNuitForfait ??= _calculateNightFlightTime(typ, sunrise, sunset, dtDebut, arrForfait);
-      
+
       // S'assurer que les champs MEP sont vides
       sDureeMep = '';
       sMepForfait = '';
@@ -346,7 +376,7 @@ class VolModel {
         sMepForfait = _getForfaitValue(typ, depIcao, arrIcao, dtDebut, dtFin);
       }
       arrMepForfait ??= _calculateArrForfait(typ, dtDebut, sMepForfait ?? '');
-      
+
       // S'assurer que les champs Vol et nuit sont vides
       sDureevol = '';
       sDureeForfait = '';
@@ -377,29 +407,11 @@ class VolModel {
 
   // ========== GETTERS DURATION POUR TOUS LES CHAMPS ==========
 
-  /// Convertit une chaîne "XXhYY" en Duration
-  static Duration _stringToDuration(String? durationString) {
-    if (durationString == null || durationString.isEmpty) return Duration.zero;
-    
-    try {
-      final parts = durationString.toLowerCase().split('h');
-      if (parts.length == 2) {
-        final hours = int.tryParse(parts[0]) ?? 0;
-        final minutes = int.tryParse(parts[1]) ?? 0;
-        return Duration(hours: hours, minutes: minutes);
-      }
-    } catch (e) {
-      return Duration.zero;
-    }
-    return Duration.zero;
-  }
+  /// Convertit une chaîne "XXhYY" en Duration (utilise Fct.stringToDuration)
+  static Duration _stringToDuration(String? durationString) => Fct.stringToDuration(durationString);
 
-  /// Convertit une Duration en chaîne "XXhYY"
-  static String _durationToString(Duration duration) {
-    final hours = duration.inHours;
-    final minutes = duration.inMinutes.remainder(60);
-    return '${hours.toString().padLeft(2, '0')}h${minutes.toString().padLeft(2, '0')}';
-  }
+  /// Convertit une Duration en chaîne "XXhYY" (utilise Fct.durationToString)
+  static String _durationToString(Duration duration) => Fct.durationToString(duration);
 
   /// Durée du vol (dtFin - dtDebut)
   Duration get dureeBrute {
@@ -451,18 +463,15 @@ class VolModel {
     String? Function(VolModel) fieldExtractor,
   ) {
     // Début du mois de référence
-    final startOfMonth = DateTime(
-      referenceVol.dtDebut.year,
-      referenceVol.dtDebut.month,
-      1,
-    );
-    
+    final startOfMonth = DateTime(referenceVol.dtDebut.year, referenceVol.dtDebut.month, 1);
+
     // Filtrer les vols du même mois jusqu'à dtDebut (inclus)
     final volsInPeriod = vols.where((v) {
       final fieldValue = fieldExtractor(v);
       return v.dtDebut.isAfter(startOfMonth.subtract(const Duration(seconds: 1))) &&
-             v.dtDebut.isBefore(referenceVol.dtDebut.add(const Duration(seconds: 1))) &&
-             fieldValue != null && fieldValue.isNotEmpty;
+          v.dtDebut.isBefore(referenceVol.dtDebut.add(const Duration(seconds: 1))) &&
+          fieldValue != null &&
+          fieldValue.isNotEmpty;
     }).toList();
 
     // Calculer le cumul en utilisant Duration
@@ -490,6 +499,14 @@ class VolModel {
     return calculateMonthlyCumul(vols, referenceVol, (v) => v.sNuitVol);
   }
 
+  /// get lists of crew
+  static List<Map<String, String>> getCrews(List<Crew> crews) =>
+      crews.map((crew) => {
+        'Mat': crew.crewId, 
+        'pos': crew.pos, 
+        'name': '${crew.firstname} ${crew.lastname}'
+      }).toList();
+
   /// Calcule le cumul de sNuitForfait depuis le début du mois (pour type tVol)
   static String calculateCumulNuitForfait(List<VolModel> vols, VolModel referenceVol) {
     return calculateMonthlyCumul(vols, referenceVol, (v) => v.sNuitForfait);
@@ -503,6 +520,80 @@ class VolModel {
   /// Calcule le cumul de sMepForfait depuis le début du mois (pour types tMEP et tTAX)
   static String calculateCumulMepForfait(List<VolModel> vols, VolModel referenceVol) {
     return calculateMonthlyCumul(vols, referenceVol, (v) => v.sMepForfait);
+  }
+
+  /// Crée une copie du VolModel avec les propriétés modifiées
+  /// Note: Cette méthode ne copie PAS les relations ToMany (crews)
+  /// Pour copier avec les crews, utilisez copyWithCrews()
+  VolModel copyWith({
+    int? id,
+    String? cle,
+    String? typ,
+    String? nVol,
+    DateTime? dtDebut,
+    String? depIata,
+    String? depIcao,
+    String? arrIata,
+    String? arrIcao,
+    DateTime? dtFin,
+    String? label,
+    String? sAvion,
+    String? tsv,
+    String? sDureevol,
+    String? sDureeMep,
+    DateTime? arrForfait,
+    DateTime? arrMepForfait,
+    DateTime? sunrise,
+    DateTime? sunset,
+    String? sNuitVol,
+    String? sDureeForfait,
+    String? sMepForfait,
+    String? sNuitForfait,
+  }) {
+    final copy = VolModel(
+      id: id ?? this.id,
+      typ: typ ?? this.typ,
+      nVol: nVol ?? this.nVol,
+      dtDebut: dtDebut ?? this.dtDebut,
+      depIata: depIata ?? this.depIata,
+      depIcao: depIcao ?? this.depIcao,
+      arrIata: arrIata ?? this.arrIata,
+      arrIcao: arrIcao ?? this.arrIcao,
+      dtFin: dtFin ?? this.dtFin,
+      label: label ?? this.label,
+      cle: cle ?? this.cle,
+      sAvion: sAvion ?? this.sAvion,
+      tsv: tsv ?? this.tsv,
+      durationString: sDureevol ?? this.sDureevol,
+      durationMepString: sDureeMep ?? this.sDureeMep,
+      arrForfait: arrForfait ?? this.arrForfait,
+      arrMepForfait: arrMepForfait ?? this.arrMepForfait,
+      sunrise: sunrise ?? this.sunrise,
+      sunset: sunset ?? this.sunset,
+      nightFlightString: sNuitVol ?? this.sNuitVol,
+      durationForfaitString: sDureeForfait ?? this.sDureeForfait,
+      mepForfaitString: sMepForfait ?? this.sMepForfait,
+      nightForfaitString: sNuitForfait ?? this.sNuitForfait,
+    );
+    
+    // Copy crews by creating new independent Crew instances linked only to the new VolModel
+    // This ensures the copied VolModel and its crews are independent from the original
+    for (var crew in crews) {
+      final newCrew = Crew(
+        id: 0, // New crew with no ID to ensure it's a new entity
+        crewId: crew.crewId,
+        firstname: crew.firstname,
+        lastname: crew.lastname,
+        matricule: crew.matricule,
+        pos: crew.pos,
+        base: crew.base,
+      );
+      // Link the new crew ONLY to the new VolModel (not to MyDuty or MyEtape)
+      newCrew.volModel.target = copy;
+      copy.crews.add(newCrew);
+    }
+    
+    return copy;
   }
 
   @override

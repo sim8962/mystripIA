@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../Models/userModel/usermodel.dart';
@@ -82,7 +82,7 @@ class RegisterController extends GetxController {
           emailController.text = emails;
         }
       } catch (e) {
-        MyErrorInfo.erreurInos(label: 'UsersExist', content: 'Error auto-filling credentials: $e');
+        MyErrorInfo.erreurInos(label: 'UsersExist', content: '${'error_autofill_credentials'.tr}: $e');
       }
     }
     // else {
@@ -112,7 +112,17 @@ class RegisterController extends GetxController {
         : '${emailController.text.trim()}@royalairmaroc.com';
     final matricule = int.tryParse(matController.text);
     if (matricule == null) {
-      MyErrorInfo.erreurInos(label: 'Erreur Matricule', content: 'Le matricule doit être un nombre valide.');
+      Get.snackbar(
+        'error_matricule_title'.tr,
+        'error_matricule_invalid'.tr,
+        icon: const Icon(Icons.error_outline, color: Colors.white),
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.orange,
+        borderRadius: 20,
+        margin: const EdgeInsets.all(15),
+        colorText: Colors.white,
+        duration: const Duration(seconds: 3),
+      );
       dones = true; // Re-enable the button
       return;
     }
@@ -164,10 +174,7 @@ class RegisterController extends GetxController {
         emailController.clear();
         passController.clear();
       } catch (e) {
-        MyErrorInfo.erreurInos(
-          label: 'Erreur Stockage',
-          content: 'Erreur lors du stockage des identifiants.',
-        );
+        MyErrorInfo.erreurInos(label: 'error_storage_title'.tr, content: 'error_storage_credentials'.tr);
       }
     }
   }

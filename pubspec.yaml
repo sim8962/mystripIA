@@ -43,15 +43,22 @@ dependencies:
   # ============================================
   adhan_dart: ^1.1.2 # Prayer times & sunrise/sunset calculations
   collection: ^1.19.1 # Collection utilities
+  device_calendar: ^4.3.3 # Collection utilities
   excel: ^4.0.6 # Excel file processing
   intl: ^0.20.2 # Internationalization & date formatting
-
+  syncfusion_flutter_pdf: ^31.1.23
   # ============================================
   # FILE SYSTEM & STORAGE
   # ============================================
   path: ^1.9.1 # Path manipulation
   path_provider: ^2.1.5 # Access to file system directories
   file_picker: ^10.3.3 # File picker dialog
+
+  # ============================================
+  # PDF PROCESSING
+  # ============================================
+  pdf: ^3.10.0 # PDF parsing and text extraction
+  pdfx: ^2.5.0 # PDF viewer and parser
 
   # ============================================
   # NETWORK & CONNECTIVITY
@@ -97,6 +104,7 @@ flutter:
   # Assets
   assets:
     - assets/
+    - assets/mypdfFile.pdf
     - assets/excel/
     - assets/iconsacts/
     - assets/images/

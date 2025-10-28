@@ -38,7 +38,59 @@ class AppStylingConstant {
     color: AppTheme.isDark ? AppColors.colorWhite : AppColors.colorblack87,
     fontSize: AppTheme.getfontSize(iphoneSize: 12, ipadsize: 14),
   );
+  // ###################################################################################
+  // Styles de VolDetailCard
+  // ###################################################################################
+  // ===================================================================================
+  // VolDetailCard
+  // ===================================================================================
+  static TextStyle get volDetailMonthStyle => _textTheme.bodyMedium!.copyWith(
+    color: AppTheme.isDark ? AppColors.colorWhite : AppColors.volCardText,
+    fontFamily: AppStylingConstant.robotoFontFamily,
+    fontWeight: FontWeight.w600,
+    //fontFamily: AppStylingConstant.latoFontFamily,
+    fontSize: AppTheme.getfontSize(iphoneSize: 15, ipadsize: 15),
+  );
 
+  static TextStyle get volDetailICAOStyle => _textTheme.bodyMedium!.copyWith(
+    color: AppTheme.isDark ? AppColors.myCustomColor : AppColors.volCardText,
+    fontWeight: FontWeight.w600,
+    fontSize: AppTheme.getfontSize(iphoneSize: 15, ipadsize: 15),
+  );
+  static TextStyle get volDetailIATAStyle => _textTheme.titleLarge!.copyWith(
+    fontSize: AppTheme.getfontSize(iphoneSize: 58, ipadsize: 48),
+    fontWeight: FontWeight.w700,
+    fontFamily: AppStylingConstant.impactFontFamily,
+    color: AppTheme.isDark ? AppColors.secondaryColor : AppColors.volCardText,
+    letterSpacing: 2,
+    height: 1.0,
+  );
+  static TextStyle get volNvol => _textTheme.bodyMedium!.copyWith(
+    fontSize: AppTheme.getfontSize(iphoneSize: 22, ipadsize: 22),
+    // fontWeight: FontWeight.w700,
+    fontFamily: AppStylingConstant.impactFontFamily,
+    color: AppTheme.isDark ? AppColors.secondaryColor : AppColors.volCardText,
+    letterSpacing: 2,
+    height: 1.0,
+  );
+  static TextStyle get volNumeriq => TextStyle(
+    color: AppTheme.isDark ? AppColors.secondaryColor : AppColors.volCardText,
+    fontSize: AppTheme.getfontSize(iphoneSize: 13, ipadsize: 13),
+    fontWeight: FontWeight.w600,
+    fontFamily: AppStylingConstant.latoFontFamily,
+  );
+  static TextStyle get volTitreCrew => TextStyle(
+    color: AppTheme.isDark ? AppColors.myCustomColor : AppColors.volCardText,
+    fontSize: AppTheme.getfontSize(iphoneSize: 13, ipadsize: 13),
+    fontWeight: FontWeight.w600,
+    fontFamily: AppStylingConstant.latoFontFamily,
+  );
+  static TextStyle get volCrew => TextStyle(
+    color: AppTheme.isDark ? AppColors.colorWhite : AppColors.volCardText,
+    fontSize: AppTheme.getfontSize(iphoneSize: 13, ipadsize: 13),
+    fontWeight: FontWeight.w600,
+    fontFamily: AppStylingConstant.latoFontFamily,
+  );
   // ###################################################################################
   // Styles de bodyMedium : Cardeduty, CardeEtape, CardeNextduty, CardeTsv, CardeHeure, CadreSalaire
   // ###################################################################################
@@ -369,6 +421,176 @@ class AppStylingConstant {
       _textTheme.headlineLarge!.copyWith(color: AppColors.colorWhite, decoration: TextDecoration.none);
 
   static TextStyle get importFileSizeStyle => const TextStyle(fontSize: 14);
+
+  // ###################################################################################
+  // Styles pour VolScreen et VolDetailCard
+  // ###################################################################################
+
+  // Vol Screen - Search
+  static TextStyle get volSearchHintStyle => _textTheme.bodyMedium!.copyWith(
+    color: AppTheme.isDark ? AppColors.colorWhite.withAlpha(180) : AppColors.colorblack87.withAlpha(150),
+    fontSize: AppTheme.getfontSize(iphoneSize: 14, ipadsize: 15),
+  );
+
+  // Vol Screen - Empty State
+  static TextStyle get volEmptyStateStyle => _textTheme.bodyLarge!.copyWith(
+    color: AppTheme.isDark ? AppColors.colorWhite.withAlpha(180) : AppColors.colorblack87.withAlpha(150),
+    fontSize: AppTheme.getfontSize(iphoneSize: 16, ipadsize: 17),
+    fontWeight: FontWeight.w500,
+  );
+
+  static TextStyle get volEmptySubtitleStyle => _textTheme.bodyMedium!.copyWith(
+    color: AppTheme.isDark ? AppColors.colorWhite.withAlpha(130) : AppColors.colorblack87.withAlpha(120),
+    fontSize: AppTheme.getfontSize(iphoneSize: 14, ipadsize: 15),
+  );
+
+  // Vol Card - Airport Codes (IATA)
+  static TextStyle get volAirportIataStyle => _textTheme.headlineLarge!.copyWith(
+    color: AppTheme.isDark ? AppColors.colorWhite : AppColors.colorblack87,
+    fontSize: AppTheme.getfontSize(iphoneSize: 22, ipadsize: 24),
+    fontWeight: FontWeight.bold,
+    letterSpacing: -0.5,
+  );
+
+  // Vol Card - Airport Codes (ICAO)
+  static TextStyle get volAirportIcaoStyle => _textTheme.bodySmall!.copyWith(
+    color: AppTheme.isDark ? AppColors.secondaryColor : AppColors.primaryLightColor,
+    fontSize: AppTheme.getfontSize(iphoneSize: 11, ipadsize: 12),
+    fontWeight: FontWeight.w600,
+  );
+
+  // Vol Card - Flight Number
+  static TextStyle get volFlightNumberStyle => _textTheme.titleLarge!.copyWith(
+    color: AppTheme.isDark ? AppColors.colorWhite : AppColors.colorblack87,
+    fontSize: AppTheme.getfontSize(iphoneSize: 14, ipadsize: 15),
+    fontWeight: FontWeight.bold,
+  );
+
+  // Vol Card - Duration Labels
+  static TextStyle get volDurationLabelStyle => _textTheme.bodySmall!.copyWith(
+    color: AppTheme.isDark ? AppColors.colorWhite.withAlpha(180) : AppColors.colorblack87.withAlpha(150),
+    fontSize: AppTheme.getfontSize(iphoneSize: 10, ipadsize: 11),
+    fontWeight: FontWeight.w500,
+  );
+
+  // Vol Card - Duration Values
+  static TextStyle get volDurationValueStyle => _textTheme.bodyMedium!.copyWith(
+    color: AppTheme.isDark ? AppColors.colorWhite : AppColors.colorblack87,
+    fontSize: AppTheme.getfontSize(iphoneSize: 14, ipadsize: 15),
+    fontWeight: FontWeight.bold,
+  );
+
+  // Vol Card - Monthly Cumuls Title
+  static TextStyle get volCumulsTitleStyle => _textTheme.bodyMedium!.copyWith(
+    color: AppTheme.isDark ? AppColors.errorColor : AppColors.primaryLightColor,
+    fontSize: AppTheme.getfontSize(iphoneSize: 12, ipadsize: 13),
+    fontWeight: FontWeight.bold,
+  );
+
+  // Vol Card - Cumuls Values
+  static TextStyle get volCumulsValueStyle => _textTheme.bodyMedium!.copyWith(
+    color: AppTheme.isDark ? AppColors.secondaryColor : AppColors.primaryLightColor,
+    fontSize: AppTheme.getfontSize(iphoneSize: 13, ipadsize: 14),
+    fontWeight: FontWeight.bold,
+  );
+
+  // Vol Detail Card - Section Headers
+  static TextStyle get volDetailHeaderStyle => _textTheme.labelMedium!.copyWith(
+    color: AppTheme.isDark ? AppColors.colorWhite.withAlpha(180) : AppColors.colorblack87.withAlpha(150),
+    fontSize: AppTheme.getfontSize(iphoneSize: 9, ipadsize: 10),
+    fontWeight: FontWeight.w600,
+    letterSpacing: 0.5,
+  );
+
+  // Vol Detail Card - Date Header
+  static TextStyle get volDetailDateStyle => _textTheme.bodyMedium!.copyWith(
+    color: AppTheme.isDark ? AppColors.colorWhite.withAlpha(180) : AppColors.colorblack87.withAlpha(150),
+    fontSize: AppTheme.getfontSize(iphoneSize: 13, ipadsize: 14),
+    fontWeight: FontWeight.w600,
+  );
+
+  // Vol Detail Card - Large Airport Codes
+  static TextStyle get volDetailAirportLargeStyle => _textTheme.displayLarge!.copyWith(
+    color: AppTheme.isDark ? AppColors.colorWhite : AppColors.colorblack87,
+    fontSize: AppTheme.getfontSize(iphoneSize: 32, ipadsize: 36),
+    fontWeight: FontWeight.w300,
+    letterSpacing: -1,
+  );
+
+  // Vol Detail Card - Time Display
+  static TextStyle get volDetailTimeStyle => _textTheme.headlineSmall!.copyWith(
+    color: AppTheme.isDark ? AppColors.colorWhite : AppColors.colorblack87,
+    fontSize: AppTheme.getfontSize(iphoneSize: 20, ipadsize: 22),
+    fontWeight: FontWeight.w300,
+  );
+
+  // Vol Detail Card - Time Suffix (z)
+  static TextStyle get volDetailTimeSuffixStyle => _textTheme.bodyMedium!.copyWith(
+    color: AppTheme.isDark ? AppColors.colorWhite.withAlpha(150) : AppColors.colorblack87.withAlpha(130),
+    fontSize: AppTheme.getfontSize(iphoneSize: 14, ipadsize: 15),
+    fontWeight: FontWeight.w300,
+  );
+
+  // Vol Detail Card - Flight Number Large
+  static TextStyle get volDetailFlightNumberStyle => _textTheme.headlineMedium!.copyWith(
+    color: AppTheme.isDark ? AppColors.colorWhite : AppColors.colorblack87,
+    fontSize: AppTheme.getfontSize(iphoneSize: 24, ipadsize: 26),
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.5,
+  );
+
+  // Vol Detail Card - Duration Item Label
+  static TextStyle get volDetailDurationLabelStyle => _textTheme.labelSmall!.copyWith(
+    color: AppTheme.isDark ? AppColors.colorWhite.withAlpha(180) : AppColors.colorblack87.withAlpha(150),
+    fontSize: AppTheme.getfontSize(iphoneSize: 8, ipadsize: 9),
+    fontWeight: FontWeight.w600,
+  );
+
+  // Vol Detail Card - Duration Item Value
+  static TextStyle get volDetailDurationValueStyle => _textTheme.titleMedium!.copyWith(
+    fontSize: AppTheme.getfontSize(iphoneSize: 16, ipadsize: 17),
+    fontWeight: FontWeight.bold,
+  );
+
+  // Vol Detail Card - Cumul Label
+  static TextStyle get volDetailCumulLabelStyle => _textTheme.labelSmall!.copyWith(
+    color: AppTheme.isDark ? AppColors.colorWhite.withAlpha(180) : AppColors.colorblack87.withAlpha(150),
+    fontSize: AppTheme.getfontSize(iphoneSize: 8, ipadsize: 9),
+    fontWeight: FontWeight.w500,
+  );
+
+  // Vol Detail Card - Cumul Value
+  static TextStyle get volDetailCumulValueStyle => _textTheme.bodySmall!.copyWith(
+    fontSize: AppTheme.getfontSize(iphoneSize: 10, ipadsize: 11),
+    fontWeight: FontWeight.bold,
+  );
+
+  // Vol Detail Card - Aircraft Name
+  static TextStyle get volDetailAircraftStyle => _textTheme.bodyMedium!.copyWith(
+    color: AppTheme.isDark ? AppColors.colorWhite : AppColors.colorblack87,
+    fontSize: AppTheme.getfontSize(iphoneSize: 14, ipadsize: 15),
+    fontWeight: FontWeight.w500,
+  );
+
+  // Vol Detail Card - Aircraft Type
+  static TextStyle get volDetailAircraftTypeStyle => _textTheme.bodySmall!.copyWith(
+    color: AppTheme.isDark ? AppColors.colorWhite.withAlpha(180) : AppColors.colorblack87.withAlpha(150),
+    fontSize: AppTheme.getfontSize(iphoneSize: 11, ipadsize: 12),
+    fontWeight: FontWeight.w400,
+  );
+
+  // Vol Detail Card - Sun Times Label
+  static TextStyle get volDetailSunLabelStyle => _textTheme.labelSmall!.copyWith(
+    color: AppTheme.isDark ? AppColors.colorWhite.withAlpha(180) : AppColors.colorblack87.withAlpha(150),
+    fontSize: AppTheme.getfontSize(iphoneSize: 8, ipadsize: 9),
+    fontWeight: FontWeight.w500,
+  );
+
+  // Vol Detail Card - Sun Times Value
+  static TextStyle get volDetailSunValueStyle => _textTheme.bodySmall!.copyWith(
+    fontSize: AppTheme.getfontSize(iphoneSize: 12, ipadsize: 13),
+    fontWeight: FontWeight.bold,
+  );
 }
 // voila une liste de textthemes flutter:
 // Cardeduty

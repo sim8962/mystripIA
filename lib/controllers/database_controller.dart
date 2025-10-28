@@ -6,15 +6,23 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../Models/ActsModels/myduty.dart';
-import '../Models/VolsModels/vol.dart';
 
+import '../Models/VolsModels/vol.dart';
+import '../Models/VolsModels/vol_traite.dart';
+import '../Models/VolsModels/vol_traite_mois.dart';
 import '../Models/jsonModels/datas/airport_model.dart';
 import '../Models/jsonModels/datas/forfait_model.dart';
 import '../Models/jsonModels/datas/forfaitlist.model.dart';
 import '../Models/userModel/my_download.dart';
 import '../Models/userModel/usermodel.dart';
-import '../services/objectbox_service.dart';
+import 'objectbox_service.dart';
 
+/// Gère l'ensemble des interactions avec la base de données ObjectBox.
+///
+/// Ce contrôleur centralise la logique métier pour accéder et manipuler les données,
+/// tout en exposant des listes réactives (Rx) pour une synchronisation automatique
+/// de l'interface utilisateur. Il s'appuie sur [ObjectBoxService] pour les
+/// opérations de bas niveau.
 class DatabaseController extends GetxController {
   static DatabaseController get instance => Get.find();
   late final ObjectBoxService objectBox;
@@ -25,13 +33,96 @@ class DatabaseController extends GetxController {
     objectBox = Get.find<ObjectBoxService>();
   }
 
-  // Reactive lists for UI updates
+  // =====================================================================
+  // SECTION: AÉROPORTS (AeroportModel)
+  // =====================================================================
 
   final RxList<AeroportModel> _airports = <AeroportModel>[].obs;
   List<AeroportModel> get airports => _airports;
   set airports(List<AeroportModel> val) {
     _airports.value = val;
   }
+
+  /// Ajoute un aéroport à la liste.
+  void addAirport(AeroportModel airport) {
+    final currentAirports = objectBox.getAllAirports();
+    currentAirports.add(airport);
+    objectBox.replaceAllAirports(currentAirports);
+    getAllAirports();
+  }
+
+  /// Met à jour un aéroport existant.
+  void updateAirport(AeroportModel airport) {
+    final currentAirports = objectBox.getAllAirports();
+    final index = currentAirports.indexWhere((a) => a.id == airport.id);
+    if (index != -1) {
+      currentAirports[index] = airport;
+      objectBox.replaceAllAirports(currentAirports);
+      getAllAirports();
+    }
+  }
+
+  /// Récupère tous les aéroports de la base de données.
+  void getAllAirports() {
+    airports.assignAll(objectBox.getAllAirports());
+  }
+
+  /// Ajoute une liste d'aéroports à la base de données.
+  void addAirports(List<AeroportModel> airports) {
+    objectBox.addAllAirports(airports);
+    getAllAirports();
+  }
+
+  /// Remplace tous les aéroports de la base de données par une nouvelle liste.
+  void replaceAllAirports(List<AeroportModel> airports) {
+    objectBox.replaceAllAirports(airports);
+    getAllAirports();
+  }
+
+  /// Récupère un aéroport par son code OACI.
+  AeroportModel? getAeroportByOaci(String icao) {
+    int index = airports.indexWhere((a) => a.icao == icao);
+    return (index == -1) ? null : airports[index];
+  }
+
+  /// Récupère un aéroport par son code IATA.
+  AeroportModel? getAeroportByIata(String iata) {
+    int index = airports.indexWhere((a) => a.iata == iata);
+    return (index == -1) ? null : airports[index];
+  }
+
+  /// Retourne la ville d'un aéroport via son code IATA.
+  String getAirportCity(String iata) {
+    final airport = getAeroportByIata(iata);
+    return airport?.city ?? iata;
+  }
+
+  /// Exporte la liste complète des aéroports au format JSON.
+  Future<String?> exportAeroportToJson({required String fileName}) async {
+    try {
+      final airports = DatabaseController.instance.airports;
+
+      if (airports.isEmpty) {
+        return null;
+      }
+
+      final jsonList = airports.map((airport) => airport.toJson()).toList();
+      final jsonString = const JsonEncoder.withIndent('  ').convert(jsonList);
+
+      final directory = await getApplicationDocumentsDirectory();
+      final filePath = '${directory.path}/$fileName';
+
+      final file = File(filePath);
+      await file.writeAsString(jsonString);
+      return filePath;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // =====================================================================
+  // SECTION: FORFAITS (ForfaitModel & ForfaitListModel)
+  // =====================================================================
 
   final RxList<ForfaitModel> _forfaits = <ForfaitModel>[].obs;
   List<ForfaitModel> get forfaits => _forfaits;
@@ -45,37 +136,7 @@ class DatabaseController extends GetxController {
     _forfaitLists.value = val;
   }
 
-  // ====== Get all Airports Datas ======
-  void addAirport(AeroportModel airport) {
-    objectBox.addAirport(airport);
-    getAllAirports();
-  }
-
-  void updateAirport(AeroportModel airport) {
-    objectBox.updateAirport(airport);
-    getAllAirports();
-  }
-
-  void getAllAirports() {
-    airports.assignAll(objectBox.getAllAirports());
-  }
-
-  void addAirports(List<AeroportModel> airports) {
-    objectBox.addAirports(airports);
-    getAllAirports();
-  }
-
-  AeroportModel? getAeroportByOaci(String icao) {
-    int index = airports.indexWhere((a) => a.icao == icao);
-    return (index == -1) ? null : airports[index];
-  }
-
-  AeroportModel? getAeroportByIata(String iata) {
-    int index = airports.indexWhere((a) => a.iata == iata);
-    return (index == -1) ? null : airports[index];
-  }
-
-  // // ====== ForfaitModel Methods ======
+  /// Récupère un forfait par sa clé.
   ForfaitModel? getForfaitByKey(String cle) {
     int index = forfaits.indexWhere((forfait) => forfait.cle == cle);
     if (index == -1) {
@@ -84,8 +145,7 @@ class DatabaseController extends GetxController {
     return forfaits[index];
   }
 
-  // ====== ForfaitListModel Methods ======
-
+  /// Récupère toutes les listes de forfaits et peuple la liste aplatie `forfaits`.
   void getAllForfaitLists() {
     forfaitLists = objectBox.getAllForfaitLists();
     forfaits.clear();
@@ -95,17 +155,26 @@ class DatabaseController extends GetxController {
     forfaits.sort((a, b) => a.cle.compareTo(b.cle));
   }
 
+  /// Supprime toutes les listes de forfaits.
   void clearAllForfaitLists() {
-    objectBox.clearAllForfaitLists();
+    objectBox.removeAllForfaitLists();
     forfaits.clear();
     getAllForfaitLists();
   }
 
+  /// Ajoute des listes de forfaits à la base de données.
   void addForfaitLists(List<ForfaitListModel> lists) {
-    objectBox.addForfaitLists(lists);
+    objectBox.addAllForfaitLists(lists);
     getAllForfaitLists();
   }
 
+  /// Remplace toutes les listes de forfaits par une nouvelle liste.
+  void replaceAllForfaitLists(List<ForfaitListModel> lists) {
+    objectBox.replaceAllForfaitLists(lists);
+    getAllForfaitLists();
+  }
+
+  /// Récupère les listes de forfaits à partir d'une liste de forfaits.
   List<ForfaitListModel> getForfaitListsFromForfaits(List<ForfaitModel> myForfaits) {
     List<ForfaitListModel> newForfaitLists = [];
     List sDateForfaits = myForfaits.map((myForfait) => myForfait.dateForfait).toSet().toList();
@@ -124,274 +193,227 @@ class DatabaseController extends GetxController {
     return newForfaitLists;
   }
 
+  /// Exporte la liste des forfaits au format JSON.
   Future<String?> exportForfaitsToJson({required String fileName}) async {
     try {
-      // Get the list of forfaits
       final forfaitsList = DatabaseController.instance.forfaits;
 
       if (forfaitsList.isEmpty) {
-        // status.value = 'Aucun forfait à exporter';
         return null;
       }
 
-      // Convert to JSON
       final jsonList = forfaitsList.map((forfait) => forfait.toJson()).toList();
       final jsonString = const JsonEncoder.withIndent('  ').convert(jsonList);
 
-      // Get the documents directory
       final directory = await getApplicationDocumentsDirectory();
       final filePath = '${directory.path}/$fileName';
 
-      // Write to file
       final file = File(filePath);
       await file.writeAsString(jsonString);
-      // print('json file.path: ${file.path}');
-      //status.value = 'Export réussi: ${forfaitsList.length} forfaits exportés';
       return filePath;
     } catch (e) {
-      //status.value = 'Erreur d\'export: $e';
       return null;
     }
   }
 
-  Future<String?> exportAeroportToJson({required String fileName}) async {
-    try {
-      // Get the list of forfaits
-      final airports = DatabaseController.instance.airports;
+  // =====================================================================
+  // SECTION: UTILISATEURS (UserModel)
+  // =====================================================================
 
-      if (airports.isEmpty) {
-        // status.value = 'Aucun forfait à exporter';
-        return null;
-      }
-
-      // Convert to JSON
-      final jsonList = airports.map((airport) => airport.toJson()).toList();
-      final jsonString = const JsonEncoder.withIndent('  ').convert(jsonList);
-
-      // Get the documents directory
-      final directory = await getApplicationDocumentsDirectory();
-      final filePath = '${directory.path}/$fileName';
-
-      // Write to file
-      final file = File(filePath);
-      await file.writeAsString(jsonString);
-      //print('json file.path: ${file.path}');
-      //status.value = 'Export réussi: ${forfaitsList.length} forfaits exportés';
-      return filePath;
-    } catch (e) {
-      //status.value = 'Erreur d\'export: $e';
-      return null;
-    }
-  }
-
-  // Current user session
-
+  final RxList<UserModel> _users = <UserModel>[].obs;
+  List<UserModel> get users => _users;
   UserModel? get currentUser => users.isEmpty ? null : users.first;
-  // Reactive lists for UI updates
-  final RxList<UserModel> users = <UserModel>[].obs;
 
-  // ====== CRUD Operations for UserModel ======
-
+  /// Récupère un utilisateur par son matricule.
   UserModel? getUserByMatricule(int matricule) {
-    return objectBox.getUserByMatricule(matricule);
+    final allUsers = objectBox.getAllUsers();
+    return allUsers.firstWhereOrNull((u) => u.matricule == matricule);
   }
 
+  /// Ajoute un utilisateur à la base de données.
   void addUser(UserModel user) {
-    objectBox.addUser(user);
+    final currentUsers = objectBox.getAllUsers();
+    currentUsers.add(user);
+    objectBox.replaceAllUsers(currentUsers);
     getAllUsers();
   }
 
+  /// Met à jour un utilisateur existant.
   void updateUser(UserModel user) {
-    objectBox.updateUser(user);
-    getAllUsers();
+    final currentUsers = objectBox.getAllUsers();
+    final index = currentUsers.indexWhere((u) => u.id == user.id);
+    if (index != -1) {
+      currentUsers[index] = user;
+      objectBox.replaceAllUsers(currentUsers);
+      getAllUsers();
+    }
   }
 
-  void addDownloadToUser(int userId, MyDownLoad download) {
-    objectBox.addDownloadToUser(userId, download);
-    getAllUsers(); // Refresh to reflect changes
-  }
-
-  /// Get all downloads for a specific user
-  List<MyDownLoad> getDownloadsByUser(int userId) {
-    return objectBox.getDownloadsByUser(userId);
-  }
-
-  MyDownLoad? getMostRecentDownloadByUser(int userId) {
-    return objectBox.getMostRecentDownloadByUser(userId);
-  }
-
-  /// Delete specific MyDownLoad entities from ObjectBox database
-  void deleteDownloads(List<MyDownLoad> downloadsToDelete) {
-    objectBox.deleteDownloads(downloadsToDelete);
-  }
-
+  /// Récupère tous les utilisateurs de la base de données.
   void getAllUsers() {
     users.assignAll(objectBox.getAllUsers());
   }
 
-  void getAllDuties() {
-    duties.assignAll(objectBox.getAllDuties());
+  /// Remplace tous les utilisateurs de la base de données par une nouvelle liste.
+  void replaceAllUsers(List<UserModel> users) {
+    objectBox.replaceAllUsers(users);
+    getAllUsers();
   }
 
-  void getAllVolTransits() {
-    vols.assignAll(objectBox.getAllVolTransits());
+  // =====================================================================
+  // SECTION: TÉLÉCHARGEMENTS (MyDownLoad)
+  // =====================================================================
+
+  /// Ajoute un téléchargement à un utilisateur.
+  void addDownloadToUser(int userId, MyDownLoad download) {
+    final currentUsers = objectBox.getAllUsers();
+    final user = currentUsers.firstWhereOrNull((u) => u.id == userId);
+    if (user != null) {
+      // Évite les doublons en vérifiant si le téléchargement existe déjà.
+      final existingDownloads = user.myDownLoads.toList();
+      final isDuplicate = existingDownloads.any((existing) => existing == download);
+      if (!isDuplicate) {
+        user.myDownLoads.add(download);
+        objectBox.replaceAllUsers(currentUsers);
+        getAllUsers();
+      }
+    }
   }
 
-  //final RxList<MyDuty> duties = <MyDuty>[].obs;
+  /// Récupère tous les téléchargements d'un utilisateur, triés par date.
+  List<MyDownLoad> getDownloadsByUser(int userId) {
+    final allUsers = objectBox.getAllUsers();
+    final user = allUsers.firstWhereOrNull((u) => u.id == userId);
+    final list = user?.myDownLoads.toList() ?? [];
+    list.sort((a, b) => (a.downloadTime).compareTo(b.downloadTime));
+    return list;
+  }
+
+  /// Récupère le téléchargement le plus récent d'un utilisateur.
+  MyDownLoad? getMostRecentDownloadByUser(int userId) {
+    final userDownloads = getDownloadsByUser(userId);
+    if (userDownloads.isEmpty) return null;
+    userDownloads.sort((a, b) => b.downloadTime.compareTo(a.downloadTime));
+    return userDownloads.first;
+  }
+
+  /// Supprime une liste de téléchargements de la base de données.
+  void deleteDownloads(List<MyDownLoad> downloadsToDelete) {
+    final currentDownloads = objectBox.getAllDownloads();
+    final idsToDelete = downloadsToDelete.map((d) => d.id).toSet();
+    currentDownloads.removeWhere((d) => idsToDelete.contains(d.id));
+    objectBox.replaceAllDownloads(currentDownloads);
+  }
+
+  // =====================================================================
+  // SECTION: SERVICES (MyDuty)
+  // =====================================================================
+
   final RxList<MyDuty> _duties = <MyDuty>[].obs;
   List<MyDuty> get duties => _duties;
   set duties(List<MyDuty> val) {
     _duties.value = val;
   }
 
-  void addDuties(List<MyDuty> duties) {
-    objectBox.addDuties(duties);
+  /// Récupère tous les services de la base de données.
+  void getAllDuties() {
+    duties.assignAll(objectBox.getAllDuties());
+  }
+
+  /// Remplace tous les services de la base de données par une nouvelle liste.
+  void replaceAllDuties(List<MyDuty> duties) {
+    objectBox.replaceAllDuties(duties);
     getAllDuties();
   }
 
-  void addVolTransits(List<VolModel> vols) {
-    objectBox.addVolTransits(vols);
-    getAllVolTransits();
+  // =====================================================================
+  // SECTION: VOLS (VolModel)
+  // Les `VolModel` ne sont pas stockés directement mais extraits des `MyDuty`.
+  // =====================================================================
+
+  final RxList<VolModel> _volModels = <VolModel>[].obs;
+  List<VolModel> get volModels => _volModels;
+  set volModels(List<VolModel> val) {
+    _volModels.value = val;
   }
 
-  final RxList<VolModel> _volTransits = <VolModel>[].obs;
-  List<VolModel> get vols => _volTransits;
-  set vols(List<VolModel> val) {
-    _volTransits.value = val;
+  /// Charge tous les vols en les extrayant des services (duties).
+  void getAllVolModels() {
+    volModels.assignAll(getVolFromDuties(duties));
   }
 
-  // List<VolTransit> getAllVolTransits() {
-  //   getAllDuties(); // This updates the duties property
-  //   List<VolTransit> allVolTransits = [];
-
-  //   for (final duty in duties) {
-  //     allVolTransits.addAll(duty.vols.toList());
-  //   }
-
-  //   // Sort by start time (newest first)
-  //   allVolTransits.sort((a, b) => b.dtDebut.compareTo(a.dtDebut));
-
-  //   return allVolTransits;
-  // }
-
-  List<VolModel> getVolFromDuties() {
-    // This updates the duties property
-    List<VolModel> allVolTransits = [];
-
-    for (final duty in duties) {
-      allVolTransits.addAll(duty.vols.toList());
+  /// Extrait et retourne une liste aplatie de tous les `VolModel` contenus dans les services.
+  List<VolModel> getVolFromDuties(List<MyDuty> myduties) {
+    List<VolModel> allVolModels = [];
+    for (final duty in myduties) {
+      allVolModels.addAll(duty.vols.map((vol) => vol.copyWith(id: 0)).toList());
     }
-
-    // Sort by start time (newest first)
-    allVolTransits.sort((a, b) => b.dtDebut.compareTo(a.dtDebut));
-
-    return allVolTransits;
+    allVolModels.sort((a, b) => b.dtDebut.compareTo(a.dtDebut));
+    return allVolModels;
   }
 
+  // =====================================================================
+  // SECTION: VOLS TRAITÉS (VolTraiteModel & VolTraiteMoisModel)
+  // =====================================================================
+
+  final RxList<VolTraiteModel> _volTraiteModels = <VolTraiteModel>[].obs;
+  List<VolTraiteModel> get volTraiteModels => _volTraiteModels;
+  set volTraiteModels(List<VolTraiteModel> val) {
+    _volTraiteModels.value = val;
+  }
+
+  final RxList<VolTraiteMoisModel> _volTraitesParMois = <VolTraiteMoisModel>[].obs;
+  List<VolTraiteMoisModel> get volTraitesParMois => _volTraitesParMois;
+  set volTraitesParMois(List<VolTraiteMoisModel> val) {
+    _volTraitesParMois.value = val;
+  }
+
+  /// Charge tous les groupes de vols traités par mois et peuple la liste aplatie `volTraiteModels`.
+  void getAllVolTraitesParMois() {
+    volTraitesParMois.assignAll(objectBox.getAllVolTraitesParMois());
+    volTraiteModels.clear();
+    for (var volTraiteMoisItem in volTraitesParMois) {
+      volTraiteModels.addAll(volTraiteMoisItem.volsTraites);
+    }
+    // Trie par date de début (plus récent en premier).
+    volTraiteModels.sort((a, b) => b.dtDebut.compareTo(a.dtDebut));
+  }
+
+  /// Supprime tous les groupes de vols traités.
+  void clearAllVolTraitesParMois() {
+    objectBox.removeAllVolTraitesParMois();
+    volTraiteModels.clear();
+    getAllVolTraitesParMois();
+  }
+
+  /// Remplace tous les groupes de vols traités par une nouvelle liste.
+  void replaceAllVolTraiteMois(List<VolTraiteMoisModel> lists) {
+    objectBox.replaceAllVolTraiteMois(lists);
+    getAllVolTraitesParMois();
+  }
+
+  // =====================================================================
+  // SECTION: OPÉRATIONS GLOBALES
+  // =====================================================================
+
+  /// (Ré)initialise toutes les listes de données en mémoire en les rechargeant depuis la base.
   void getAllDatas() {
     getAllUsers();
     getAllAirports();
-
     getAllForfaitLists();
+    getAllVolTraitesParMois();
     getAllDuties();
-    getAllVolTransits();
+    getAllVolModels();
   }
 
-  /// Recalculate missing values for all vols in the database
-  void recalculateMissingVolValues() {
-    for (var vol in vols) {
-      bool needsUpdate = false;
-
-      // Check if any required field is missing
-      if (vol.sDureevol == null ||
-          vol.sDureevol!.isEmpty ||
-          vol.sDureeForfait == null ||
-          vol.sDureeForfait!.isEmpty ||
-          vol.sNuitForfait == null ||
-          vol.sNuitForfait!.isEmpty) {
-        needsUpdate = true;
-      }
-
-      if (needsUpdate) {
-        vol.updateMissingValues();
-        objectBox.addVolTransit(vol); // put() will update if ID exists
-      }
-    }
-
-    getAllVolTransits();
-  }
-
-  /// Clear all data from database
+  /// Supprime toutes les données de la base et rafraîchit les listes en mémoire.
   void clearAllData() {
-    objectBox.clearAllData();
+    objectBox.removeAllDuties();
+    objectBox.removeAllVolTraitesParMois();
+    objectBox.removeAllUsers();
+    objectBox.removeAllDownloads();
+    objectBox.removeAllAirports();
+    objectBox.removeAllForfaitLists();
     getAllDatas();
   }
-  // void addForfaitList(ForfaitListModel list) {
-  //   objectBox.addForfaitList(list);
-  //   getAllForfaitLists();
-  // }
-
-  // void updateForfaitList(ForfaitListModel list) {
-  //   objectBox.updateForfaitList(list);
-  //   getAllForfaitLists();
-  // }
-
-  // void deleteForfaitList(int id) {
-  //   objectBox.deleteForfaitList(id);
-  //   getAllForfaitLists();
-  // }
-
-  // ForfaitListModel? getForfaitListByName(String name) {
-  //   return objectBox.getForfaitListByName(name);
-  // }
-
-  // List<ForfaitListModel> searchForfaitListsByName(String searchTerm) {
-  //   return objectBox.searchForfaitListsByName(searchTerm);
-  // }
-
-  // /// Add forfaits to a specific ForfaitListModel
-  // void addForfaitsToList(int listId, List<ForfaitModel> forfaits) {
-  //   objectBox.addForfaitsToList(listId, forfaits);
-  //   getAllForfaitLists();
-  // }
-
-  // /// Remove forfait from a specific ForfaitListModel
-  // void removeForfaitFromList(int listId, ForfaitModel forfait) {
-  //   objectBox.removeForfaitFromList(listId, forfait);
-  //   getAllForfaitLists();
-  // }
-
-  // /// Get all forfaits from a specific ForfaitListModel
-  // List<ForfaitModel> getForfaitsFromList(int listId) {
-  //   return objectBox.getForfaitsFromList(listId);
-  // }
-
-  // void getAllForfaits() {
-  //   forfaits = objectBox.getAllForfaits();
-  // }
-
-  // void addForfaits(List<ForfaitModel> forfaits) {
-  //   objectBox.addForfaits(forfaits);
-  //   getAllForfaits();
-  // }
-
-  // void addForfait(ForfaitModel forfait) {
-  //   objectBox.addForfait(forfait);
-  //   getAllForfaits();
-  // }
-
-  // void updateForfait(ForfaitModel forfait) {
-  //   objectBox.updateForfait(forfait);
-  //   getAllForfaits();
-  // }
-
-  // void deleteForfait(int id) {
-  //   objectBox.deleteForfait(id);
-  //   getAllForfaits();
-  // }
-
-  // void clearAllForfaits() {
-  //   objectBox.clearAllForfaits();
-  //   getAllForfaits();
-  // }
 }

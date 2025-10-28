@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:objectbox/objectbox.dart';
+import 'package:get/get.dart';
 
 import '../../helpers/constants.dart';
 import '../../helpers/fct.dart';
@@ -48,6 +49,37 @@ class MyDuty {
     required this.typeLabel,
     required this.detailLabel,
   });
+
+  /// Override de l'égalité pour détecter les doublons
+  /// Deux MyDuty sont considérés égaux s'ils ont:
+  /// - Même startTime
+  /// - Même endTime
+  /// - Même nombre de vols
+  /// - Même nombre d'étapes
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is MyDuty && other.startTime == startTime && other.endTime == endTime;
+    // &&
+    // other.vols.length == vols.length &&
+    // other.etapes.length == etapes.length;
+  }
+
+  @override
+  int get hashCode {
+    return startTime.hashCode ^ endTime.hashCode; //^ vols.length.hashCode ^ etapes.length.hashCode
+  }
+
+  @override
+  String toString() {
+    return 'MyDuty('
+        'startTime: $startTime, '
+        'endTime: $endTime, '
+        'vols.length: ${vols.length}, '
+        'etapes.length: ${etapes.length}'
+        ')';
+  }
 
   static List<MyDuty> getDuty({required MyStrip myStrip}) {
     String getTsvMax({required DateTime tsvDebut, required DateTime tsvFin, required int sect}) {
@@ -191,7 +223,13 @@ class MyDuty {
                       '${act.activityCode?.id ?? ''}:${act.startStation!}-${act.endStation!}:${dateFormatDD.format(Fct.uTcDate(dt: act.startTime!))}:${dateFormatDD.format(Fct.uTcDate(dt: act.endTime!))}',
                 );
 
-                volTransit.crews.addAll(act.assignedCrew.map((e) => Crew.fromAssignedCrew(e)));
+                // Create crews and link them to volTransit
+                final crewsList = act.assignedCrew.map((e) {
+                  final crew = Crew.fromAssignedCrew(e);
+                  crew.volModel.target = volTransit;
+                  return crew;
+                }).toList();
+                volTransit.crews.addAll(crewsList);
 
                 myDuty = MyDuty(
                   myMonth: Fct.firstOfMonth(dt: activitie.startTime!),
@@ -207,7 +245,6 @@ class MyDuty {
                 myDuty.etapes.clear();
                 myDuty.crews.clear();
                 myDuty.crews.addAll(act.assignedCrew.map((e) => Crew.fromAssignedCrew(e)));
-                volTransit.crews.addAll(act.assignedCrew.map((e) => Crew.fromAssignedCrew(e)));
                 myNewDutys.add(myDuty);
               }
             } catch (e) {
@@ -257,7 +294,7 @@ class MyDuty {
                   startTime: act.startTime!,
                   dateLabel: mylegs.isEmpty
                       ? ''
-                      : "${mylegs.length} Etapes - TSV:$tsv/$tsvMax max. Fin Tsv: ${dateFormatMMM.format(dutie.startTime!.add(dt))}",
+                      : "${mylegs.length} ${'duty_legs'.tr} - TSV:$tsv/$tsvMax ${'duty_tsv_max'.tr} ${'duty_tsv_end'.tr} ${dateFormatMMM.format(dutie.startTime!.add(dt))}",
                   typeLabel: '',
                   detailLabel: '',
                 );
@@ -285,13 +322,19 @@ class MyDuty {
                   cle:
                       '${act.activityCode?.id ?? ''}:${act.startStation!}-${act.endStation!}:${dateFormatDD.format(Fct.uTcDate(dt: act.startTime!))}:${dateFormatDD.format(Fct.uTcDate(dt: act.endTime!))}',
                 );
-                volTransit.crews.addAll(act.assignedCrew.map((e) => Crew.fromAssignedCrew(e)));
+                // Create crews and link them to volTransit
+                final crewsListHtl = act.assignedCrew.map((e) {
+                  final crew = Crew.fromAssignedCrew(e);
+                  crew.volModel.target = volTransit;
+                  return crew;
+                }).toList();
+                volTransit.crews.addAll(crewsListHtl);
                 etape = MyEtape(
                   startTime: act.startTime!,
                   dateLabel:
                       '${dateFormatMMM.format(act.startTime!)} - ${dateFormatMMM.format(act.endTime!)} ( $d)',
-                  typeLabel: "Hotel: $htl",
-                  detailLabel: "Transport: ${act.hotel?.transport?.name ?? ''}",
+                  typeLabel: "${'duty_hotel'.tr} $htl",
+                  detailLabel: "${'duty_transport'.tr} ${act.hotel?.transport?.name ?? ''}",
                 );
                 etape.volTransit.target = volTransit;
                 etape.typ.target = typ;
@@ -313,7 +356,13 @@ class MyDuty {
                   cle:
                       'CET: ${act.startStation!}-${act.endStation!}:${dateFormatDD.format(Fct.uTcDate(dt: act.startTime!))}:${dateFormatDD.format(Fct.uTcDate(dt: act.endTime!))}',
                 );
-                volTransit.crews.addAll(act.assignedCrew.map((e) => Crew.fromAssignedCrew(e)));
+                // Create crews and link them to volTransit
+                final crewsListTax = act.assignedCrew.map((e) {
+                  final crew = Crew.fromAssignedCrew(e);
+                  crew.volModel.target = volTransit;
+                  return crew;
+                }).toList();
+                volTransit.crews.addAll(crewsListTax);
 
                 etape = MyEtape(
                   startTime: act.startTime!,
@@ -340,7 +389,13 @@ class MyDuty {
                   cle:
                       'AT${act.flightNumber!}:${act.startStation!}-${act.endStation!}:${dateFormatDD.format(Fct.uTcDate(dt: act.startTime!))}:${dateFormatDD.format(Fct.uTcDate(dt: act.endTime!))}',
                 );
-                volTransit.crews.addAll(act.assignedCrew.map((e) => Crew.fromAssignedCrew(e)));
+                // Create crews and link them to volTransit
+                final crewsListFlight = act.assignedCrew.map((e) {
+                  final crew = Crew.fromAssignedCrew(e);
+                  crew.volModel.target = volTransit;
+                  return crew;
+                }).toList();
+                volTransit.crews.addAll(crewsListFlight);
 
                 String getLabel = (act.statusLabel == null) ? '' : "${act.statusLabel}";
 
@@ -379,7 +434,7 @@ class MyDuty {
             endTime: activitie.endTime!,
             dateLabel:
                 '${dateFormatMMMm.format(activitie.startTime!)} - ${dateFormatMMMm.format(activitie.endTime!)}',
-            typeLabel: isRotation ? tRotation.typ : tVols.typ,
+            typeLabel: isRotation ? tRotation.label : tVols.label,
             detailLabel: lists.join("- "),
           );
           myDuty.typ.target = isRotation ? tRotation : tVols;

@@ -108,8 +108,6 @@ class ForfaitController extends GetxController {
       }
 
       final linked = <String, ForfaitModel>{};
-      int successCount = 0;
-      int errorCount = 0;
 
       for (final file in excelFiles) {
         try {
@@ -121,7 +119,7 @@ class ForfaitController extends GetxController {
               label: 'ForfaitController getForfaitFromAllExcelOptimized2()',
               content: 'Le fichier ${file.path} ne respecte pas le format yyyyMM',
             );
-            errorCount++;
+            // errorCount++;
             continue;
           }
 
@@ -135,13 +133,13 @@ class ForfaitController extends GetxController {
             final key = '${f.cle}_${f.dateForfait}'.toUpperCase();
             linked[key] = f.copyWith(id: 0);
           }
-          successCount++;
+          //  successCount++;
         } catch (e) {
           MyErrorInfo.erreurInos(
             label: 'ForfaitController getForfaitFromAllExcelOptimized2()',
             content: 'Erreur lors de la lecture du fichier: ${e.toString()}',
           );
-          errorCount++;
+          //errorCount++;
           continue;
         }
       }
@@ -156,15 +154,6 @@ class ForfaitController extends GetxController {
 
       await DatabaseController.instance.exportForfaitsToJson(
         fileName: 'forfaits_${DateFormat('ddMMyyyy').format(DateTime.now())}.json',
-      );
-
-      MyErrorInfo.erreurInos(
-        label: 'success'.tr,
-        content:
-            '$successCount fichier(s) importé(s) avec succès\n'
-            '${sortedForfaits.length} forfaits au total\n'
-            '${forfaitLists.length} liste(s) créée(s)'
-            '${errorCount > 0 ? '\n$errorCount erreur(s)' : ''}',
       );
     } catch (e) {
       MyErrorInfo.erreurInos(

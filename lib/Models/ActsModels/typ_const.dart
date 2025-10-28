@@ -19,6 +19,7 @@ Typ tConge = Typ(typ: 'Conge', color: '#ebd034', icon: 'conge');
 Typ tDuty = Typ(typ: 'Duty', color: '#ebc634', icon: 'cour');
 Typ tFor = Typ(typ: 'FOR', color: '#ebc634', icon: 'cour');
 Typ tABS = Typ(typ: 'ABS', color: '#ebc634', icon: 'abs');
+Typ tRoster = Typ(typ: 'Roster', color: '#5C538B', icon: 'vol');
 List<Typ> listTyp = [
   tRotation,
   tVols,
