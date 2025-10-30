@@ -29,7 +29,7 @@ dependencies:
   objectbox_flutter_libs: ^5.0.0 # ObjectBox native libraries
   flutter_secure_storage: ^9.2.4 # Secure storage for sensitive data
   cryptography: ^2.7.0 # Cryptographic operations
-
+  source_gen: ^3.1.0
   # ============================================
   # UI COMPONENTS & STYLING
   # ============================================
@@ -41,24 +41,18 @@ dependencies:
   # ============================================
   # UTILITIES & HELPERS
   # ============================================
-  adhan_dart: ^1.1.2 # Prayer times & sunrise/sunset calculations
+  adhan_dart: ^1.2.0 # Prayer times & sunrise/sunset calculations
   collection: ^1.19.1 # Collection utilities
   device_calendar: ^4.3.3 # Collection utilities
   excel: ^4.0.6 # Excel file processing
   intl: ^0.20.2 # Internationalization & date formatting
-  syncfusion_flutter_pdf: ^31.1.23
+  syncfusion_flutter_pdf: ^31.2.4
   # ============================================
   # FILE SYSTEM & STORAGE
   # ============================================
   path: ^1.9.1 # Path manipulation
   path_provider: ^2.1.5 # Access to file system directories
   file_picker: ^10.3.3 # File picker dialog
-
-  # ============================================
-  # PDF PROCESSING
-  # ============================================
-  pdf: ^3.10.0 # PDF parsing and text extraction
-  pdfx: ^2.5.0 # PDF viewer and parser
 
   # ============================================
   # NETWORK & CONNECTIVITY
@@ -73,7 +67,7 @@ dependencies:
   webview_flutter_android: ^4.10.5
   webview_flutter_platform_interface: ^2.14.0
   webview_flutter_wkwebview: ^3.23.1
-
+  analyzer: 8.3.0
   # ============================================
   # DEVELOPMENT TOOLS
   # ============================================
@@ -92,9 +86,10 @@ dev_dependencies:
   # ============================================
   # CODE GENERATION
   # ============================================
-  build_runner: ^2.7.1 # Build system for code generation
-  objectbox_generator: ^5.0.0 # ObjectBox code generator
-
+  build_runner: ^2.4.0 # Keep this
+  objectbox_generator:
+    ^5.0.0 # Revert to 5.0.0
+    # Keep analyzer explicitly defined to ensure a new enough version
 # ============================================
 # FLUTTER CONFIGURATION
 # ============================================

@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 
 import 'package:objectbox/objectbox.dart';
 import 'package:http/http.dart' as http;
+import 'package:adhan_dart/adhan_dart.dart';
 import 'dart:convert';
 
 import '../../../helpers/constants.dart';
@@ -109,6 +110,99 @@ class AeroportModel {
   @override
   String toString() {
     return 'AirportModel(id: $id, icao: $icao, iata: $iata, name: $name, city: $city, country: $country)';
+  }
+
+  // ============================================================================
+  // AIRPORT LOOKUP METHODS (Static)
+  // ============================================================================
+
+  /// Récupère un aéroport par son code OACI.
+  /// Retourne l'aéroport ou null si non trouvé.
+  static AeroportModel? getAeroportByOaci(String icao) {
+    try {
+      final airports = DatabaseController.instance.airports;
+      final index = airports.indexWhere((a) => a.icao == icao);
+      return (index == -1) ? null : airports[index];
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // ============================================================================
+  // PRAYER TIMES & SUNRISE/SUNSET METHODS (Static)
+  // ============================================================================
+
+  /// Récupère les heures de prière pour un aéroport à une date donnée.
+  /// Utilise la méthode Muslim World League (Fajr 18°, Isha 17°).
+  /// Retourne null si l'aéroport n'est pas trouvé ou le calcul échoue.
+  static PrayerTimes? getPrayerTimes(String icao, DateTime date) {
+    try {
+      final airport = DatabaseController.instance.getAeroportByOaci(icao);
+      if (airport == null) return null;
+
+      final coordinates = Coordinates(airport.latitude, airport.longitude);
+      // Muslim World League: Fajr 18°, Isha 17°
+      final params = CalculationParameters(
+        method: CalculationMethod.muslimWorldLeague,
+        fajrAngle: 18,
+        ishaAngle: 17,
+      );
+      return PrayerTimes(coordinates: coordinates, date: date, calculationParameters: params);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /// Calcule le lever de soleil le plus tôt entre les aéroports de départ et d'arrivée.
+  /// Retourne null si le type n'est pas un vol ou si le calcul échoue.
+  /// [typ] : Type de vol (Vol, MEP, TAX, etc.)
+  /// [depIcao] : Code ICAO de départ
+  /// [arrIcao] : Code ICAO d'arrivée
+  /// [date] : Date pour le calcul
+  static DateTime? calculateSunrise(String typ, String depIcao, String arrIcao, DateTime date) {
+    if (typ != 'Vol') return null;
+
+    try {
+      final depPrayerTimes = getPrayerTimes(depIcao, date);
+      final arrPrayerTimes = getPrayerTimes(arrIcao, date);
+
+      final depSunrise = depPrayerTimes?.sunrise;
+      final arrSunrise = arrPrayerTimes?.sunrise;
+
+      // Return the earliest sunrise
+      if (depSunrise != null && arrSunrise != null) {
+        return depSunrise.isBefore(arrSunrise) ? depSunrise : arrSunrise;
+      }
+      return depSunrise ?? arrSunrise;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /// Calcule le coucher de soleil le plus tard entre les aéroports de départ et d'arrivée.
+  /// Retourne null si le type n'est pas un vol ou si le calcul échoue.
+  /// [typ] : Type de vol (Vol, MEP, TAX, etc.)
+  /// [depIcao] : Code ICAO de départ
+  /// [arrIcao] : Code ICAO d'arrivée
+  /// [date] : Date pour le calcul
+  static DateTime? calculateSunset(String typ, String depIcao, String arrIcao, DateTime date) {
+    if (typ != 'Vol') return null;
+
+    try {
+      final depPrayerTimes = getPrayerTimes(depIcao, date);
+      final arrPrayerTimes = getPrayerTimes(arrIcao, date);
+
+      final depSunset = depPrayerTimes?.maghrib;
+      final arrSunset = arrPrayerTimes?.maghrib;
+
+      // Return the latest sunset
+      if (depSunset != null && arrSunset != null) {
+        return depSunset.isAfter(arrSunset) ? depSunset : arrSunset;
+      }
+      return depSunset ?? arrSunset;
+    } catch (e) {
+      return null;
+    }
   }
 
   @override

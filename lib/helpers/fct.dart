@@ -147,7 +147,6 @@ class Fct {
   static bool entreDeuxDts({required DateTime dTinf, required DateTime dTsup, required DateTime dT}) =>
       ((dT.compareTo(dTinf) != -1) && (dTsup.compareTo(dT) != -1));
 
-
   // =====================================================================
   // SECTION: CONVERSION DURÉE (Centralisée)
   // =====================================================================
@@ -178,7 +177,6 @@ class Fct {
     final minutes = duration.inMinutes.remainder(60);
     return '${hours.toString().padLeft(2, '0')}h${minutes.toString().padLeft(2, '0')}';
   }
-
 
   // =====================================================================
   // SECTION: PARSING DATE/HEURE
@@ -274,8 +272,7 @@ class Fct {
   static DateTime firstOfMonth({required DateTime dt}) => startOfMonth(dt: dt);
 
   /// Alias pour lastOfMonth (compatibilité)
-  static DateTime lastOfMonth({required DateTime dt}) =>
-      DateTime.utc(dt.year, dt.month + 1, 1, 0, 0, 0);
+  static DateTime lastOfMonth({required DateTime dt}) => DateTime.utc(dt.year, dt.month + 1, 1, 0, 0, 0);
 
   /// Alias pour stringToDuration (compatibilité)
   static Duration getDureeFromString({required String sDuree}) => stringToDuration(sDuree);
@@ -300,7 +297,7 @@ class Fct {
   /// Retourne null si aucun format valide n'est trouvé.
   static DateTime? parseDateFromFilename(String filename) {
     final name = filename.trim();
-    
+
     // 1) Exact yyyyMM
     if (RegExp(r'^\d{6}$').hasMatch(name)) {
       final y = int.tryParse(name.substring(0, 4));
@@ -310,7 +307,7 @@ class Fct {
       }
       return null;
     }
-    
+
     // 2) Extract first yyyyMM occurrence within any filename
     final match = RegExp(r'(20\d{2})(0[1-9]|1[0-2])').firstMatch(name);
     if (match != null) {
@@ -331,11 +328,7 @@ class Fct {
   /// [items] : Liste à trier
   /// [dateExtractor] : Fonction pour extraire la date de chaque élément
   /// [descending] : Si true, tri décroissant (plus récent en premier)
-  static List<T> sortByDate<T>(
-    List<T> items,
-    DateTime Function(T) dateExtractor, {
-    bool descending = false,
-  }) {
+  static List<T> sortByDate<T>(List<T> items, DateTime Function(T) dateExtractor, {bool descending = false}) {
     final sorted = items.toList();
     sorted.sort((a, b) {
       final dateA = dateExtractor(a);
@@ -393,10 +386,7 @@ class Fct {
   /// [items] : Liste à grouper
   /// [dateExtractor] : Fonction pour extraire la date
   /// Retourne une Map avec clé "YYYY-MM" et liste des éléments du mois
-  static Map<String, List<T>> groupByMonth<T>(
-    List<T> items,
-    DateTime Function(T) dateExtractor,
-  ) {
+  static Map<String, List<T>> groupByMonth<T>(List<T> items, DateTime Function(T) dateExtractor) {
     final grouped = <String, List<T>>{};
     for (var item in items) {
       final date = dateExtractor(item);
@@ -416,5 +406,31 @@ class Fct {
     final sorted = months.toList();
     sorted.sort((a, b) => a.compareTo(b));
     return sorted;
+  }
+
+  // =====================================================================
+  // SECTION: FORFAIT TIME FORMATTING
+  // =====================================================================
+
+  /// Formate une chaîne de forfait de format "HH:mm" ou "HHmm" en "XXhYY".
+  /// Exemple: "02:30" → "02h30", "5:45" → "05h45"
+  /// Si le format est invalide, retourne la chaîne padée à 5 caractères.
+  static String formatForfaitTime(String forfaitStr) {
+    if (forfaitStr.isEmpty) return '00h00';
+
+    try {
+      // Essayer de parser au format "HH:mm"
+      final parts = forfaitStr.split(':');
+      if (parts.length == 2) {
+        final hours = parts[0].trim();
+        final minutes = parts[1].trim();
+        return '${hours.padLeft(2, '0')}h${minutes.padLeft(2, '0')}';
+      }
+
+      // Si pas de ":", retourner padé à 5 caractères
+      return forfaitStr.padLeft(5, '0');
+    } catch (e) {
+      return forfaitStr.padLeft(5, '0');
+    }
   }
 }

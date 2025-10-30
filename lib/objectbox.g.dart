@@ -26,6 +26,8 @@ import 'Models/jsonModels/datas/forfait_model.dart';
 import 'Models/jsonModels/datas/forfaitlist.model.dart';
 import 'Models/userModel/my_download.dart';
 import 'Models/userModel/usermodel.dart';
+import 'Models/volpdfs/vol_pdf.dart';
+import 'Models/volpdfs/vol_pdf_list.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -1042,6 +1044,184 @@ final _entities = <obx_int.ModelEntity>[
     ],
     backlinks: <obx_int.ModelBacklink>[],
   ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(13, 8493592656383357655),
+    name: 'VolPdf',
+    lastPropertyId: const obx_int.IdUid(21, 5590600546568305083),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 3477303823627207923),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 7440335411634146461),
+        name: 'volPdfListId',
+        type: 11,
+        flags: 520,
+        indexId: const obx_int.IdUid(10, 8514300011407805951),
+        relationTarget: 'VolPdfList',
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 4761159260789728670),
+        name: 'dateVol',
+        type: 10,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 4309830665917978273),
+        name: 'month',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 5638050188682366302),
+        name: 'datej',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 7151232331142688009),
+        name: 'dateM',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(7, 5582869390321501881),
+        name: 'myDepDate',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 6728473341378905692),
+        name: 'myArrDate',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(9, 740936915144195335),
+        name: 'myChInDate',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(10, 6094985655619994287),
+        name: 'report',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(11, 4627894863220930265),
+        name: 'tags',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(12, 3139904078873954044),
+        name: 'pos',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(13, 6551991448083593715),
+        name: 'path',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(14, 6813659360114238379),
+        name: 'activity',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(15, 41975911659998697),
+        name: 'from',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(16, 6100574225888934700),
+        name: 'to',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(17, 5539701878764644272),
+        name: 'start',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(18, 5102816479962535356),
+        name: 'end',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(19, 7886846389890448243),
+        name: 'aC',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(20, 8185210361869834045),
+        name: 'layover',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(21, 5590600546568305083),
+        name: 'duty',
+        type: 9,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(14, 6749754114596228230),
+    name: 'VolPdfList',
+    lastPropertyId: const obx_int.IdUid(4, 4098506357886852764),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 4690985471674991687),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 673866276523601448),
+        name: 'month',
+        type: 10,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 1712751151784442661),
+        name: 'tags',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 4098506357886852764),
+        name: 'path',
+        type: 9,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[
+      obx_int.ModelBacklink(
+        name: 'volPdfs',
+        srcEntity: 'VolPdf',
+        srcField: 'volPdfList',
+      ),
+    ],
+  ),
 ];
 
 /// Shortcut for [obx.Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -1082,8 +1262,8 @@ Future<obx.Store> openStore({
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(12, 1938811687117709668),
-    lastIndexId: const obx_int.IdUid(9, 6832780167094157730),
+    lastEntityId: const obx_int.IdUid(14, 6749754114596228230),
+    lastIndexId: const obx_int.IdUid(10, 8514300011407805951),
     lastRelationId: const obx_int.IdUid(5, 2819046059499769564),
     lastSequenceId: const obx_int.IdUid(0, 0),
     retiredEntityUids: const [],
@@ -2366,6 +2546,196 @@ obx_int.ModelDefinition getObjectBoxModel() {
         return object;
       },
     ),
+    VolPdf: obx_int.EntityDefinition<VolPdf>(
+      model: _entities[12],
+      toOneRelations: (VolPdf object) => [object.volPdfList],
+      toManyRelations: (VolPdf object) => {},
+      getId: (VolPdf object) => object.id,
+      setId: (VolPdf object, int id) {
+        object.id = id;
+      },
+      objectToFB: (VolPdf object, fb.Builder fbb) {
+        final monthOffset = fbb.writeString(object.month);
+        final datejOffset = fbb.writeString(object.datej);
+        final dateMOffset = fbb.writeString(object.dateM);
+        final myDepDateOffset = fbb.writeString(object.myDepDate);
+        final myArrDateOffset = fbb.writeString(object.myArrDate);
+        final myChInDateOffset = fbb.writeString(object.myChInDate);
+        final reportOffset = fbb.writeString(object.report);
+        final tagsOffset = fbb.writeString(object.tags);
+        final posOffset = fbb.writeString(object.pos);
+        final pathOffset = fbb.writeString(object.path);
+        final activityOffset = fbb.writeString(object.activity);
+        final fromOffset = fbb.writeString(object.from);
+        final toOffset = fbb.writeString(object.to);
+        final startOffset = fbb.writeString(object.start);
+        final endOffset = fbb.writeString(object.end);
+        final aCOffset = fbb.writeString(object.aC);
+        final layoverOffset = fbb.writeString(object.layover);
+        final dutyOffset = fbb.writeString(object.duty);
+        fbb.startTable(22);
+        fbb.addInt64(0, object.id);
+        fbb.addInt64(1, object.volPdfList.targetId);
+        fbb.addInt64(2, object.dateVol.millisecondsSinceEpoch);
+        fbb.addOffset(3, monthOffset);
+        fbb.addOffset(4, datejOffset);
+        fbb.addOffset(5, dateMOffset);
+        fbb.addOffset(6, myDepDateOffset);
+        fbb.addOffset(7, myArrDateOffset);
+        fbb.addOffset(8, myChInDateOffset);
+        fbb.addOffset(9, reportOffset);
+        fbb.addOffset(10, tagsOffset);
+        fbb.addOffset(11, posOffset);
+        fbb.addOffset(12, pathOffset);
+        fbb.addOffset(13, activityOffset);
+        fbb.addOffset(14, fromOffset);
+        fbb.addOffset(15, toOffset);
+        fbb.addOffset(16, startOffset);
+        fbb.addOffset(17, endOffset);
+        fbb.addOffset(18, aCOffset);
+        fbb.addOffset(19, layoverOffset);
+        fbb.addOffset(20, dutyOffset);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final object = VolPdf(id: idParam)
+          ..dateVol = DateTime.fromMillisecondsSinceEpoch(
+            const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0),
+          )
+          ..month = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGet(buffer, rootOffset, 10, '')
+          ..datej = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGet(buffer, rootOffset, 12, '')
+          ..dateM = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGet(buffer, rootOffset, 14, '')
+          ..myDepDate = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGet(buffer, rootOffset, 16, '')
+          ..myArrDate = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGet(buffer, rootOffset, 18, '')
+          ..myChInDate = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGet(buffer, rootOffset, 20, '')
+          ..report = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGet(buffer, rootOffset, 22, '')
+          ..tags = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGet(buffer, rootOffset, 24, '')
+          ..pos = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGet(buffer, rootOffset, 26, '')
+          ..path = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGet(buffer, rootOffset, 28, '')
+          ..activity = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGet(buffer, rootOffset, 30, '')
+          ..from = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGet(buffer, rootOffset, 32, '')
+          ..to = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGet(buffer, rootOffset, 34, '')
+          ..start = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGet(buffer, rootOffset, 36, '')
+          ..end = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGet(buffer, rootOffset, 38, '')
+          ..aC = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGet(buffer, rootOffset, 40, '')
+          ..layover = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGet(buffer, rootOffset, 42, '')
+          ..duty = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGet(buffer, rootOffset, 44, '');
+        object.volPdfList.targetId = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          6,
+          0,
+        );
+        object.volPdfList.attach(store);
+        return object;
+      },
+    ),
+    VolPdfList: obx_int.EntityDefinition<VolPdfList>(
+      model: _entities[13],
+      toOneRelations: (VolPdfList object) => [],
+      toManyRelations: (VolPdfList object) => {
+        obx_int.RelInfo<VolPdf>.toOneBacklink(
+          2,
+          object.id,
+          (VolPdf srcObject) => srcObject.volPdfList,
+        ): object.volPdfs,
+      },
+      getId: (VolPdfList object) => object.id,
+      setId: (VolPdfList object, int id) {
+        object.id = id;
+      },
+      objectToFB: (VolPdfList object, fb.Builder fbb) {
+        final tagsOffset = fbb.writeString(object.tags);
+        final pathOffset = fbb.writeString(object.path);
+        fbb.startTable(5);
+        fbb.addInt64(0, object.id);
+        fbb.addInt64(1, object.month.millisecondsSinceEpoch);
+        fbb.addOffset(2, tagsOffset);
+        fbb.addOffset(3, pathOffset);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final tagsParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 8, '');
+        final monthParam = DateTime.fromMillisecondsSinceEpoch(
+          const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0),
+        );
+        final pathParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 10, '');
+        final object = VolPdfList(
+          id: idParam,
+          tags: tagsParam,
+          month: monthParam,
+          path: pathParam,
+        );
+        obx_int.InternalToManyAccess.setRelInfo<VolPdfList>(
+          object.volPdfs,
+          store,
+          obx_int.RelInfo<VolPdf>.toOneBacklink(
+            2,
+            object.id,
+            (VolPdf srcObject) => srcObject.volPdfList,
+          ),
+        );
+        return object;
+      },
+    ),
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -3116,4 +3486,140 @@ class VolTraiteMoisModel_ {
       obx.QueryRelationToMany<VolTraiteMoisModel, VolTraiteModel>(
         _entities[11].relations[0],
       );
+}
+
+/// [VolPdf] entity fields to define ObjectBox queries.
+class VolPdf_ {
+  /// See [VolPdf.id].
+  static final id = obx.QueryIntegerProperty<VolPdf>(
+    _entities[12].properties[0],
+  );
+
+  /// See [VolPdf.volPdfList].
+  static final volPdfList = obx.QueryRelationToOne<VolPdf, VolPdfList>(
+    _entities[12].properties[1],
+  );
+
+  /// See [VolPdf.dateVol].
+  static final dateVol = obx.QueryDateProperty<VolPdf>(
+    _entities[12].properties[2],
+  );
+
+  /// See [VolPdf.month].
+  static final month = obx.QueryStringProperty<VolPdf>(
+    _entities[12].properties[3],
+  );
+
+  /// See [VolPdf.datej].
+  static final datej = obx.QueryStringProperty<VolPdf>(
+    _entities[12].properties[4],
+  );
+
+  /// See [VolPdf.dateM].
+  static final dateM = obx.QueryStringProperty<VolPdf>(
+    _entities[12].properties[5],
+  );
+
+  /// See [VolPdf.myDepDate].
+  static final myDepDate = obx.QueryStringProperty<VolPdf>(
+    _entities[12].properties[6],
+  );
+
+  /// See [VolPdf.myArrDate].
+  static final myArrDate = obx.QueryStringProperty<VolPdf>(
+    _entities[12].properties[7],
+  );
+
+  /// See [VolPdf.myChInDate].
+  static final myChInDate = obx.QueryStringProperty<VolPdf>(
+    _entities[12].properties[8],
+  );
+
+  /// See [VolPdf.report].
+  static final report = obx.QueryStringProperty<VolPdf>(
+    _entities[12].properties[9],
+  );
+
+  /// See [VolPdf.tags].
+  static final tags = obx.QueryStringProperty<VolPdf>(
+    _entities[12].properties[10],
+  );
+
+  /// See [VolPdf.pos].
+  static final pos = obx.QueryStringProperty<VolPdf>(
+    _entities[12].properties[11],
+  );
+
+  /// See [VolPdf.path].
+  static final path = obx.QueryStringProperty<VolPdf>(
+    _entities[12].properties[12],
+  );
+
+  /// See [VolPdf.activity].
+  static final activity = obx.QueryStringProperty<VolPdf>(
+    _entities[12].properties[13],
+  );
+
+  /// See [VolPdf.from].
+  static final from = obx.QueryStringProperty<VolPdf>(
+    _entities[12].properties[14],
+  );
+
+  /// See [VolPdf.to].
+  static final to = obx.QueryStringProperty<VolPdf>(
+    _entities[12].properties[15],
+  );
+
+  /// See [VolPdf.start].
+  static final start = obx.QueryStringProperty<VolPdf>(
+    _entities[12].properties[16],
+  );
+
+  /// See [VolPdf.end].
+  static final end = obx.QueryStringProperty<VolPdf>(
+    _entities[12].properties[17],
+  );
+
+  /// See [VolPdf.aC].
+  static final aC = obx.QueryStringProperty<VolPdf>(
+    _entities[12].properties[18],
+  );
+
+  /// See [VolPdf.layover].
+  static final layover = obx.QueryStringProperty<VolPdf>(
+    _entities[12].properties[19],
+  );
+
+  /// See [VolPdf.duty].
+  static final duty = obx.QueryStringProperty<VolPdf>(
+    _entities[12].properties[20],
+  );
+}
+
+/// [VolPdfList] entity fields to define ObjectBox queries.
+class VolPdfList_ {
+  /// See [VolPdfList.id].
+  static final id = obx.QueryIntegerProperty<VolPdfList>(
+    _entities[13].properties[0],
+  );
+
+  /// See [VolPdfList.month].
+  static final month = obx.QueryDateProperty<VolPdfList>(
+    _entities[13].properties[1],
+  );
+
+  /// See [VolPdfList.tags].
+  static final tags = obx.QueryStringProperty<VolPdfList>(
+    _entities[13].properties[2],
+  );
+
+  /// See [VolPdfList.path].
+  static final path = obx.QueryStringProperty<VolPdfList>(
+    _entities[13].properties[3],
+  );
+
+  /// see [VolPdfList.volPdfs]
+  static final volPdfs = obx.QueryBacklinkToMany<VolPdf, VolPdfList>(
+    VolPdf_.volPdfList,
+  );
 }

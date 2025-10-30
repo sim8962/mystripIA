@@ -15,6 +15,7 @@ abstract class Routes {
   static const forfaitScreen = '/ForfaitScreen';
   static const calenderScreen = '/CalenderScreen';
   static const importRosterScreen = '/ImportRosterScreen';
+  static const tableScreen = '/TableScreen';
 
   // Individual screens (accessible through navigation)
   static const dutyListScreen = '/duty-list';
@@ -29,6 +30,7 @@ abstract class Routes {
   static void toAeroportscreen() => Get.offAllNamed(aeroportscreen);
   static void toCalenderScreen() => Get.offAllNamed(calenderScreen);
   static void toImportRosterScreen() => Get.offAllNamed(importRosterScreen);
+  static void toTableScreen() => Get.offAllNamed(tableScreen);
 
   static void toHomeIphonePage() => Get.offAllNamed(homeIphonescreen);
   static void toHomeIpadPage() => Get.offAllNamed(homeIpadscreen);

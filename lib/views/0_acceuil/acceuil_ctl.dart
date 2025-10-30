@@ -69,8 +69,7 @@ class AcceuilController extends GetxController {
           Routes.toWebview();
         } else {
           // Routes.toHome();
-          Routes.toImportRosterScreen();
-          // Routes.toHomePage();
+          Routes.toTableScreen();
         }
       } else {
         // Users exist but no current user set, go to register

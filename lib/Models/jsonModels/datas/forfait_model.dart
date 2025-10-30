@@ -9,6 +9,7 @@ import 'package:objectbox/objectbox.dart';
 
 import '../../../helpers/constants.dart';
 import '../../../helpers/myerrorinfo.dart';
+import '../../../helpers/fct.dart';
 import '../../../controllers/database_controller.dart';
 import 'forfaitlist.model.dart';
 
@@ -63,11 +64,8 @@ class ForfaitModel {
 
   // Factory constructor from JSON
   factory ForfaitModel.fromJson(Map<String, dynamic> json) {
-    String sheure = json['Forfait'] ?? '';
-    List<String> iheure = json['Forfait'].split(':');
-    if (iheure.length > 1) {
-      sheure = '${json['Forfait'].split(':')[0]}h${json['Forfait'].split(':')[1]}'.padLeft(5, "0");
-    }
+    final forfaitStr = json['Forfait'] ?? '';
+    final sheure = Fct.formatForfaitTime(forfaitStr);
 
     return ForfaitModel(
       id: json['id'] ?? 0,
@@ -240,16 +238,10 @@ class ForfaitModel {
           return (v == null) ? '' : v.toString().trim();
         }
 
-        String depIata = DatabaseController.instance.getAeroportByOaci(read(idxEscaleDep))?.iata ?? '';
-        String arrIata = DatabaseController.instance.getAeroportByOaci(read(idxEscaleArr))?.iata ?? '';
+        String depIata = AeroportModel.getAeroportByOaci(read(idxEscaleDep))?.iata ?? '';
+        String arrIata = AeroportModel.getAeroportByOaci(read(idxEscaleArr))?.iata ?? '';
 
-        String forfait = '';
-        List<String> iheure = read(idxForfait).split(':');
-        if (iheure.length > 1) {
-          forfait = '${read(idxForfait).split(':')[0]}h${read(idxForfait).split(':')[1]}'.padLeft(5, "0");
-        } else {
-          forfait = read(idxForfait).padLeft(5, "0");
-        }
+        String forfait = Fct.formatForfaitTime(read(idxForfait));
         // print('depIata: $depIata ,arrIata:$arrIata');
 
         // Build cle: use column if exists, otherwise construct from other columns

@@ -28,25 +28,17 @@ class VolPdfList {
   @override
   int get hashCode => volPdfs.length.hashCode ^ month.hashCode;
 
-  factory VolPdfList.copy(VolPdfList volPdfListB) {
-    VolPdfList vol = VolPdfList(
-      id: volPdfListB.id,
-      month: volPdfListB.month,
-      tags: volPdfListB.tags,
-      path: volPdfListB.path,
-    );
-    vol.volPdfs.addAll(volPdfListB.volPdfs);
+  factory VolPdfList.copy(VolPdfList volPdfList) {
+    VolPdfList vol = VolPdfList(month: volPdfList.month, tags: volPdfList.tags, path: volPdfList.path);
+    vol.volPdfs.addAll(volPdfList.volPdfs);
     return vol;
   }
 
-  factory VolPdfList.getListVolPdfyMonth({required DateTime myMonth, required List<VolPdf> volPdfBs}) {
-    List<VolPdf> monthLists =
-        volPdfBs
-            .where(
-              (volPdfB) => (volPdfB.dateVol.year == myMonth.year && volPdfB.dateVol.month == myMonth.month),
-            )
-            .toSet()
-            .toList();
+  factory VolPdfList.getListVolPdfyMonth({required DateTime myMonth, required List<VolPdf> volPdfs}) {
+    List<VolPdf> monthLists = volPdfs
+        .where((volPdf) => (volPdf.dateVol.year == myMonth.year && volPdf.dateVol.month == myMonth.month))
+        .toSet()
+        .toList();
 
     monthLists.sort((a, b) {
       return a.dateVol.millisecondsSinceEpoch.compareTo(b.dateVol.millisecondsSinceEpoch);
@@ -73,7 +65,7 @@ class VolPdfList {
   /// Groupe les VolPdf par mois et retourne une liste de VolPdfList
   static List<VolPdfList> groupByMonth({required List<VolPdf> volPdfs}) {
     final Map<String, List<VolPdf>> groupedByMonth = {};
-    
+
     for (var volPdf in volPdfs) {
       final monthKey = '${volPdf.dateVol.year}-${volPdf.dateVol.month.toString().padLeft(2, '0')}';
       groupedByMonth.putIfAbsent(monthKey, () => []).add(volPdf);
@@ -85,8 +77,8 @@ class VolPdfList {
       final year = int.parse(parts[0]);
       final month = int.parse(parts[1]);
       final monthDate = DateTime(year, month, 1);
-      
-      final volPdfList = VolPdfList.getListVolPdfyMonth(myMonth: monthDate, volPdfBs: entry.value);
+
+      final volPdfList = VolPdfList.getListVolPdfyMonth(myMonth: monthDate, volPdfs: entry.value);
       result.add(volPdfList);
     }
 

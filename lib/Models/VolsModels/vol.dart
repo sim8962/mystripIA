@@ -1,10 +1,10 @@
 import 'package:objectbox/objectbox.dart';
-import 'package:adhan_dart/adhan_dart.dart';
 import '../ActsModels/crew.dart';
 import '../../controllers/database_controller.dart';
 import '../ActsModels/typ_const.dart';
 import '../volpdfs/vol_pdf.dart';
 import '../../helpers/fct.dart';
+import '../jsonModels/datas/airport_model.dart';
 
 @Entity()
 class VolModel {
@@ -39,7 +39,7 @@ class VolModel {
   String? sMepForfait; // Duration between dtDebut and arrMepForfait for MEP and TAX types
   String? sNuitForfait; // Night flight time for forfait duration (Vol type only)
   String tsv; // Position du vol dans la période TSV: "debut tsv", "fin tsv", "dans tsv"
-  
+
   @Backlink('volModel')
   final crews = ToMany<Crew>();
 
@@ -67,8 +67,8 @@ class VolModel {
     String? durationForfaitString,
     String? mepForfaitString,
     String? nightForfaitString,
-  }) : depIcao = depIcao ?? _getIcaoByIata(depIata),
-       arrIcao = arrIcao ?? _getIcaoByIata(arrIata) {
+  }) : depIcao = depIcao ?? DatabaseController.instance.getIcaoByIata(depIata),
+       arrIcao = arrIcao ?? DatabaseController.instance.getIcaoByIata(arrIata) {
     // Calculate derived values only if not provided
     final resolvedDepIcao = this.depIcao;
     final resolvedArrIcao = this.arrIcao;
@@ -83,8 +83,8 @@ class VolModel {
       sMepForfait = '';
       this.arrForfait = arrForfait ?? _calculateArrForfait(typ, dtDebut, sDureeForfait ?? '');
       this.arrMepForfait = null;
-      this.sunrise = sunrise ?? _calculateSunrise(typ, resolvedDepIcao, resolvedArrIcao, dtDebut);
-      this.sunset = sunset ?? _calculateSunset(typ, resolvedDepIcao, resolvedArrIcao, dtDebut);
+      this.sunrise = sunrise ?? AeroportModel.calculateSunrise(typ, resolvedDepIcao, resolvedArrIcao, dtDebut);
+      this.sunset = sunset ?? AeroportModel.calculateSunset(typ, resolvedDepIcao, resolvedArrIcao, dtDebut);
 
       // Calculate night flight time for Vol type
       sNuitVol =
@@ -120,25 +120,26 @@ class VolModel {
     }
   }
 
-  // Check if this is a flight type (Vol, MEP, or TAX)
+  // ============================================================================
+  // GETTER METHODS
+  // ============================================================================
+
+  /// Check if this is a flight type (Vol, MEP, or TAX)
   bool get isFlightType => typ == tVol.typ || typ == tMEP.typ || typ == tTAX.typ;
 
-  // Helper pour vérifier si le type nécessite des calculs de vol
+  // ============================================================================
+  // HELPER METHODS (Private)
+  // ============================================================================
+
+  /// Check if type requires flight calculations
   static bool _requiresFlightCalculations(String typ) =>
       typ == tVol.typ || typ == tMEP.typ || typ == tTAX.typ;
 
-  // Helper method to get ICAO code from IATA using DatabaseController
-  static String _getIcaoByIata(String iata) {
-    try {
-      final airports = DatabaseController.instance.airports;
-      final airport = airports.firstWhere((airport) => airport.iata.toUpperCase() == iata.toUpperCase());
-      return airport.icao;
-    } catch (e) {
-      return ''; // Return empty string if not found
-    }
-  }
+  // ============================================================================
+  // CALCULATION METHODS (Private)
+  // ============================================================================
 
-  // Helper method to calculate duration string
+  /// Calculate actual flight duration ("XXhYY" format)
   static String _calculateDuration(String typ, DateTime dtDebut, DateTime dtFin) {
     if (!_requiresFlightCalculations(typ)) return '';
 
@@ -191,67 +192,6 @@ class VolModel {
     }
   }
 
-  // Helper method to get prayer times for an airport
-  static PrayerTimes? _getPrayerTimes(String icao, DateTime date) {
-    try {
-      final airport = DatabaseController.instance.getAeroportByOaci(icao);
-      if (airport == null) return null;
-
-      final coordinates = Coordinates(airport.latitude, airport.longitude);
-      // Muslim World League: Fajr 18°, Isha 17°
-      final params = CalculationParameters(
-        method: CalculationMethod.muslimWorldLeague,
-        fajrAngle: 18,
-        ishaAngle: 17,
-      );
-      return PrayerTimes(coordinates: coordinates, date: date, calculationParameters: params);
-    } catch (e) {
-      return null;
-    }
-  }
-
-  // Helper method to calculate sunrise (le plus tôt des sunrise départ et arrivée)
-  static DateTime? _calculateSunrise(String typ, String depIcao, String arrIcao, DateTime date) {
-    if (!_requiresFlightCalculations(typ)) return null;
-
-    try {
-      final depPrayerTimes = _getPrayerTimes(depIcao, date);
-      final arrPrayerTimes = _getPrayerTimes(arrIcao, date);
-
-      final depSunrise = depPrayerTimes?.sunrise;
-      final arrSunrise = arrPrayerTimes?.sunrise;
-
-      // Return the earliest sunrise
-      if (depSunrise != null && arrSunrise != null) {
-        return depSunrise.isBefore(arrSunrise) ? depSunrise : arrSunrise;
-      }
-      return depSunrise ?? arrSunrise;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  // Helper method to calculate sunset (le plus tard des sunset départ et arrivée)
-  static DateTime? _calculateSunset(String typ, String depIcao, String arrIcao, DateTime date) {
-    if (!_requiresFlightCalculations(typ)) return null;
-
-    try {
-      final depPrayerTimes = _getPrayerTimes(depIcao, date);
-      final arrPrayerTimes = _getPrayerTimes(arrIcao, date);
-
-      final depSunset = depPrayerTimes?.maghrib;
-      final arrSunset = arrPrayerTimes?.maghrib;
-
-      // Return the latest sunset
-      if (depSunset != null && arrSunset != null) {
-        return depSunset.isAfter(arrSunset) ? depSunset : arrSunset;
-      }
-      return depSunset ?? arrSunset;
-    } catch (e) {
-      return null;
-    }
-  }
-
   // Helper method to calculate night flight time
   static String _calculateNightFlightTime(
     String typ,
@@ -291,8 +231,13 @@ class VolModel {
     return Fct.durationToString(duration);
   }
 
-  /// Factory pour créer un VolModel à partir d'un VolPdf
-  /// Accepte les champs vides (from, to, activity) qui seront traités ultérieurement
+  // ============================================================================
+  // FACTORY METHODS
+  // ============================================================================
+
+  /// Create VolModel from PDF-extracted data (VolPdf)
+  /// Accepts empty fields (from, to, activity) for later processing
+  /// Automatically determines TSV status based on myChInDate
   factory VolModel.fromVolPdf(VolPdf volPdf) {
     // Dates de départ et d'arrivée
     final dtDebut = volPdf.dateVol;
@@ -301,6 +246,9 @@ class VolModel {
     // Codes IATA (peuvent être vides)
     final depIata = volPdf.from.isNotEmpty ? volPdf.from.toUpperCase() : '';
     final arrIata = volPdf.to.isNotEmpty ? volPdf.to.toUpperCase() : '';
+
+    // Déterminer le statut TSV basé sur myChInDate
+    final tsv = _determineTsvStatus(dtDebut, dtFin, volPdf.myChInDate);
 
     // Créer le VolModel
     return VolModel(
@@ -313,11 +261,51 @@ class VolModel {
       dtFin: dtFin,
       cle: volPdf.cle,
       sAvion: volPdf.aC.isNotEmpty ? volPdf.aC : '',
-      tsv: '', // À déterminer selon la logique métier
+      tsv: tsv,
     );
   }
 
-  // Method to update ICAO codes manually if needed
+  /// Détermine le statut TSV (Time-Sensitive Visit) basé sur myChInDate
+  /// Retourne:
+  /// - "debut tsv" : Premier vol qui commence juste après la date de check-in
+  /// - "fin tsv" : Dernier vol qui se termine avant la prochaine date de check-in
+  /// - "dans tsv" : Vol entièrement dans la période TSV (entre deux check-in)
+  /// - "" si myChInDate est vide
+  static String _determineTsvStatus(DateTime dtDebut, DateTime dtFin, String myChInDate) {
+    if (myChInDate.isEmpty) {
+      return '';
+    }
+
+    try {
+      // Parser myChInDate au format "dd/MM/yyyy HH:mm"
+      final chInDateTime = Fct.parseDateTimeFromString(myChInDate);
+
+      // Comparer les dates
+      if (dtDebut.isAfter(chInDateTime) || dtDebut.isAtSameMomentAs(chInDateTime)) {
+        // Le vol commence à ou après la date de check-in
+        // C'est le premier vol après check-in
+        return "debut tsv";
+      } else if (dtFin.isBefore(chInDateTime) || dtFin.isAtSameMomentAs(chInDateTime)) {
+        // Le vol se termine avant ou à la date de check-in
+        // C'est le dernier vol avant le prochain check-in
+        return "fin tsv";
+      } else if (dtDebut.isBefore(chInDateTime) && dtFin.isAfter(chInDateTime)) {
+        // Le vol traverse la date de check-in
+        return "dans tsv";
+      }
+
+      return '';
+    } catch (e) {
+      // Si le parsing échoue, retourner une chaîne vide
+      return '';
+    }
+  }
+
+  // ============================================================================
+  // INSTANCE METHODS
+  // ============================================================================
+
+  /// Create new VolModel with updated ICAO codes
   VolModel updateIcaoCodes() {
     return VolModel(
       id: id,
@@ -327,8 +315,8 @@ class VolModel {
       depIata: depIata,
       arrIata: arrIata,
       dtFin: dtFin,
-      depIcao: _getIcaoByIata(depIata),
-      arrIcao: _getIcaoByIata(arrIata),
+      depIcao: DatabaseController.instance.getIcaoByIata(depIata),
+      arrIcao: DatabaseController.instance.getIcaoByIata(arrIata),
       label: label,
       cle: cle,
       sAvion: sAvion,
@@ -357,8 +345,8 @@ class VolModel {
         sDureeForfait = _getForfaitValue(typ, depIcao, arrIcao, dtDebut, dtFin);
       }
       arrForfait ??= _calculateArrForfait(typ, dtDebut, sDureeForfait ?? '');
-      sunrise ??= _calculateSunrise(typ, depIcao, arrIcao, dtDebut);
-      sunset ??= _calculateSunset(typ, depIcao, arrIcao, dtDebut);
+      sunrise ??= AeroportModel.calculateSunrise(typ, depIcao, arrIcao, dtDebut);
+      sunset ??= AeroportModel.calculateSunset(typ, depIcao, arrIcao, dtDebut);
 
       // Update night flight time if missing
       sNuitVol ??= _calculateNightFlightTime(typ, sunrise, sunset, dtDebut, dtFin);
@@ -387,30 +375,20 @@ class VolModel {
     }
   }
 
-  // Helper method to get airport name by IATA
-  static String _getAirportNameByIata(String iata) {
-    try {
-      final airport = DatabaseController.instance.airports.firstWhere(
-        (a) => a.iata.toUpperCase() == iata.toUpperCase(),
-      );
-      return airport.name;
-    } catch (e) {
-      return iata; // Return IATA if name not found
-    }
-  }
-
   // Getter for departure airport name
-  String get depAirportName => _getAirportNameByIata(depIata);
+  String get depAirportName => DatabaseController.instance.getAirportNameByIata(depIata);
 
   // Getter for arrival airport name
-  String get arrAirportName => _getAirportNameByIata(arrIata);
+  String get arrAirportName => DatabaseController.instance.getAirportNameByIata(arrIata);
 
-  // ========== GETTERS DURATION POUR TOUS LES CHAMPS ==========
+  // ============================================================================
+  // CONVERSION HELPERS (Private)
+  // ============================================================================
 
-  /// Convertit une chaîne "XXhYY" en Duration (utilise Fct.stringToDuration)
+  /// Convert duration string "XXhYY" to Duration object
   static Duration _stringToDuration(String? durationString) => Fct.stringToDuration(durationString);
 
-  /// Convertit une Duration en chaîne "XXhYY" (utilise Fct.durationToString)
+  /// Convert Duration object to string "XXhYY"
   static String _durationToString(Duration duration) => Fct.durationToString(duration);
 
   /// Durée du vol (dtFin - dtDebut)
@@ -451,12 +429,14 @@ class VolModel {
   /// Alias pour compatibilité
   Duration get nightFlightDuration => nuitVol;
 
-  // ========== MÉTHODES STATIQUES POUR LES CUMULS MENSUELS ==========
+  // ============================================================================
+  // CUMULATIVE CALCULATION METHODS (Static)
+  // ============================================================================
 
-  /// Calcule le cumul mensuel pour un champ donné
-  /// [vols] : Liste de tous les vols
-  /// [referenceVol] : Vol de référence pour déterminer le mois
-  /// [fieldExtractor] : Fonction pour extraire le champ à cumuler
+  /// Calculate cumulative duration for a specific field from month start to reference flight
+  /// [vols] : List of all flights
+  /// [referenceVol] : Reference flight to determine month and end date
+  /// [fieldExtractor] : Function to extract field from each flight
   static String calculateMonthlyCumul(
     List<VolModel> vols,
     VolModel referenceVol,
@@ -500,12 +480,9 @@ class VolModel {
   }
 
   /// get lists of crew
-  static List<Map<String, String>> getCrews(List<Crew> crews) =>
-      crews.map((crew) => {
-        'Mat': crew.crewId, 
-        'pos': crew.pos, 
-        'name': '${crew.firstname} ${crew.lastname}'
-      }).toList();
+  static List<Map<String, String>> getCrews(List<Crew> crews) => crews
+      .map((crew) => {'Mat': crew.crewId, 'pos': crew.pos, 'name': '${crew.firstname} ${crew.lastname}'})
+      .toList();
 
   /// Calcule le cumul de sNuitForfait depuis le début du mois (pour type tVol)
   static String calculateCumulNuitForfait(List<VolModel> vols, VolModel referenceVol) {
@@ -575,7 +552,7 @@ class VolModel {
       mepForfaitString: sMepForfait ?? this.sMepForfait,
       nightForfaitString: sNuitForfait ?? this.sNuitForfait,
     );
-    
+
     // Copy crews by creating new independent Crew instances linked only to the new VolModel
     // This ensures the copied VolModel and its crews are independent from the original
     for (var crew in crews) {
@@ -592,7 +569,7 @@ class VolModel {
       newCrew.volModel.target = copy;
       copy.crews.add(newCrew);
     }
-    
+
     return copy;
   }
 

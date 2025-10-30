@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import '../../Models/VolsModels/vol_traite_mois.dart';
 
 import '../../Models/volpdfs/chechplatform.dart';
+import '../../controllers/database_controller.dart';
+import '../../routes/app_routes.dart';
 import '../../theming/app_color.dart';
 import '../../theming/app_theme.dart';
 import '../widgets/background_container.dart';
@@ -116,10 +118,33 @@ class ImportRosterScreen extends GetView<ImportrosterCtl> {
       padding: EdgeInsets.all(AppTheme.getWidth(iphoneSize: 10, ipadsize: 10)),
       child: SingleChildScrollView(
         child: Column(
-          children: List.generate(months.length, (index) {
-            final volTraiteMois = months[index];
-            return _buildMonthSection(volTraiteMois);
-          }),
+          children: [
+            Row(
+              children: [
+                MyButton(
+                  width: _buttonWidth,
+                  label: 'button_save'.tr,
+                  func: () {
+                    DatabaseController.instance.addVolPdfLists(controller.volPdfLists);
+                    controller.etape = 0;
+                    Routes.toHome();
+                  },
+                ),
+                MyButton(
+                  width: _buttonWidth,
+                  label: 'button_return'.tr,
+                  func: () {
+                    controller.etape = 0;
+                    Routes.toHome();
+                  },
+                ),
+              ],
+            ),
+            ...List.generate(months.length, (index) {
+              final volTraiteMois = months[index];
+              return _buildMonthSection(volTraiteMois);
+            }),
+          ],
         ),
       ),
     );
@@ -337,10 +362,10 @@ class ImportRosterScreen extends GetView<ImportrosterCtl> {
                         ),
                         SizedBox(height: AppTheme.h(x: 4)),
                         ...blcTags.map((tag) {
-                          print(
-                            """tag.split('/')[0] ${tag.split('/')[0]}. /. volTraiteMois.cumulTotalDureeVol:${volTraiteMois.cumulTotalDureeVol}""",
-                          );
-                          print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                          // print(
+                          //   """tag.split('/')[0] ${tag.split('/')[0]}. /. volTraiteMois.cumulTotalDureeVol:${volTraiteMois.cumulTotalDureeVol}""",
+                          // );
+                          // print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

@@ -10,6 +10,8 @@ import '../Models/ActsModels/myduty.dart';
 import '../Models/VolsModels/vol.dart';
 import '../Models/VolsModels/vol_traite.dart';
 import '../Models/VolsModels/vol_traite_mois.dart';
+import '../Models/volpdfs/vol_pdf.dart';
+import '../Models/volpdfs/vol_pdf_list.dart';
 import '../Models/jsonModels/datas/airport_model.dart';
 import '../Models/jsonModels/datas/forfait_model.dart';
 import '../Models/jsonModels/datas/forfaitlist.model.dart';
@@ -95,6 +97,31 @@ class DatabaseController extends GetxController {
   String getAirportCity(String iata) {
     final airport = getAeroportByIata(iata);
     return airport?.city ?? iata;
+  }
+
+  /// Récupère le code ICAO à partir du code IATA.
+  /// Retourne le code ICAO ou une chaîne vide si non trouvé.
+  /// Exemple: getIcaoByIata("CDG") → "LFPG"
+  String getIcaoByIata(String iata) {
+    try {
+      final airport = airports.firstWhere((a) => a.iata.toUpperCase() == iata.toUpperCase());
+      return airport.icao;
+    } catch (e) {
+      return ''; // Return empty string if not found
+    }
+  }
+
+  /// Récupère le nom de l'aéroport à partir du code IATA.
+  /// Retourne le nom de l'aéroport ou le code IATA en fallback.
+  String getAirportNameByIata(String iata) {
+    try {
+      final airport = airports.firstWhere(
+        (a) => a.iata.toUpperCase() == iata.toUpperCase(),
+      );
+      return airport.name;
+    } catch (e) {
+      return iata; // Return IATA if name not found
+    }
   }
 
   /// Exporte la liste complète des aéroports au format JSON.
@@ -353,6 +380,56 @@ class DatabaseController extends GetxController {
   }
 
   // =====================================================================
+  // SECTION: VOLS PDF LIST (VolPdfList)
+  // =====================================================================
+
+  final RxList<VolPdfList> _volPdfLists = <VolPdfList>[].obs;
+  List<VolPdfList> get volPdfLists => _volPdfLists;
+  set volPdfLists(List<VolPdfList> val) {
+    _volPdfLists.value = val;
+  }
+
+  final RxList<VolPdf> _volPdfs = <VolPdf>[].obs;
+  List<VolPdf> get volPdfs => _volPdfs;
+  set volPdfs(List<VolPdf> val) {
+    _volPdfs.value = val;
+  }
+
+  /// Ajoute une liste de PDFs de vol à la base de données.
+  // void addVolPdfList(VolPdfList volPdfList) {
+  //   final currentLists = objectBox.getAllVolPdfLists();
+  //   currentLists.add(volPdfList);
+  //   objectBox.replaceAllVolPdfLists(currentLists);
+  //   getAllVolPdfLists();
+  // }
+
+  /// Récupère toutes les listes de PDFs de vol de la base de données.
+  void getAllVolPdfLists() {
+    volPdfLists.assignAll(objectBox.getAllVolPdfLists());
+    volPdfs.assignAll(volPdfLists.expand((list) => list.volPdfs).toList());
+    //print(volPdfLists.length);
+  }
+
+  /// Ajoute plusieurs listes de PDFs de vol à la base de données.
+  void addVolPdfLists(List<VolPdfList> lists) {
+    objectBox.addAllVolPdfLists(lists);
+    getAllVolPdfLists();
+  }
+
+  /// Remplace toutes les listes de PDFs de vol par une nouvelle liste.
+  void replaceAllVolPdfLists(List<VolPdfList> lists) {
+    objectBox.replaceAllVolPdfLists(lists);
+    getAllVolPdfLists();
+  }
+
+  /// Supprime toutes les listes de PDFs de vol.
+  void clearAllVolPdfLists() {
+    objectBox.removeAllVolPdfLists();
+    volPdfs.clear();
+    getAllVolPdfLists();
+  }
+
+  // =====================================================================
   // SECTION: VOLS TRAITÉS (VolTraiteModel & VolTraiteMoisModel)
   // =====================================================================
 
@@ -404,6 +481,7 @@ class DatabaseController extends GetxController {
     getAllVolTraitesParMois();
     getAllDuties();
     getAllVolModels();
+    getAllVolPdfLists();
   }
 
   /// Supprime toutes les données de la base et rafraîchit les listes en mémoire.
@@ -414,6 +492,7 @@ class DatabaseController extends GetxController {
     objectBox.removeAllDownloads();
     objectBox.removeAllAirports();
     objectBox.removeAllForfaitLists();
+    objectBox.removeAllVolPdfLists();
     getAllDatas();
   }
 }

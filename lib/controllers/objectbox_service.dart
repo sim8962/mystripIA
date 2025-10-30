@@ -4,6 +4,7 @@ import 'package:path_provider/path_provider.dart';
 
 import '../Models/ActsModels/myduty.dart';
 import '../Models/VolsModels/vol_traite_mois.dart';
+import '../Models/volpdfs/vol_pdf_list.dart';
 import '../Models/jsonModels/datas/airport_model.dart';
 import '../Models/jsonModels/datas/forfaitlist.model.dart';
 import '../Models/userModel/my_download.dart';
@@ -24,6 +25,7 @@ class ObjectBoxService {
   late final Box<MyDownLoad> _downloadBox;
   late final Box<AeroportModel> _airportBox;
   late final Box<ForfaitListModel> _forfaitListBox;
+  late final Box<VolPdfList> _volPdfListBox;
 
   bool _isClosed = false;
   bool get isClosed => _isClosed;
@@ -52,6 +54,7 @@ class ObjectBoxService {
     _downloadBox = Box<MyDownLoad>(store);
     _airportBox = Box<AeroportModel>(store);
     _forfaitListBox = Box<ForfaitListModel>(store);
+    _volPdfListBox = Box<VolPdfList>(store);
   }
 
   /// Constructeur privé pour l'initialisation.
@@ -112,6 +115,40 @@ class ObjectBoxService {
   List<MyDuty> getAllDuties() {
     final list = _dutyBox.getAll();
     list.sort((a, b) => _compareNullable<DateTime>(a.startTime, b.startTime));
+    return list;
+  }
+
+  // =====================================================================
+  // SECTION: VOLS PDF LIST (VolPdfList)
+  // =====================================================================
+
+  /// Remplace toutes les listes de PDFs de vols par une nouvelle liste triée.
+  List<VolPdfList> replaceAllVolPdfLists(List<VolPdfList> volPdfLists) {
+    List<VolPdfList> newVolPdfLists = volPdfLists.map((list) => list).toList();
+    newVolPdfLists.sort((a, b) => _compareNullable<DateTime>(a.month, b.month));
+    removeAllVolPdfLists();
+    addAllVolPdfLists(newVolPdfLists);
+    return newVolPdfLists;
+  }
+
+  /// Supprime toutes les listes de PDFs de vols de la base de données.
+  void removeAllVolPdfLists() {
+    store.runInTransaction(TxMode.write, () {
+      _volPdfListBox.removeAll();
+    });
+  }
+
+  /// Ajoute une liste de listes de PDFs de vols à la base de données.
+  void addAllVolPdfLists(List<VolPdfList> volPdfLists) {
+    store.runInTransaction(TxMode.write, () {
+      _volPdfListBox.putMany(volPdfLists);
+    });
+  }
+
+  /// Récupère toutes les listes de PDFs de vols triées par mois.
+  List<VolPdfList> getAllVolPdfLists() {
+    final list = _volPdfListBox.getAll();
+    list.sort((a, b) => _compareNullable<DateTime>(a.month, b.month));
     return list;
   }
 

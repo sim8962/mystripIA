@@ -13,8 +13,8 @@ class MyErrorInfo {
   ///
   /// Returns a [SnackbarController] that can be used to control the snackbar.
   static SnackbarController erreurInos({required String label, required String content}) {
-    print("""label: $label, content: $content""");
-    print("======================================================");
+    //print("""label: $label, content: $content""");
+    // print("======================================================");
     return Get.snackbar(
       label,
       content,
