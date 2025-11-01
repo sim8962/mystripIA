@@ -35,8 +35,13 @@ const String myPass = 'AbdeL@5715Jam';
 
 final DateFormat dateFormatMMMm = DateFormat('dd EEE HH:mm');
 final DateFormat dateFormatDD = DateFormat('dd-MM-yyyy');
+final DateFormat dateFormatDDHH = DateFormat('dd/MM/yyyy HH:mm');
+
 final DateFormat dateFormatMMM = DateFormat('dd/HH:mm');
 final DateFormat dateFormatHH = DateFormat('HH:mm');
+final DateFormat dateFormatEE = DateFormat("EEE");
+final DateFormat dateFormatdd = DateFormat("dd");
+final DateFormat dateFormatMM = DateFormat("MMM");
 
 // =====================================================================
 // SECTION: RESSOURCES (IMAGES ET ICÔNES)

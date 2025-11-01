@@ -180,7 +180,7 @@ class ForfaitModel {
     try {
       // Check if forfaits box is empty
       if (dbController.forfaits.isEmpty) {
-        List<ForfaitModel> forfaits = await ForfaitModel.fetchFromJson();
+        List<ForfaitModel> forfaits = await fetchFromJson();
 
         // Bulk insert forfaits if we have any
         if (forfaits.isNotEmpty) {

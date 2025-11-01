@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:mystrip25/Models/ActsModels/typ_const.dart';
 import 'package:objectbox/objectbox.dart';
-import 'vol.dart';
+
 import '../../helpers/fct.dart';
+import 'vol.dart';
 
 /// Modèle ObjectBox pour stocker les données traitées d'un vol
 /// Contient tous les champs calculés et cumuls pour optimiser les performances
@@ -180,7 +181,9 @@ class VolTraiteModel {
     final sDebut = Fct.formatTimeToString(volModel.dtDebut);
     final sFin = Fct.formatTimeToString(volModel.dtFin);
     final sArrForfait = volModel.arrForfait != null ? Fct.formatTimeToString(volModel.arrForfait!) : '';
-    final sArrMepForfait = volModel.arrMepForfait != null ? Fct.formatTimeToString(volModel.arrMepForfait!) : '';
+    final sArrMepForfait = volModel.arrMepForfait != null
+        ? Fct.formatTimeToString(volModel.arrMepForfait!)
+        : '';
     final sSunrise = volModel.sunrise != null ? Fct.formatTimeToString(volModel.sunrise!) : '';
     final sSunset = volModel.sunset != null ? Fct.formatTimeToString(volModel.sunset!) : '';
     final now = DateTime.now();

@@ -281,7 +281,7 @@ class VolTraiteWidget {
             children: [
               SizedBox(
                 width: AppTheme.getWidth(iphoneSize: space1, ipadsize: space1),
-                child: Text('crew_matricule'.tr, style: AppStylingConstant.volTitreCrew),
+                child: Text('crew_sen'.tr, style: AppStylingConstant.volTitreCrew),
               ),
               SizedBox(
                 width: AppTheme.getWidth(iphoneSize: space2, ipadsize: space2),
@@ -306,7 +306,7 @@ class VolTraiteWidget {
                     children: [
                       SizedBox(
                         width: AppTheme.getWidth(iphoneSize: space1, ipadsize: space1),
-                        child: Text(member['Mat'] ?? '', style: AppStylingConstant.volCrew),
+                        child: Text(member['sen'] ?? '', style: AppStylingConstant.volCrew),
                       ),
                       SizedBox(
                         width: AppTheme.getWidth(iphoneSize: space2, ipadsize: space2),

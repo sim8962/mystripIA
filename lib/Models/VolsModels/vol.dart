@@ -1,4 +1,5 @@
 import 'package:objectbox/objectbox.dart';
+import '../../helpers/constants.dart';
 import '../ActsModels/crew.dart';
 import '../../controllers/database_controller.dart';
 import '../ActsModels/typ_const.dart';
@@ -83,7 +84,8 @@ class VolModel {
       sMepForfait = '';
       this.arrForfait = arrForfait ?? _calculateArrForfait(typ, dtDebut, sDureeForfait ?? '');
       this.arrMepForfait = null;
-      this.sunrise = sunrise ?? AeroportModel.calculateSunrise(typ, resolvedDepIcao, resolvedArrIcao, dtDebut);
+      this.sunrise =
+          sunrise ?? AeroportModel.calculateSunrise(typ, resolvedDepIcao, resolvedArrIcao, dtDebut);
       this.sunset = sunset ?? AeroportModel.calculateSunset(typ, resolvedDepIcao, resolvedArrIcao, dtDebut);
 
       // Calculate night flight time for Vol type
@@ -240,8 +242,9 @@ class VolModel {
   /// Automatically determines TSV status based on myChInDate
   factory VolModel.fromVolPdf(VolPdf volPdf) {
     // Dates de départ et d'arrivée
-    final dtDebut = volPdf.dateVol;
-    final dtFin = VolPdf.parseDateTimeFromString(volPdf.myArrDate, volPdf.dateVol);
+    final dtDebut = dateFormatDDHH.parse(volPdf.myDepDate);
+
+    final dtFin = dateFormatDDHH.parse(volPdf.myArrDate);
 
     // Codes IATA (peuvent être vides)
     final depIata = volPdf.from.isNotEmpty ? volPdf.from.toUpperCase() : '';
@@ -278,8 +281,8 @@ class VolModel {
 
     try {
       // Parser myChInDate au format "dd/MM/yyyy HH:mm"
-      final chInDateTime = Fct.parseDateTimeFromString(myChInDate);
-
+      final chInDateTime = dateFormatDDHH.tryParse(myChInDate);
+      if (chInDateTime == null) return '';
       // Comparer les dates
       if (dtDebut.isAfter(chInDateTime) || dtDebut.isAtSameMomentAs(chInDateTime)) {
         // Le vol commence à ou après la date de check-in
@@ -561,7 +564,7 @@ class VolModel {
         crewId: crew.crewId,
         firstname: crew.firstname,
         lastname: crew.lastname,
-        matricule: crew.matricule,
+        sen: crew.sen,
         pos: crew.pos,
         base: crew.base,
       );

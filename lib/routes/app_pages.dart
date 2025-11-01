@@ -11,7 +11,7 @@ import '../views/5_cruds/forfait_crud/forfait_screen.dart';
 import '../views/6_versCalender/calender_screen.dart';
 
 import '../views/7_importRoster/importroster_screen.dart';
-import '../views/7_importRoster/table_vol.dart';
+import '../views/9_comparevol/comparevolscreen.dart';
 
 import 'app_routes.dart';
 
@@ -36,10 +36,6 @@ class AppPages {
       page: () => ImportRosterScreen(),
       binding: AllControllerBinding(),
     ),
-    GetPage(
-      name: Routes.tableScreen,
-      page: () => const Tablescreen(),
-      binding: AllControllerBinding(),
-    ),
+    GetPage(name: Routes.tableScreen, page: () => const CompareVolScreen(), binding: AllControllerBinding()),
   ];
 }

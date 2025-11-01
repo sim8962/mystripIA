@@ -176,7 +176,7 @@ class AppTranslations extends Translations {
       'flight_nil': 'nil',
 
       // Crew Table Headers
-      'crew_matricule': 'Mat',
+      'crew_sen': 'Sen',
       'crew_position': 'Pos',
       'crew_name': 'Name',
 
@@ -435,7 +435,7 @@ class AppTranslations extends Translations {
       'flight_nil': 'nil',
 
       // Crew Table Headers
-      'crew_matricule': 'Mat',
+      'crew_sen': 'Sen',
       'crew_position': 'Pos',
       'crew_name': 'Nom',
 

@@ -115,9 +115,7 @@ class DatabaseController extends GetxController {
   /// Retourne le nom de l'aéroport ou le code IATA en fallback.
   String getAirportNameByIata(String iata) {
     try {
-      final airport = airports.firstWhere(
-        (a) => a.iata.toUpperCase() == iata.toUpperCase(),
-      );
+      final airport = airports.firstWhere((a) => a.iata.toUpperCase() == iata.toUpperCase());
       return airport.name;
     } catch (e) {
       return iata; // Return IATA if name not found

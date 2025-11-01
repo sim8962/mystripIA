@@ -25,11 +25,11 @@ dependencies:
   # ============================================
   # DATABASE & PERSISTENCE
   # ============================================
-  objectbox: ^5.0.0 # NoSQL database for Flutter
-  objectbox_flutter_libs: ^5.0.0 # ObjectBox native libraries
+  objectbox: ^5.0.1 # NoSQL database for Flutter
+  objectbox_flutter_libs: ^5.0.1 # ObjectBox native libraries
   flutter_secure_storage: ^9.2.4 # Secure storage for sensitive data
   cryptography: ^2.7.0 # Cryptographic operations
-  source_gen: ^3.1.0
+  source_gen: ^4.0.2
   # ============================================
   # UI COMPONENTS & STYLING
   # ============================================
@@ -86,9 +86,9 @@ dev_dependencies:
   # ============================================
   # CODE GENERATION
   # ============================================
-  build_runner: ^2.4.0 # Keep this
+  build_runner: ^2.10.1 # Keep this
   objectbox_generator:
-    ^5.0.0 # Revert to 5.0.0
+    ^5.0.1 # Revert to 5.0.0
     # Keep analyzer explicitly defined to ensure a new enough version
 # ============================================
 # FLUTTER CONFIGURATION

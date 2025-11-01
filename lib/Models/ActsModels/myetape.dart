@@ -1,6 +1,5 @@
 import 'package:objectbox/objectbox.dart';
 import 'package:get/get.dart';
-
 import '../VolsModels/vol.dart';
 import './typ.dart';
 import './myduty.dart';

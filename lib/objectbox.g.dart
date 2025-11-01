@@ -9,8 +9,7 @@
 import 'dart:typed_data';
 
 import 'package:flat_buffers/flat_buffers.dart' as fb;
-import 'package:objectbox/internal.dart'
-    as obx_int; // generated code can access "internal" functionality
+import 'package:objectbox/internal.dart' as obx_int; // generated code can access "internal" functionality
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
@@ -19,6 +18,7 @@ import 'Models/ActsModels/myduty.dart';
 import 'Models/ActsModels/myetape.dart';
 import 'Models/ActsModels/typ.dart';
 import 'Models/VolsModels/vol.dart';
+
 import 'Models/VolsModels/vol_traite.dart';
 import 'Models/VolsModels/vol_traite_mois.dart';
 import 'Models/jsonModels/datas/airport_model.dart';
@@ -38,36 +38,11 @@ final _entities = <obx_int.ModelEntity>[
     lastPropertyId: const obx_int.IdUid(9, 7886607517188494381),
     flags: 0,
     properties: <obx_int.ModelProperty>[
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 1898355380133034674),
-        name: 'id',
-        type: 6,
-        flags: 1,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(2, 4675911980449452810),
-        name: 'icao',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(3, 8383249995591403391),
-        name: 'iata',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(4, 7699091937409174945),
-        name: 'name',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(5, 8535439497796383950),
-        name: 'city',
-        type: 9,
-        flags: 0,
-      ),
+      obx_int.ModelProperty(id: const obx_int.IdUid(1, 1898355380133034674), name: 'id', type: 6, flags: 1),
+      obx_int.ModelProperty(id: const obx_int.IdUid(2, 4675911980449452810), name: 'icao', type: 9, flags: 0),
+      obx_int.ModelProperty(id: const obx_int.IdUid(3, 8383249995591403391), name: 'iata', type: 9, flags: 0),
+      obx_int.ModelProperty(id: const obx_int.IdUid(4, 7699091937409174945), name: 'name', type: 9, flags: 0),
+      obx_int.ModelProperty(id: const obx_int.IdUid(5, 8535439497796383950), name: 'city', type: 9, flags: 0),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(6, 9007524106793190419),
         name: 'country',
@@ -118,12 +93,7 @@ final _entities = <obx_int.ModelEntity>[
         indexId: const obx_int.IdUid(2, 1143523934415270206),
         relationTarget: 'MyDuty',
       ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(3, 1431288268430097098),
-        name: 'id',
-        type: 6,
-        flags: 129,
-      ),
+      obx_int.ModelProperty(id: const obx_int.IdUid(3, 1431288268430097098), name: 'id', type: 6, flags: 129),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(4, 2801914836043350351),
         name: 'crewId',
@@ -148,18 +118,8 @@ final _entities = <obx_int.ModelEntity>[
         type: 9,
         flags: 0,
       ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(8, 4450300001438791799),
-        name: 'pos',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(9, 8734828892144025033),
-        name: 'base',
-        type: 9,
-        flags: 0,
-      ),
+      obx_int.ModelProperty(id: const obx_int.IdUid(8, 4450300001438791799), name: 'pos', type: 9, flags: 0),
+      obx_int.ModelProperty(id: const obx_int.IdUid(9, 8734828892144025033), name: 'base', type: 9, flags: 0),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(10, 5475991727489001701),
         name: 'volModelId',
@@ -178,18 +138,8 @@ final _entities = <obx_int.ModelEntity>[
     lastPropertyId: const obx_int.IdUid(3, 6385521583544589037),
     flags: 0,
     properties: <obx_int.ModelProperty>[
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 655033706533054759),
-        name: 'id',
-        type: 6,
-        flags: 1,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(2, 358368090076526703),
-        name: 'name',
-        type: 9,
-        flags: 0,
-      ),
+      obx_int.ModelProperty(id: const obx_int.IdUid(1, 655033706533054759), name: 'id', type: 6, flags: 1),
+      obx_int.ModelProperty(id: const obx_int.IdUid(2, 358368090076526703), name: 'name', type: 9, flags: 0),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(3, 6385521583544589037),
         name: 'date',
@@ -212,18 +162,8 @@ final _entities = <obx_int.ModelEntity>[
     lastPropertyId: const obx_int.IdUid(11, 588787552599325038),
     flags: 0,
     properties: <obx_int.ModelProperty>[
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 5696038714843015416),
-        name: 'id',
-        type: 6,
-        flags: 1,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(2, 6442133008560455530),
-        name: 'cle',
-        type: 9,
-        flags: 0,
-      ),
+      obx_int.ModelProperty(id: const obx_int.IdUid(1, 5696038714843015416), name: 'id', type: 6, flags: 1),
+      obx_int.ModelProperty(id: const obx_int.IdUid(2, 6442133008560455530), name: 'cle', type: 9, flags: 0),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(3, 3122605427127306295),
         name: 'saison',
@@ -288,12 +228,7 @@ final _entities = <obx_int.ModelEntity>[
     lastPropertyId: const obx_int.IdUid(5, 1871625104648271802),
     flags: 0,
     properties: <obx_int.ModelProperty>[
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 8700745739563674762),
-        name: 'id',
-        type: 6,
-        flags: 1,
-      ),
+      obx_int.ModelProperty(id: const obx_int.IdUid(1, 8700745739563674762), name: 'id', type: 6, flags: 1),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(2, 7639021864892206846),
         name: 'jsonContent',
@@ -330,12 +265,7 @@ final _entities = <obx_int.ModelEntity>[
     lastPropertyId: const obx_int.IdUid(8, 2825894120016527937),
     flags: 0,
     properties: <obx_int.ModelProperty>[
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 6160124486903242114),
-        name: 'id',
-        type: 6,
-        flags: 129,
-      ),
+      obx_int.ModelProperty(id: const obx_int.IdUid(1, 6160124486903242114), name: 'id', type: 6, flags: 129),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(2, 2171488053467485524),
         name: 'myMonth',
@@ -389,16 +319,8 @@ final _entities = <obx_int.ModelEntity>[
       ),
     ],
     backlinks: <obx_int.ModelBacklink>[
-      obx_int.ModelBacklink(
-        name: 'crews',
-        srcEntity: 'Crew',
-        srcField: 'myDuty',
-      ),
-      obx_int.ModelBacklink(
-        name: 'etapes',
-        srcEntity: 'MyEtape',
-        srcField: 'myDuty',
-      ),
+      obx_int.ModelBacklink(name: 'crews', srcEntity: 'Crew', srcField: 'myDuty'),
+      obx_int.ModelBacklink(name: 'etapes', srcEntity: 'MyEtape', srcField: 'myDuty'),
     ],
   ),
   obx_int.ModelEntity(
@@ -407,12 +329,7 @@ final _entities = <obx_int.ModelEntity>[
     lastPropertyId: const obx_int.IdUid(8, 4728081608132273743),
     flags: 0,
     properties: <obx_int.ModelProperty>[
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 7838496666313441658),
-        name: 'id',
-        type: 6,
-        flags: 129,
-      ),
+      obx_int.ModelProperty(id: const obx_int.IdUid(1, 7838496666313441658), name: 'id', type: 6, flags: 129),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(2, 5389005964426926744),
         name: 'startTime',
@@ -477,30 +394,15 @@ final _entities = <obx_int.ModelEntity>[
     lastPropertyId: const obx_int.IdUid(4, 5740774173345793194),
     flags: 0,
     properties: <obx_int.ModelProperty>[
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 8085986616724075656),
-        name: 'id',
-        type: 6,
-        flags: 129,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(2, 4844674664213380605),
-        name: 'typ',
-        type: 9,
-        flags: 0,
-      ),
+      obx_int.ModelProperty(id: const obx_int.IdUid(1, 8085986616724075656), name: 'id', type: 6, flags: 129),
+      obx_int.ModelProperty(id: const obx_int.IdUid(2, 4844674664213380605), name: 'typ', type: 9, flags: 0),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(3, 7038168244218687608),
         name: 'color',
         type: 9,
         flags: 0,
       ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(4, 5740774173345793194),
-        name: 'icon',
-        type: 9,
-        flags: 0,
-      ),
+      obx_int.ModelProperty(id: const obx_int.IdUid(4, 5740774173345793194), name: 'icon', type: 9, flags: 0),
     ],
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[],
@@ -511,12 +413,7 @@ final _entities = <obx_int.ModelEntity>[
     lastPropertyId: const obx_int.IdUid(7, 3228876673509742628),
     flags: 0,
     properties: <obx_int.ModelProperty>[
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 2438144686377755813),
-        name: 'id',
-        type: 6,
-        flags: 1,
-      ),
+      obx_int.ModelProperty(id: const obx_int.IdUid(1, 2438144686377755813), name: 'id', type: 6, flags: 1),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(2, 6457043268913413779),
         name: 'matricule',
@@ -556,11 +453,7 @@ final _entities = <obx_int.ModelEntity>[
     ],
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[
-      obx_int.ModelBacklink(
-        name: 'myDownLoads',
-        srcEntity: 'MyDownLoad',
-        srcField: '',
-      ),
+      obx_int.ModelBacklink(name: 'myDownLoads', srcEntity: 'MyDownLoad', srcField: ''),
     ],
   ),
   obx_int.ModelEntity(
@@ -569,30 +462,10 @@ final _entities = <obx_int.ModelEntity>[
     lastPropertyId: const obx_int.IdUid(23, 8248432171896701907),
     flags: 0,
     properties: <obx_int.ModelProperty>[
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 3850350166140906016),
-        name: 'id',
-        type: 6,
-        flags: 129,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(2, 1254767335862193091),
-        name: 'cle',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(3, 407282332873674746),
-        name: 'typ',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(4, 2702338602972199440),
-        name: 'nVol',
-        type: 9,
-        flags: 0,
-      ),
+      obx_int.ModelProperty(id: const obx_int.IdUid(1, 3850350166140906016), name: 'id', type: 6, flags: 129),
+      obx_int.ModelProperty(id: const obx_int.IdUid(2, 1254767335862193091), name: 'cle', type: 9, flags: 0),
+      obx_int.ModelProperty(id: const obx_int.IdUid(3, 407282332873674746), name: 'typ', type: 9, flags: 0),
+      obx_int.ModelProperty(id: const obx_int.IdUid(4, 2702338602972199440), name: 'nVol', type: 9, flags: 0),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(5, 4680177869392860941),
         name: 'dtDebut',
@@ -701,20 +574,11 @@ final _entities = <obx_int.ModelEntity>[
         type: 9,
         flags: 0,
       ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(23, 8248432171896701907),
-        name: 'tsv',
-        type: 9,
-        flags: 0,
-      ),
+      obx_int.ModelProperty(id: const obx_int.IdUid(23, 8248432171896701907), name: 'tsv', type: 9, flags: 0),
     ],
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[
-      obx_int.ModelBacklink(
-        name: 'crews',
-        srcEntity: 'Crew',
-        srcField: 'volModel',
-      ),
+      obx_int.ModelBacklink(name: 'crews', srcEntity: 'Crew', srcField: 'volModel'),
     ],
   ),
   obx_int.ModelEntity(
@@ -723,24 +587,9 @@ final _entities = <obx_int.ModelEntity>[
     lastPropertyId: const obx_int.IdUid(39, 6714547670195736461),
     flags: 0,
     properties: <obx_int.ModelProperty>[
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 7520673271943498956),
-        name: 'id',
-        type: 6,
-        flags: 129,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(3, 3410475754437422942),
-        name: 'typ',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(4, 5367674099441132972),
-        name: 'nVol',
-        type: 9,
-        flags: 0,
-      ),
+      obx_int.ModelProperty(id: const obx_int.IdUid(1, 7520673271943498956), name: 'id', type: 6, flags: 129),
+      obx_int.ModelProperty(id: const obx_int.IdUid(3, 3410475754437422942), name: 'typ', type: 9, flags: 0),
+      obx_int.ModelProperty(id: const obx_int.IdUid(4, 5367674099441132972), name: 'nVol', type: 9, flags: 0),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(5, 5837597482833726511),
         name: 'dtDebut',
@@ -915,12 +764,7 @@ final _entities = <obx_int.ModelEntity>[
         type: 9,
         flags: 0,
       ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(39, 6714547670195736461),
-        name: 'tsv',
-        type: 9,
-        flags: 0,
-      ),
+      obx_int.ModelProperty(id: const obx_int.IdUid(39, 6714547670195736461), name: 'tsv', type: 9, flags: 0),
     ],
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[],
@@ -931,12 +775,7 @@ final _entities = <obx_int.ModelEntity>[
     lastPropertyId: const obx_int.IdUid(17, 580409135656480561),
     flags: 0,
     properties: <obx_int.ModelProperty>[
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 4997127988628861439),
-        name: 'id',
-        type: 6,
-        flags: 129,
-      ),
+      obx_int.ModelProperty(id: const obx_int.IdUid(1, 4997127988628861439), name: 'id', type: 6, flags: 129),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(2, 7961644977691499131),
         name: 'premierJourMois',
@@ -956,12 +795,7 @@ final _entities = <obx_int.ModelEntity>[
         type: 6,
         flags: 0,
       ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(5, 1016652522183114355),
-        name: 'mois',
-        type: 6,
-        flags: 0,
-      ),
+      obx_int.ModelProperty(id: const obx_int.IdUid(5, 1016652522183114355), name: 'mois', type: 6, flags: 0),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(6, 4753334089645614755),
         name: 'cumulTotalDureeVol',
@@ -1050,12 +884,7 @@ final _entities = <obx_int.ModelEntity>[
     lastPropertyId: const obx_int.IdUid(21, 5590600546568305083),
     flags: 0,
     properties: <obx_int.ModelProperty>[
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 3477303823627207923),
-        name: 'id',
-        type: 6,
-        flags: 1,
-      ),
+      obx_int.ModelProperty(id: const obx_int.IdUid(1, 3477303823627207923), name: 'id', type: 6, flags: 1),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(2, 7440335411634146461),
         name: 'volPdfListId',
@@ -1118,12 +947,7 @@ final _entities = <obx_int.ModelEntity>[
         type: 9,
         flags: 0,
       ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(12, 3139904078873954044),
-        name: 'pos',
-        type: 9,
-        flags: 0,
-      ),
+      obx_int.ModelProperty(id: const obx_int.IdUid(12, 3139904078873954044), name: 'pos', type: 9, flags: 0),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(13, 6551991448083593715),
         name: 'path',
@@ -1136,36 +960,16 @@ final _entities = <obx_int.ModelEntity>[
         type: 9,
         flags: 0,
       ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(15, 41975911659998697),
-        name: 'from',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(16, 6100574225888934700),
-        name: 'to',
-        type: 9,
-        flags: 0,
-      ),
+      obx_int.ModelProperty(id: const obx_int.IdUid(15, 41975911659998697), name: 'from', type: 9, flags: 0),
+      obx_int.ModelProperty(id: const obx_int.IdUid(16, 6100574225888934700), name: 'to', type: 9, flags: 0),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(17, 5539701878764644272),
         name: 'start',
         type: 9,
         flags: 0,
       ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(18, 5102816479962535356),
-        name: 'end',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(19, 7886846389890448243),
-        name: 'aC',
-        type: 9,
-        flags: 0,
-      ),
+      obx_int.ModelProperty(id: const obx_int.IdUid(18, 5102816479962535356), name: 'end', type: 9, flags: 0),
+      obx_int.ModelProperty(id: const obx_int.IdUid(19, 7886846389890448243), name: 'aC', type: 9, flags: 0),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(20, 8185210361869834045),
         name: 'layover',
@@ -1188,38 +992,19 @@ final _entities = <obx_int.ModelEntity>[
     lastPropertyId: const obx_int.IdUid(4, 4098506357886852764),
     flags: 0,
     properties: <obx_int.ModelProperty>[
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 4690985471674991687),
-        name: 'id',
-        type: 6,
-        flags: 1,
-      ),
+      obx_int.ModelProperty(id: const obx_int.IdUid(1, 4690985471674991687), name: 'id', type: 6, flags: 1),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(2, 673866276523601448),
         name: 'month',
         type: 10,
         flags: 0,
       ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(3, 1712751151784442661),
-        name: 'tags',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(4, 4098506357886852764),
-        name: 'path',
-        type: 9,
-        flags: 0,
-      ),
+      obx_int.ModelProperty(id: const obx_int.IdUid(3, 1712751151784442661), name: 'tags', type: 9, flags: 0),
+      obx_int.ModelProperty(id: const obx_int.IdUid(4, 4098506357886852764), name: 'path', type: 9, flags: 0),
     ],
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[
-      obx_int.ModelBacklink(
-        name: 'volPdfs',
-        srcEntity: 'VolPdf',
-        srcField: 'volPdfList',
-      ),
+      obx_int.ModelBacklink(name: 'volPdfs', srcEntity: 'VolPdf', srcField: 'volPdfList'),
     ],
   ),
 ];
@@ -1314,18 +1099,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
       objectFromFB: (obx.Store store, ByteData fbData) {
         final buffer = fb.BufferContext(fbData);
         final rootOffset = buffer.derefObject(0);
-        final idParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          4,
-          0,
-        );
-        final icaoParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 6, '');
-        final iataParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 8, '');
+        final idParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+        final icaoParam = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 6, '');
+        final iataParam = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 8, '');
         final nameParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 10, '');
@@ -1335,18 +1111,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final countryParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 14, '');
-        final latitudeParam = const fb.Float64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          16,
-          0,
-        );
-        final longitudeParam = const fb.Float64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          18,
-          0,
-        );
+        final latitudeParam = const fb.Float64Reader().vTableGet(buffer, rootOffset, 16, 0);
+        final longitudeParam = const fb.Float64Reader().vTableGet(buffer, rootOffset, 18, 0);
         final altitudeParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 20, '');
@@ -1367,11 +1133,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
     ),
     Crew: obx_int.EntityDefinition<Crew>(
       model: _entities[1],
-      toOneRelations: (Crew object) => [
-        object.myEtape,
-        object.myDuty,
-        object.volModel,
-      ],
+      toOneRelations: (Crew object) => [object.myEtape, object.myDuty, object.volModel],
       toManyRelations: (Crew object) => {},
       getId: (Crew object) => object.id,
       setId: (Crew object, int id) {
@@ -1381,7 +1143,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final crewIdOffset = fbb.writeString(object.crewId);
         final firstnameOffset = fbb.writeString(object.firstname);
         final lastnameOffset = fbb.writeString(object.lastname);
-        final matriculeOffset = fbb.writeString(object.matricule);
+        final matriculeOffset = fbb.writeString(object.sen);
         final posOffset = fbb.writeString(object.pos);
         final baseOffset = fbb.writeString(object.base);
         fbb.startTable(11);
@@ -1401,12 +1163,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
       objectFromFB: (obx.Store store, ByteData fbData) {
         final buffer = fb.BufferContext(fbData);
         final rootOffset = buffer.derefObject(0);
-        final idParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          8,
-          0,
-        );
+        final idParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
         final crewIdParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 10, '');
@@ -1419,9 +1176,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final matriculeParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 16, '');
-        final posParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 18, '');
+        final posParam = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 18, '');
         final baseParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 20, '');
@@ -1430,30 +1185,15 @@ obx_int.ModelDefinition getObjectBoxModel() {
           crewId: crewIdParam,
           firstname: firstnameParam,
           lastname: lastnameParam,
-          matricule: matriculeParam,
+          sen: matriculeParam,
           pos: posParam,
           base: baseParam,
         );
-        object.myEtape.targetId = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          4,
-          0,
-        );
+        object.myEtape.targetId = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
         object.myEtape.attach(store);
-        object.myDuty.targetId = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          6,
-          0,
-        );
+        object.myDuty.targetId = const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
         object.myDuty.attach(store);
-        object.volModel.targetId = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          22,
-          0,
-        );
+        object.volModel.targetId = const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
         object.volModel.attach(store);
         return object;
       },
@@ -1480,23 +1220,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
       objectFromFB: (obx.Store store, ByteData fbData) {
         final buffer = fb.BufferContext(fbData);
         final rootOffset = buffer.derefObject(0);
-        final idParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          4,
-          0,
-        );
-        final nameParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 6, '');
+        final idParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+        final nameParam = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 6, '');
         final dateParam = DateTime.fromMillisecondsSinceEpoch(
           const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0),
         );
-        final object = ForfaitListModel(
-          id: idParam,
-          name: nameParam,
-          date: dateParam,
-        );
+        final object = ForfaitListModel(id: idParam, name: nameParam, date: dateParam);
         obx_int.InternalToManyAccess.setRelInfo<ForfaitListModel>(
           object.forfaits,
           store,
@@ -1542,15 +1271,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
       objectFromFB: (obx.Store store, ByteData fbData) {
         final buffer = fb.BufferContext(fbData);
         final rootOffset = buffer.derefObject(0);
-        final idParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          4,
-          0,
-        );
-        final cleParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 6, '');
+        final idParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+        final cleParam = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 6, '');
         final saisonParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 8, '');
@@ -1604,12 +1326,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
         object.id = id;
       },
       objectToFB: (MyDownLoad object, fb.Builder fbb) {
-        final jsonContentOffset = object.jsonContent == null
-            ? null
-            : fbb.writeString(object.jsonContent!);
-        final htmlContentOffset = object.htmlContent == null
-            ? null
-            : fbb.writeString(object.htmlContent!);
+        final jsonContentOffset = object.jsonContent == null ? null : fbb.writeString(object.jsonContent!);
+        final htmlContentOffset = object.htmlContent == null ? null : fbb.writeString(object.htmlContent!);
         fbb.startTable(6);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, jsonContentOffset);
@@ -1636,12 +1354,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           htmlContent: htmlContentParam,
           downloadTime: downloadTimeParam,
         )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-        object.user.targetId = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          12,
-          0,
-        );
+        object.user.targetId = const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
         object.user.attach(store);
         return object;
       },
@@ -1651,16 +1364,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
       toOneRelations: (MyDuty object) => [object.typ],
       toManyRelations: (MyDuty object) => {
         obx_int.RelInfo<MyDuty>.toMany(2, object.id): object.vols,
-        obx_int.RelInfo<Crew>.toOneBacklink(
-          2,
-          object.id,
-          (Crew srcObject) => srcObject.myDuty,
-        ): object.crews,
-        obx_int.RelInfo<MyEtape>.toOneBacklink(
-          8,
-          object.id,
-          (MyEtape srcObject) => srcObject.myDuty,
-        ): object.etapes,
+        obx_int.RelInfo<Crew>.toOneBacklink(2, object.id, (Crew srcObject) => srcObject.myDuty): object.crews,
+        obx_int.RelInfo<MyEtape>.toOneBacklink(8, object.id, (MyEtape srcObject) => srcObject.myDuty):
+            object.etapes,
       },
       getId: (MyDuty object) => object.id,
       setId: (MyDuty object, int id) {
@@ -1685,12 +1391,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
       objectFromFB: (obx.Store store, ByteData fbData) {
         final buffer = fb.BufferContext(fbData);
         final rootOffset = buffer.derefObject(0);
-        final idParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          4,
-          0,
-        );
+        final idParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
         final myMonthParam = DateTime.fromMillisecondsSinceEpoch(
           const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0),
         );
@@ -1718,12 +1419,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           typeLabel: typeLabelParam,
           detailLabel: detailLabelParam,
         );
-        object.typ.targetId = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          18,
-          0,
-        );
+        object.typ.targetId = const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
         object.typ.attach(store);
         obx_int.InternalToManyAccess.setRelInfo<MyDuty>(
           object.vols,
@@ -1733,34 +1429,20 @@ obx_int.ModelDefinition getObjectBoxModel() {
         obx_int.InternalToManyAccess.setRelInfo<MyDuty>(
           object.crews,
           store,
-          obx_int.RelInfo<Crew>.toOneBacklink(
-            2,
-            object.id,
-            (Crew srcObject) => srcObject.myDuty,
-          ),
+          obx_int.RelInfo<Crew>.toOneBacklink(2, object.id, (Crew srcObject) => srcObject.myDuty),
         );
         obx_int.InternalToManyAccess.setRelInfo<MyDuty>(
           object.etapes,
           store,
-          obx_int.RelInfo<MyEtape>.toOneBacklink(
-            8,
-            object.id,
-            (MyEtape srcObject) => srcObject.myDuty,
-          ),
+          obx_int.RelInfo<MyEtape>.toOneBacklink(8, object.id, (MyEtape srcObject) => srcObject.myDuty),
         );
         return object;
       },
     ),
     MyEtape: obx_int.EntityDefinition<MyEtape>(
       model: _entities[6],
-      toOneRelations: (MyEtape object) => [
-        object.volTransit,
-        object.typ,
-        object.myDuty,
-      ],
-      toManyRelations: (MyEtape object) => {
-        obx_int.RelInfo<MyEtape>.toMany(3, object.id): object.crews,
-      },
+      toOneRelations: (MyEtape object) => [object.volTransit, object.typ, object.myDuty],
+      toManyRelations: (MyEtape object) => {obx_int.RelInfo<MyEtape>.toMany(3, object.id): object.crews},
       getId: (MyEtape object) => object.id,
       setId: (MyEtape object, int id) {
         object.id = id;
@@ -1784,12 +1466,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
       objectFromFB: (obx.Store store, ByteData fbData) {
         final buffer = fb.BufferContext(fbData);
         final rootOffset = buffer.derefObject(0);
-        final idParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          4,
-          0,
-        );
+        final idParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
         final startTimeParam = DateTime.fromMillisecondsSinceEpoch(
           const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0),
         );
@@ -1809,26 +1486,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
           typeLabel: typeLabelParam,
           detailLabel: detailLabelParam,
         );
-        object.volTransit.targetId = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          14,
-          0,
-        );
+        object.volTransit.targetId = const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
         object.volTransit.attach(store);
-        object.typ.targetId = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          16,
-          0,
-        );
+        object.typ.targetId = const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
         object.typ.attach(store);
-        object.myDuty.targetId = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          18,
-          0,
-        );
+        object.myDuty.targetId = const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
         object.myDuty.attach(store);
         obx_int.InternalToManyAccess.setRelInfo<MyEtape>(
           object.crews,
@@ -1861,27 +1523,15 @@ obx_int.ModelDefinition getObjectBoxModel() {
       objectFromFB: (obx.Store store, ByteData fbData) {
         final buffer = fb.BufferContext(fbData);
         final rootOffset = buffer.derefObject(0);
-        final idParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          4,
-          0,
-        );
-        final typParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 6, '');
+        final idParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+        final typParam = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 6, '');
         final colorParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 8, '');
         final iconParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 10, '');
-        final object = Typ(
-          id: idParam,
-          typ: typParam,
-          color: colorParam,
-          icon: iconParam,
-        );
+        final object = Typ(id: idParam, typ: typParam, color: colorParam, icon: iconParam);
 
         return object;
       },
@@ -1890,23 +1540,16 @@ obx_int.ModelDefinition getObjectBoxModel() {
       model: _entities[8],
       toOneRelations: (UserModel object) => [],
       toManyRelations: (UserModel object) => {
-        obx_int.RelInfo<MyDownLoad>.toOneBacklink(
-          5,
-          object.id,
-          (MyDownLoad srcObject) => srcObject.user,
-        ): object.myDownLoads,
+        obx_int.RelInfo<MyDownLoad>.toOneBacklink(5, object.id, (MyDownLoad srcObject) => srcObject.user):
+            object.myDownLoads,
       },
       getId: (UserModel object) => object.id,
       setId: (UserModel object, int id) {
         object.id = id;
       },
       objectToFB: (UserModel object, fb.Builder fbb) {
-        final emailOffset = object.email == null
-            ? null
-            : fbb.writeString(object.email!);
-        final usersOffset = object.users == null
-            ? null
-            : fbb.writeListInt64(object.users!);
+        final emailOffset = object.email == null ? null : fbb.writeString(object.email!);
+        final usersOffset = object.users == null ? null : fbb.writeListInt64(object.users!);
         fbb.startTable(8);
         fbb.addInt64(0, object.id);
         fbb.addInt64(1, object.matricule);
@@ -1921,29 +1564,13 @@ obx_int.ModelDefinition getObjectBoxModel() {
       objectFromFB: (obx.Store store, ByteData fbData) {
         final buffer = fb.BufferContext(fbData);
         final rootOffset = buffer.derefObject(0);
-        final matriculeParam = const fb.Int64Reader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          6,
-        );
+        final matriculeParam = const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 6);
         final emailParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGetNullable(buffer, rootOffset, 8);
-        final isRamParam = const fb.BoolReader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          10,
-        );
-        final isPntParam = const fb.BoolReader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          12,
-        );
-        final isMoyenCParam = const fb.BoolReader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          14,
-        );
+        final isRamParam = const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 10);
+        final isPntParam = const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 12);
+        final isMoyenCParam = const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 14);
         final usersParam = const fb.ListReader<int>(
           fb.Int64Reader(),
           lazy: false,
@@ -1959,11 +1586,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         obx_int.InternalToManyAccess.setRelInfo<UserModel>(
           object.myDownLoads,
           store,
-          obx_int.RelInfo<MyDownLoad>.toOneBacklink(
-            5,
-            object.id,
-            (MyDownLoad srcObject) => srcObject.user,
-          ),
+          obx_int.RelInfo<MyDownLoad>.toOneBacklink(5, object.id, (MyDownLoad srcObject) => srcObject.user),
         );
         return object;
       },
@@ -1972,11 +1595,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
       model: _entities[9],
       toOneRelations: (VolModel object) => [],
       toManyRelations: (VolModel object) => {
-        obx_int.RelInfo<Crew>.toOneBacklink(
-          10,
-          object.id,
-          (Crew srcObject) => srcObject.volModel,
-        ): object.crews,
+        obx_int.RelInfo<Crew>.toOneBacklink(10, object.id, (Crew srcObject) => srcObject.volModel):
+            object.crews,
       },
       getId: (VolModel object) => object.id,
       setId: (VolModel object, int id) {
@@ -1992,24 +1612,14 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final arrIcaoOffset = fbb.writeString(object.arrIcao);
         final labelOffset = fbb.writeString(object.label);
         final sAvionOffset = fbb.writeString(object.sAvion);
-        final sDureevolOffset = object.sDureevol == null
-            ? null
-            : fbb.writeString(object.sDureevol!);
-        final sNuitVolOffset = object.sNuitVol == null
-            ? null
-            : fbb.writeString(object.sNuitVol!);
+        final sDureevolOffset = object.sDureevol == null ? null : fbb.writeString(object.sDureevol!);
+        final sNuitVolOffset = object.sNuitVol == null ? null : fbb.writeString(object.sNuitVol!);
         final sDureeForfaitOffset = object.sDureeForfait == null
             ? null
             : fbb.writeString(object.sDureeForfait!);
-        final sNuitForfaitOffset = object.sNuitForfait == null
-            ? null
-            : fbb.writeString(object.sNuitForfait!);
-        final sDureeMepOffset = object.sDureeMep == null
-            ? null
-            : fbb.writeString(object.sDureeMep!);
-        final sMepForfaitOffset = object.sMepForfait == null
-            ? null
-            : fbb.writeString(object.sMepForfait!);
+        final sNuitForfaitOffset = object.sNuitForfait == null ? null : fbb.writeString(object.sNuitForfait!);
+        final sDureeMepOffset = object.sDureeMep == null ? null : fbb.writeString(object.sDureeMep!);
+        final sMepForfaitOffset = object.sMepForfait == null ? null : fbb.writeString(object.sMepForfait!);
         final tsvOffset = fbb.writeString(object.tsv);
         fbb.startTable(24);
         fbb.addInt64(0, object.id);
@@ -2041,35 +1651,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
       objectFromFB: (obx.Store store, ByteData fbData) {
         final buffer = fb.BufferContext(fbData);
         final rootOffset = buffer.derefObject(0);
-        final arrForfaitValue = const fb.Int64Reader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          30,
-        );
-        final sunriseValue = const fb.Int64Reader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          32,
-        );
-        final sunsetValue = const fb.Int64Reader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          34,
-        );
-        final arrMepForfaitValue = const fb.Int64Reader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          44,
-        );
-        final idParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          4,
-          0,
-        );
-        final typParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 8, '');
+        final arrForfaitValue = const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 30);
+        final sunriseValue = const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 32);
+        final sunsetValue = const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 34);
+        final arrMepForfaitValue = const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 44);
+        final idParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+        final typParam = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 8, '');
         final nVolParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 10, '');
@@ -2094,27 +1681,19 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final labelParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 24, '');
-        final cleParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 6, '');
+        final cleParam = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 6, '');
         final sAvionParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 26, '');
-        final tsvParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 48, '');
+        final tsvParam = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 48, '');
         final arrForfaitParam = arrForfaitValue == null
             ? null
             : DateTime.fromMillisecondsSinceEpoch(arrForfaitValue);
         final arrMepForfaitParam = arrMepForfaitValue == null
             ? null
             : DateTime.fromMillisecondsSinceEpoch(arrMepForfaitValue);
-        final sunriseParam = sunriseValue == null
-            ? null
-            : DateTime.fromMillisecondsSinceEpoch(sunriseValue);
-        final sunsetParam = sunsetValue == null
-            ? null
-            : DateTime.fromMillisecondsSinceEpoch(sunsetValue);
+        final sunriseParam = sunriseValue == null ? null : DateTime.fromMillisecondsSinceEpoch(sunriseValue);
+        final sunsetParam = sunsetValue == null ? null : DateTime.fromMillisecondsSinceEpoch(sunsetValue);
         final object =
             VolModel(
                 id: idParam,
@@ -2156,11 +1735,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         obx_int.InternalToManyAccess.setRelInfo<VolModel>(
           object.crews,
           store,
-          obx_int.RelInfo<Crew>.toOneBacklink(
-            10,
-            object.id,
-            (Crew srcObject) => srcObject.volModel,
-          ),
+          obx_int.RelInfo<Crew>.toOneBacklink(10, object.id, (Crew srcObject) => srcObject.volModel),
         );
         return object;
       },
@@ -2188,14 +1763,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final sNuitForfaitOffset = fbb.writeString(object.sNuitForfait);
         final sCumulDureeVolOffset = fbb.writeString(object.sCumulDureeVol);
         final sCumulDureeMepOffset = fbb.writeString(object.sCumulDureeMep);
-        final sCumulDureeForfaitOffset = fbb.writeString(
-          object.sCumulDureeForfait,
-        );
+        final sCumulDureeForfaitOffset = fbb.writeString(object.sCumulDureeForfait);
         final sCumulMepForfaitOffset = fbb.writeString(object.sCumulMepForfait);
         final sCumulNuitVolOffset = fbb.writeString(object.sCumulNuitVol);
-        final sCumulNuitForfaitOffset = fbb.writeString(
-          object.sCumulNuitForfait,
-        );
+        final sCumulNuitForfaitOffset = fbb.writeString(object.sCumulNuitForfait);
         final moisReferenceOffset = fbb.writeString(object.moisReference);
         final depIcaoOffset = fbb.writeString(object.depIcao);
         final arrIcaoOffset = fbb.writeString(object.arrIcao);
@@ -2248,15 +1819,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
       objectFromFB: (obx.Store store, ByteData fbData) {
         final buffer = fb.BufferContext(fbData);
         final rootOffset = buffer.derefObject(0);
-        final idParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          4,
-          0,
-        );
-        final typParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 8, '');
+        final idParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+        final typParam = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 8, '');
         final nVolParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 10, '');
@@ -2287,9 +1851,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final sAvionParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 20, '');
-        final tsvParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 80, '');
+        final tsvParam = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 80, '');
         final crewsParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 78, '');
@@ -2393,8 +1955,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
       model: _entities[11],
       toOneRelations: (VolTraiteMoisModel object) => [],
       toManyRelations: (VolTraiteMoisModel object) => {
-        obx_int.RelInfo<VolTraiteMoisModel>.toMany(5, object.id):
-            object.volsTraites,
+        obx_int.RelInfo<VolTraiteMoisModel>.toMany(5, object.id): object.volsTraites,
       },
       getId: (VolTraiteMoisModel object) => object.id,
       setId: (VolTraiteMoisModel object, int id) {
@@ -2402,24 +1963,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
       },
       objectToFB: (VolTraiteMoisModel object, fb.Builder fbb) {
         final moisReferenceOffset = fbb.writeString(object.moisReference);
-        final cumulTotalDureeVolOffset = fbb.writeString(
-          object.cumulTotalDureeVol,
-        );
-        final cumulTotalDureeMepOffset = fbb.writeString(
-          object.cumulTotalDureeMep,
-        );
-        final cumulTotalDureeForfaitOffset = fbb.writeString(
-          object.cumulTotalDureeForfait,
-        );
-        final cumulTotalMepForfaitOffset = fbb.writeString(
-          object.cumulTotalMepForfait,
-        );
-        final cumulTotalNuitVolOffset = fbb.writeString(
-          object.cumulTotalNuitVol,
-        );
-        final cumulTotalNuitForfaitOffset = fbb.writeString(
-          object.cumulTotalNuitForfait,
-        );
+        final cumulTotalDureeVolOffset = fbb.writeString(object.cumulTotalDureeVol);
+        final cumulTotalDureeMepOffset = fbb.writeString(object.cumulTotalDureeMep);
+        final cumulTotalDureeForfaitOffset = fbb.writeString(object.cumulTotalDureeForfait);
+        final cumulTotalMepForfaitOffset = fbb.writeString(object.cumulTotalMepForfait);
+        final cumulTotalNuitVolOffset = fbb.writeString(object.cumulTotalNuitVol);
+        final cumulTotalNuitForfaitOffset = fbb.writeString(object.cumulTotalNuitForfait);
         fbb.startTable(18);
         fbb.addInt64(0, object.id);
         fbb.addInt64(1, object.premierJourMois.millisecondsSinceEpoch);
@@ -2444,30 +1993,15 @@ obx_int.ModelDefinition getObjectBoxModel() {
       objectFromFB: (obx.Store store, ByteData fbData) {
         final buffer = fb.BufferContext(fbData);
         final rootOffset = buffer.derefObject(0);
-        final idParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          4,
-          0,
-        );
+        final idParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
         final premierJourMoisParam = DateTime.fromMillisecondsSinceEpoch(
           const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0),
         );
         final moisReferenceParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 8, '');
-        final anneeParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          10,
-          0,
-        );
-        final moisParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          12,
-          0,
-        );
+        final anneeParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+        final moisParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
         final cumulTotalDureeVolParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 14, '');
@@ -2486,39 +2020,14 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final cumulTotalNuitForfaitParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 24, '');
-        final nombreVolsTotalParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          26,
-          0,
-        );
-        final nombreVolsVolParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          28,
-          0,
-        );
-        final nombreVolsMepParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          30,
-          0,
-        );
-        final nombreVolsTaxParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          32,
-          0,
-        );
+        final nombreVolsTotalParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0);
+        final nombreVolsVolParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
+        final nombreVolsMepParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0);
+        final nombreVolsTaxParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 32, 0);
         final dateTraitementParam = DateTime.fromMillisecondsSinceEpoch(
           const fb.Int64Reader().vTableGet(buffer, rootOffset, 34, 0),
         );
-        final estAJourParam = const fb.BoolReader().vTableGet(
-          buffer,
-          rootOffset,
-          36,
-          false,
-        );
+        final estAJourParam = const fb.BoolReader().vTableGet(buffer, rootOffset, 36, false);
         final object = VolTraiteMoisModel(
           id: idParam,
           premierJourMois: premierJourMoisParam,
@@ -2601,76 +2110,30 @@ obx_int.ModelDefinition getObjectBoxModel() {
       objectFromFB: (obx.Store store, ByteData fbData) {
         final buffer = fb.BufferContext(fbData);
         final rootOffset = buffer.derefObject(0);
-        final idParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          4,
-          0,
-        );
+        final idParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
         final object = VolPdf(id: idParam)
           ..dateVol = DateTime.fromMillisecondsSinceEpoch(
             const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0),
           )
-          ..month = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 10, '')
-          ..datej = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 12, '')
-          ..dateM = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 14, '')
-          ..myDepDate = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 16, '')
-          ..myArrDate = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 18, '')
-          ..myChInDate = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 20, '')
-          ..report = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 22, '')
-          ..tags = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 24, '')
-          ..pos = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 26, '')
-          ..path = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 28, '')
-          ..activity = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 30, '')
-          ..from = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 32, '')
-          ..to = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 34, '')
-          ..start = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 36, '')
-          ..end = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 38, '')
-          ..aC = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 40, '')
-          ..layover = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 42, '')
-          ..duty = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 44, '');
-        object.volPdfList.targetId = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          6,
-          0,
-        );
+          ..month = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 10, '')
+          ..datej = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 12, '')
+          ..dateM = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 14, '')
+          ..myDepDate = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 16, '')
+          ..myArrDate = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 18, '')
+          ..myChInDate = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, '')
+          ..report = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, '')
+          ..tags = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 24, '')
+          ..pos = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 26, '')
+          ..path = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 28, '')
+          ..activity = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 30, '')
+          ..from = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 32, '')
+          ..to = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 34, '')
+          ..start = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 36, '')
+          ..end = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 38, '')
+          ..aC = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 40, '')
+          ..layover = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 42, '')
+          ..duty = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 44, '');
+        object.volPdfList.targetId = const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
         object.volPdfList.attach(store);
         return object;
       },
@@ -2679,11 +2142,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
       model: _entities[13],
       toOneRelations: (VolPdfList object) => [],
       toManyRelations: (VolPdfList object) => {
-        obx_int.RelInfo<VolPdf>.toOneBacklink(
-          2,
-          object.id,
-          (VolPdf srcObject) => srcObject.volPdfList,
-        ): object.volPdfs,
+        obx_int.RelInfo<VolPdf>.toOneBacklink(2, object.id, (VolPdf srcObject) => srcObject.volPdfList):
+            object.volPdfs,
       },
       getId: (VolPdfList object) => object.id,
       setId: (VolPdfList object, int id) {
@@ -2703,35 +2163,19 @@ obx_int.ModelDefinition getObjectBoxModel() {
       objectFromFB: (obx.Store store, ByteData fbData) {
         final buffer = fb.BufferContext(fbData);
         final rootOffset = buffer.derefObject(0);
-        final idParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          4,
-          0,
-        );
-        final tagsParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 8, '');
+        final idParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+        final tagsParam = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 8, '');
         final monthParam = DateTime.fromMillisecondsSinceEpoch(
           const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0),
         );
         final pathParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 10, '');
-        final object = VolPdfList(
-          id: idParam,
-          tags: tagsParam,
-          month: monthParam,
-          path: pathParam,
-        );
+        final object = VolPdfList(id: idParam, tags: tagsParam, month: monthParam, path: pathParam);
         obx_int.InternalToManyAccess.setRelInfo<VolPdfList>(
           object.volPdfs,
           store,
-          obx_int.RelInfo<VolPdf>.toOneBacklink(
-            2,
-            object.id,
-            (VolPdf srcObject) => srcObject.volPdfList,
-          ),
+          obx_int.RelInfo<VolPdf>.toOneBacklink(2, object.id, (VolPdf srcObject) => srcObject.volPdfList),
         );
         return object;
       },
@@ -2744,85 +2188,55 @@ obx_int.ModelDefinition getObjectBoxModel() {
 /// [AeroportModel] entity fields to define ObjectBox queries.
 class AeroportModel_ {
   /// See [AeroportModel.id].
-  static final id = obx.QueryIntegerProperty<AeroportModel>(
-    _entities[0].properties[0],
-  );
+  static final id = obx.QueryIntegerProperty<AeroportModel>(_entities[0].properties[0]);
 
   /// See [AeroportModel.icao].
-  static final icao = obx.QueryStringProperty<AeroportModel>(
-    _entities[0].properties[1],
-  );
+  static final icao = obx.QueryStringProperty<AeroportModel>(_entities[0].properties[1]);
 
   /// See [AeroportModel.iata].
-  static final iata = obx.QueryStringProperty<AeroportModel>(
-    _entities[0].properties[2],
-  );
+  static final iata = obx.QueryStringProperty<AeroportModel>(_entities[0].properties[2]);
 
   /// See [AeroportModel.name].
-  static final name = obx.QueryStringProperty<AeroportModel>(
-    _entities[0].properties[3],
-  );
+  static final name = obx.QueryStringProperty<AeroportModel>(_entities[0].properties[3]);
 
   /// See [AeroportModel.city].
-  static final city = obx.QueryStringProperty<AeroportModel>(
-    _entities[0].properties[4],
-  );
+  static final city = obx.QueryStringProperty<AeroportModel>(_entities[0].properties[4]);
 
   /// See [AeroportModel.country].
-  static final country = obx.QueryStringProperty<AeroportModel>(
-    _entities[0].properties[5],
-  );
+  static final country = obx.QueryStringProperty<AeroportModel>(_entities[0].properties[5]);
 
   /// See [AeroportModel.latitude].
-  static final latitude = obx.QueryDoubleProperty<AeroportModel>(
-    _entities[0].properties[6],
-  );
+  static final latitude = obx.QueryDoubleProperty<AeroportModel>(_entities[0].properties[6]);
 
   /// See [AeroportModel.longitude].
-  static final longitude = obx.QueryDoubleProperty<AeroportModel>(
-    _entities[0].properties[7],
-  );
+  static final longitude = obx.QueryDoubleProperty<AeroportModel>(_entities[0].properties[7]);
 
   /// See [AeroportModel.altitude].
-  static final altitude = obx.QueryStringProperty<AeroportModel>(
-    _entities[0].properties[8],
-  );
+  static final altitude = obx.QueryStringProperty<AeroportModel>(_entities[0].properties[8]);
 }
 
 /// [Crew] entity fields to define ObjectBox queries.
 class Crew_ {
   /// See [Crew.myEtape].
-  static final myEtape = obx.QueryRelationToOne<Crew, MyEtape>(
-    _entities[1].properties[0],
-  );
+  static final myEtape = obx.QueryRelationToOne<Crew, MyEtape>(_entities[1].properties[0]);
 
   /// See [Crew.myDuty].
-  static final myDuty = obx.QueryRelationToOne<Crew, MyDuty>(
-    _entities[1].properties[1],
-  );
+  static final myDuty = obx.QueryRelationToOne<Crew, MyDuty>(_entities[1].properties[1]);
 
   /// See [Crew.id].
   static final id = obx.QueryIntegerProperty<Crew>(_entities[1].properties[2]);
 
   /// See [Crew.crewId].
-  static final crewId = obx.QueryStringProperty<Crew>(
-    _entities[1].properties[3],
-  );
+  static final crewId = obx.QueryStringProperty<Crew>(_entities[1].properties[3]);
 
   /// See [Crew.firstname].
-  static final firstname = obx.QueryStringProperty<Crew>(
-    _entities[1].properties[4],
-  );
+  static final firstname = obx.QueryStringProperty<Crew>(_entities[1].properties[4]);
 
   /// See [Crew.lastname].
-  static final lastname = obx.QueryStringProperty<Crew>(
-    _entities[1].properties[5],
-  );
+  static final lastname = obx.QueryStringProperty<Crew>(_entities[1].properties[5]);
 
-  /// See [Crew.matricule].
-  static final matricule = obx.QueryStringProperty<Crew>(
-    _entities[1].properties[6],
-  );
+  /// See [Crew.sen].
+  static final matricule = obx.QueryStringProperty<Crew>(_entities[1].properties[6]);
 
   /// See [Crew.pos].
   static final pos = obx.QueryStringProperty<Crew>(_entities[1].properties[7]);
@@ -2831,223 +2245,142 @@ class Crew_ {
   static final base = obx.QueryStringProperty<Crew>(_entities[1].properties[8]);
 
   /// See [Crew.volModel].
-  static final volModel = obx.QueryRelationToOne<Crew, VolModel>(
-    _entities[1].properties[9],
-  );
+  static final volModel = obx.QueryRelationToOne<Crew, VolModel>(_entities[1].properties[9]);
 }
 
 /// [ForfaitListModel] entity fields to define ObjectBox queries.
 class ForfaitListModel_ {
   /// See [ForfaitListModel.id].
-  static final id = obx.QueryIntegerProperty<ForfaitListModel>(
-    _entities[2].properties[0],
-  );
+  static final id = obx.QueryIntegerProperty<ForfaitListModel>(_entities[2].properties[0]);
 
   /// See [ForfaitListModel.name].
-  static final name = obx.QueryStringProperty<ForfaitListModel>(
-    _entities[2].properties[1],
-  );
+  static final name = obx.QueryStringProperty<ForfaitListModel>(_entities[2].properties[1]);
 
   /// See [ForfaitListModel.date].
-  static final date = obx.QueryDateProperty<ForfaitListModel>(
-    _entities[2].properties[2],
-  );
+  static final date = obx.QueryDateProperty<ForfaitListModel>(_entities[2].properties[2]);
 
   /// see [ForfaitListModel.forfaits]
-  static final forfaits =
-      obx.QueryRelationToMany<ForfaitListModel, ForfaitModel>(
-        _entities[2].relations[0],
-      );
+  static final forfaits = obx.QueryRelationToMany<ForfaitListModel, ForfaitModel>(_entities[2].relations[0]);
 }
 
 /// [ForfaitModel] entity fields to define ObjectBox queries.
 class ForfaitModel_ {
   /// See [ForfaitModel.id].
-  static final id = obx.QueryIntegerProperty<ForfaitModel>(
-    _entities[3].properties[0],
-  );
+  static final id = obx.QueryIntegerProperty<ForfaitModel>(_entities[3].properties[0]);
 
   /// See [ForfaitModel.cle].
-  static final cle = obx.QueryStringProperty<ForfaitModel>(
-    _entities[3].properties[1],
-  );
+  static final cle = obx.QueryStringProperty<ForfaitModel>(_entities[3].properties[1]);
 
   /// See [ForfaitModel.saison].
-  static final saison = obx.QueryStringProperty<ForfaitModel>(
-    _entities[3].properties[2],
-  );
+  static final saison = obx.QueryStringProperty<ForfaitModel>(_entities[3].properties[2]);
 
   /// See [ForfaitModel.secteur].
-  static final secteur = obx.QueryStringProperty<ForfaitModel>(
-    _entities[3].properties[3],
-  );
+  static final secteur = obx.QueryStringProperty<ForfaitModel>(_entities[3].properties[3]);
 
   /// See [ForfaitModel.depICAO].
-  static final depICAO = obx.QueryStringProperty<ForfaitModel>(
-    _entities[3].properties[4],
-  );
+  static final depICAO = obx.QueryStringProperty<ForfaitModel>(_entities[3].properties[4]);
 
   /// See [ForfaitModel.arrICAO].
-  static final arrICAO = obx.QueryStringProperty<ForfaitModel>(
-    _entities[3].properties[5],
-  );
+  static final arrICAO = obx.QueryStringProperty<ForfaitModel>(_entities[3].properties[5]);
 
   /// See [ForfaitModel.depIATA].
-  static final depIATA = obx.QueryStringProperty<ForfaitModel>(
-    _entities[3].properties[6],
-  );
+  static final depIATA = obx.QueryStringProperty<ForfaitModel>(_entities[3].properties[6]);
 
   /// See [ForfaitModel.arrIATA].
-  static final arrIATA = obx.QueryStringProperty<ForfaitModel>(
-    _entities[3].properties[7],
-  );
+  static final arrIATA = obx.QueryStringProperty<ForfaitModel>(_entities[3].properties[7]);
 
   /// See [ForfaitModel.forfait].
-  static final forfait = obx.QueryStringProperty<ForfaitModel>(
-    _entities[3].properties[8],
-  );
+  static final forfait = obx.QueryStringProperty<ForfaitModel>(_entities[3].properties[8]);
 
   /// See [ForfaitModel.table].
-  static final table = obx.QueryStringProperty<ForfaitModel>(
-    _entities[3].properties[9],
-  );
+  static final table = obx.QueryStringProperty<ForfaitModel>(_entities[3].properties[9]);
 
   /// See [ForfaitModel.dateForfait].
-  static final dateForfait = obx.QueryStringProperty<ForfaitModel>(
-    _entities[3].properties[10],
-  );
+  static final dateForfait = obx.QueryStringProperty<ForfaitModel>(_entities[3].properties[10]);
 }
 
 /// [MyDownLoad] entity fields to define ObjectBox queries.
 class MyDownLoad_ {
   /// See [MyDownLoad.id].
-  static final id = obx.QueryIntegerProperty<MyDownLoad>(
-    _entities[4].properties[0],
-  );
+  static final id = obx.QueryIntegerProperty<MyDownLoad>(_entities[4].properties[0]);
 
   /// See [MyDownLoad.jsonContent].
-  static final jsonContent = obx.QueryStringProperty<MyDownLoad>(
-    _entities[4].properties[1],
-  );
+  static final jsonContent = obx.QueryStringProperty<MyDownLoad>(_entities[4].properties[1]);
 
   /// See [MyDownLoad.htmlContent].
-  static final htmlContent = obx.QueryStringProperty<MyDownLoad>(
-    _entities[4].properties[2],
-  );
+  static final htmlContent = obx.QueryStringProperty<MyDownLoad>(_entities[4].properties[2]);
 
   /// See [MyDownLoad.downloadTime].
-  static final downloadTime = obx.QueryDateProperty<MyDownLoad>(
-    _entities[4].properties[3],
-  );
+  static final downloadTime = obx.QueryDateProperty<MyDownLoad>(_entities[4].properties[3]);
 
   /// See [MyDownLoad.user].
-  static final user = obx.QueryRelationToOne<MyDownLoad, UserModel>(
-    _entities[4].properties[4],
-  );
+  static final user = obx.QueryRelationToOne<MyDownLoad, UserModel>(_entities[4].properties[4]);
 }
 
 /// [MyDuty] entity fields to define ObjectBox queries.
 class MyDuty_ {
   /// See [MyDuty.id].
-  static final id = obx.QueryIntegerProperty<MyDuty>(
-    _entities[5].properties[0],
-  );
+  static final id = obx.QueryIntegerProperty<MyDuty>(_entities[5].properties[0]);
 
   /// See [MyDuty.myMonth].
-  static final myMonth = obx.QueryDateProperty<MyDuty>(
-    _entities[5].properties[1],
-  );
+  static final myMonth = obx.QueryDateProperty<MyDuty>(_entities[5].properties[1]);
 
   /// See [MyDuty.startTime].
-  static final startTime = obx.QueryDateProperty<MyDuty>(
-    _entities[5].properties[2],
-  );
+  static final startTime = obx.QueryDateProperty<MyDuty>(_entities[5].properties[2]);
 
   /// See [MyDuty.endTime].
-  static final endTime = obx.QueryDateProperty<MyDuty>(
-    _entities[5].properties[3],
-  );
+  static final endTime = obx.QueryDateProperty<MyDuty>(_entities[5].properties[3]);
 
   /// See [MyDuty.dateLabel].
-  static final dateLabel = obx.QueryStringProperty<MyDuty>(
-    _entities[5].properties[4],
-  );
+  static final dateLabel = obx.QueryStringProperty<MyDuty>(_entities[5].properties[4]);
 
   /// See [MyDuty.typeLabel].
-  static final typeLabel = obx.QueryStringProperty<MyDuty>(
-    _entities[5].properties[5],
-  );
+  static final typeLabel = obx.QueryStringProperty<MyDuty>(_entities[5].properties[5]);
 
   /// See [MyDuty.detailLabel].
-  static final detailLabel = obx.QueryStringProperty<MyDuty>(
-    _entities[5].properties[6],
-  );
+  static final detailLabel = obx.QueryStringProperty<MyDuty>(_entities[5].properties[6]);
 
   /// See [MyDuty.typ].
-  static final typ = obx.QueryRelationToOne<MyDuty, Typ>(
-    _entities[5].properties[7],
-  );
+  static final typ = obx.QueryRelationToOne<MyDuty, Typ>(_entities[5].properties[7]);
 
   /// see [MyDuty.vols]
-  static final vols = obx.QueryRelationToMany<MyDuty, VolModel>(
-    _entities[5].relations[0],
-  );
+  static final vols = obx.QueryRelationToMany<MyDuty, VolModel>(_entities[5].relations[0]);
 
   /// see [MyDuty.crews]
   static final crews = obx.QueryBacklinkToMany<Crew, MyDuty>(Crew_.myDuty);
 
   /// see [MyDuty.etapes]
-  static final etapes = obx.QueryBacklinkToMany<MyEtape, MyDuty>(
-    MyEtape_.myDuty,
-  );
+  static final etapes = obx.QueryBacklinkToMany<MyEtape, MyDuty>(MyEtape_.myDuty);
 }
 
 /// [MyEtape] entity fields to define ObjectBox queries.
 class MyEtape_ {
   /// See [MyEtape.id].
-  static final id = obx.QueryIntegerProperty<MyEtape>(
-    _entities[6].properties[0],
-  );
+  static final id = obx.QueryIntegerProperty<MyEtape>(_entities[6].properties[0]);
 
   /// See [MyEtape.startTime].
-  static final startTime = obx.QueryDateProperty<MyEtape>(
-    _entities[6].properties[1],
-  );
+  static final startTime = obx.QueryDateProperty<MyEtape>(_entities[6].properties[1]);
 
   /// See [MyEtape.dateLabel].
-  static final dateLabel = obx.QueryStringProperty<MyEtape>(
-    _entities[6].properties[2],
-  );
+  static final dateLabel = obx.QueryStringProperty<MyEtape>(_entities[6].properties[2]);
 
   /// See [MyEtape.typeLabel].
-  static final typeLabel = obx.QueryStringProperty<MyEtape>(
-    _entities[6].properties[3],
-  );
+  static final typeLabel = obx.QueryStringProperty<MyEtape>(_entities[6].properties[3]);
 
   /// See [MyEtape.detailLabel].
-  static final detailLabel = obx.QueryStringProperty<MyEtape>(
-    _entities[6].properties[4],
-  );
+  static final detailLabel = obx.QueryStringProperty<MyEtape>(_entities[6].properties[4]);
 
   /// See [MyEtape.volTransit].
-  static final volTransit = obx.QueryRelationToOne<MyEtape, VolModel>(
-    _entities[6].properties[5],
-  );
+  static final volTransit = obx.QueryRelationToOne<MyEtape, VolModel>(_entities[6].properties[5]);
 
   /// See [MyEtape.typ].
-  static final typ = obx.QueryRelationToOne<MyEtape, Typ>(
-    _entities[6].properties[6],
-  );
+  static final typ = obx.QueryRelationToOne<MyEtape, Typ>(_entities[6].properties[6]);
 
   /// See [MyEtape.myDuty].
-  static final myDuty = obx.QueryRelationToOne<MyEtape, MyDuty>(
-    _entities[6].properties[7],
-  );
+  static final myDuty = obx.QueryRelationToOne<MyEtape, MyDuty>(_entities[6].properties[7]);
 
   /// see [MyEtape.crews]
-  static final crews = obx.QueryRelationToMany<MyEtape, Crew>(
-    _entities[6].relations[0],
-  );
+  static final crews = obx.QueryRelationToMany<MyEtape, Crew>(_entities[6].relations[0]);
 }
 
 /// [Typ] entity fields to define ObjectBox queries.
@@ -3068,162 +2401,100 @@ class Typ_ {
 /// [UserModel] entity fields to define ObjectBox queries.
 class UserModel_ {
   /// See [UserModel.id].
-  static final id = obx.QueryIntegerProperty<UserModel>(
-    _entities[8].properties[0],
-  );
+  static final id = obx.QueryIntegerProperty<UserModel>(_entities[8].properties[0]);
 
   /// See [UserModel.matricule].
-  static final matricule = obx.QueryIntegerProperty<UserModel>(
-    _entities[8].properties[1],
-  );
+  static final matricule = obx.QueryIntegerProperty<UserModel>(_entities[8].properties[1]);
 
   /// See [UserModel.email].
-  static final email = obx.QueryStringProperty<UserModel>(
-    _entities[8].properties[2],
-  );
+  static final email = obx.QueryStringProperty<UserModel>(_entities[8].properties[2]);
 
   /// See [UserModel.isRam].
-  static final isRam = obx.QueryBooleanProperty<UserModel>(
-    _entities[8].properties[3],
-  );
+  static final isRam = obx.QueryBooleanProperty<UserModel>(_entities[8].properties[3]);
 
   /// See [UserModel.isPnt].
-  static final isPnt = obx.QueryBooleanProperty<UserModel>(
-    _entities[8].properties[4],
-  );
+  static final isPnt = obx.QueryBooleanProperty<UserModel>(_entities[8].properties[4]);
 
   /// See [UserModel.isMoyenC].
-  static final isMoyenC = obx.QueryBooleanProperty<UserModel>(
-    _entities[8].properties[5],
-  );
+  static final isMoyenC = obx.QueryBooleanProperty<UserModel>(_entities[8].properties[5]);
 
   /// See [UserModel.users].
-  static final users = obx.QueryIntegerVectorProperty<UserModel>(
-    _entities[8].properties[6],
-  );
+  static final users = obx.QueryIntegerVectorProperty<UserModel>(_entities[8].properties[6]);
 
   /// see [UserModel.myDownLoads]
-  static final myDownLoads = obx.QueryBacklinkToMany<MyDownLoad, UserModel>(
-    MyDownLoad_.user,
-  );
+  static final myDownLoads = obx.QueryBacklinkToMany<MyDownLoad, UserModel>(MyDownLoad_.user);
 }
 
 /// [VolModel] entity fields to define ObjectBox queries.
 class VolModel_ {
   /// See [VolModel.id].
-  static final id = obx.QueryIntegerProperty<VolModel>(
-    _entities[9].properties[0],
-  );
+  static final id = obx.QueryIntegerProperty<VolModel>(_entities[9].properties[0]);
 
   /// See [VolModel.cle].
-  static final cle = obx.QueryStringProperty<VolModel>(
-    _entities[9].properties[1],
-  );
+  static final cle = obx.QueryStringProperty<VolModel>(_entities[9].properties[1]);
 
   /// See [VolModel.typ].
-  static final typ = obx.QueryStringProperty<VolModel>(
-    _entities[9].properties[2],
-  );
+  static final typ = obx.QueryStringProperty<VolModel>(_entities[9].properties[2]);
 
   /// See [VolModel.nVol].
-  static final nVol = obx.QueryStringProperty<VolModel>(
-    _entities[9].properties[3],
-  );
+  static final nVol = obx.QueryStringProperty<VolModel>(_entities[9].properties[3]);
 
   /// See [VolModel.dtDebut].
-  static final dtDebut = obx.QueryDateProperty<VolModel>(
-    _entities[9].properties[4],
-  );
+  static final dtDebut = obx.QueryDateProperty<VolModel>(_entities[9].properties[4]);
 
   /// See [VolModel.depIata].
-  static final depIata = obx.QueryStringProperty<VolModel>(
-    _entities[9].properties[5],
-  );
+  static final depIata = obx.QueryStringProperty<VolModel>(_entities[9].properties[5]);
 
   /// See [VolModel.depIcao].
-  static final depIcao = obx.QueryStringProperty<VolModel>(
-    _entities[9].properties[6],
-  );
+  static final depIcao = obx.QueryStringProperty<VolModel>(_entities[9].properties[6]);
 
   /// See [VolModel.arrIata].
-  static final arrIata = obx.QueryStringProperty<VolModel>(
-    _entities[9].properties[7],
-  );
+  static final arrIata = obx.QueryStringProperty<VolModel>(_entities[9].properties[7]);
 
   /// See [VolModel.arrIcao].
-  static final arrIcao = obx.QueryStringProperty<VolModel>(
-    _entities[9].properties[8],
-  );
+  static final arrIcao = obx.QueryStringProperty<VolModel>(_entities[9].properties[8]);
 
   /// See [VolModel.dtFin].
-  static final dtFin = obx.QueryDateProperty<VolModel>(
-    _entities[9].properties[9],
-  );
+  static final dtFin = obx.QueryDateProperty<VolModel>(_entities[9].properties[9]);
 
   /// See [VolModel.label].
-  static final label = obx.QueryStringProperty<VolModel>(
-    _entities[9].properties[10],
-  );
+  static final label = obx.QueryStringProperty<VolModel>(_entities[9].properties[10]);
 
   /// See [VolModel.sAvion].
-  static final sAvion = obx.QueryStringProperty<VolModel>(
-    _entities[9].properties[11],
-  );
+  static final sAvion = obx.QueryStringProperty<VolModel>(_entities[9].properties[11]);
 
   /// See [VolModel.sDureevol].
-  static final sDureevol = obx.QueryStringProperty<VolModel>(
-    _entities[9].properties[12],
-  );
+  static final sDureevol = obx.QueryStringProperty<VolModel>(_entities[9].properties[12]);
 
   /// See [VolModel.arrForfait].
-  static final arrForfait = obx.QueryDateProperty<VolModel>(
-    _entities[9].properties[13],
-  );
+  static final arrForfait = obx.QueryDateProperty<VolModel>(_entities[9].properties[13]);
 
   /// See [VolModel.sunrise].
-  static final sunrise = obx.QueryDateProperty<VolModel>(
-    _entities[9].properties[14],
-  );
+  static final sunrise = obx.QueryDateProperty<VolModel>(_entities[9].properties[14]);
 
   /// See [VolModel.sunset].
-  static final sunset = obx.QueryDateProperty<VolModel>(
-    _entities[9].properties[15],
-  );
+  static final sunset = obx.QueryDateProperty<VolModel>(_entities[9].properties[15]);
 
   /// See [VolModel.sNuitVol].
-  static final sNuitVol = obx.QueryStringProperty<VolModel>(
-    _entities[9].properties[16],
-  );
+  static final sNuitVol = obx.QueryStringProperty<VolModel>(_entities[9].properties[16]);
 
   /// See [VolModel.sDureeForfait].
-  static final sDureeForfait = obx.QueryStringProperty<VolModel>(
-    _entities[9].properties[17],
-  );
+  static final sDureeForfait = obx.QueryStringProperty<VolModel>(_entities[9].properties[17]);
 
   /// See [VolModel.sNuitForfait].
-  static final sNuitForfait = obx.QueryStringProperty<VolModel>(
-    _entities[9].properties[18],
-  );
+  static final sNuitForfait = obx.QueryStringProperty<VolModel>(_entities[9].properties[18]);
 
   /// See [VolModel.sDureeMep].
-  static final sDureeMep = obx.QueryStringProperty<VolModel>(
-    _entities[9].properties[19],
-  );
+  static final sDureeMep = obx.QueryStringProperty<VolModel>(_entities[9].properties[19]);
 
   /// See [VolModel.arrMepForfait].
-  static final arrMepForfait = obx.QueryDateProperty<VolModel>(
-    _entities[9].properties[20],
-  );
+  static final arrMepForfait = obx.QueryDateProperty<VolModel>(_entities[9].properties[20]);
 
   /// See [VolModel.sMepForfait].
-  static final sMepForfait = obx.QueryStringProperty<VolModel>(
-    _entities[9].properties[21],
-  );
+  static final sMepForfait = obx.QueryStringProperty<VolModel>(_entities[9].properties[21]);
 
   /// See [VolModel.tsv].
-  static final tsv = obx.QueryStringProperty<VolModel>(
-    _entities[9].properties[22],
-  );
+  static final tsv = obx.QueryStringProperty<VolModel>(_entities[9].properties[22]);
 
   /// see [VolModel.crews]
   static final crews = obx.QueryBacklinkToMany<Crew, VolModel>(Crew_.volModel);
@@ -3232,394 +2503,250 @@ class VolModel_ {
 /// [VolTraiteModel] entity fields to define ObjectBox queries.
 class VolTraiteModel_ {
   /// See [VolTraiteModel.id].
-  static final id = obx.QueryIntegerProperty<VolTraiteModel>(
-    _entities[10].properties[0],
-  );
+  static final id = obx.QueryIntegerProperty<VolTraiteModel>(_entities[10].properties[0]);
 
   /// See [VolTraiteModel.typ].
-  static final typ = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[1],
-  );
+  static final typ = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[1]);
 
   /// See [VolTraiteModel.nVol].
-  static final nVol = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[2],
-  );
+  static final nVol = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[2]);
 
   /// See [VolTraiteModel.dtDebut].
-  static final dtDebut = obx.QueryDateProperty<VolTraiteModel>(
-    _entities[10].properties[3],
-  );
+  static final dtDebut = obx.QueryDateProperty<VolTraiteModel>(_entities[10].properties[3]);
 
   /// See [VolTraiteModel.dtFin].
-  static final dtFin = obx.QueryDateProperty<VolTraiteModel>(
-    _entities[10].properties[4],
-  );
+  static final dtFin = obx.QueryDateProperty<VolTraiteModel>(_entities[10].properties[4]);
 
   /// See [VolTraiteModel.depIata].
-  static final depIata = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[5],
-  );
+  static final depIata = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[5]);
 
   /// See [VolTraiteModel.arrIata].
-  static final arrIata = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[6],
-  );
+  static final arrIata = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[6]);
 
   /// See [VolTraiteModel.sAvion].
-  static final sAvion = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[7],
-  );
+  static final sAvion = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[7]);
 
   /// See [VolTraiteModel.sDureeBrute].
-  static final sDureeBrute = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[8],
-  );
+  static final sDureeBrute = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[8]);
 
   /// See [VolTraiteModel.sDureevol].
-  static final sDureevol = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[9],
-  );
+  static final sDureevol = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[9]);
 
   /// See [VolTraiteModel.sDureeMep].
-  static final sDureeMep = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[10],
-  );
+  static final sDureeMep = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[10]);
 
   /// See [VolTraiteModel.sDureeForfait].
-  static final sDureeForfait = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[11],
-  );
+  static final sDureeForfait = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[11]);
 
   /// See [VolTraiteModel.sMepForfait].
-  static final sMepForfait = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[12],
-  );
+  static final sMepForfait = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[12]);
 
   /// See [VolTraiteModel.sNuitVol].
-  static final sNuitVol = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[13],
-  );
+  static final sNuitVol = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[13]);
 
   /// See [VolTraiteModel.sNuitForfait].
-  static final sNuitForfait = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[14],
-  );
+  static final sNuitForfait = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[14]);
 
   /// See [VolTraiteModel.sCumulDureeVol].
-  static final sCumulDureeVol = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[15],
-  );
+  static final sCumulDureeVol = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[15]);
 
   /// See [VolTraiteModel.sCumulDureeMep].
-  static final sCumulDureeMep = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[16],
-  );
+  static final sCumulDureeMep = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[16]);
 
   /// See [VolTraiteModel.sCumulDureeForfait].
-  static final sCumulDureeForfait = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[17],
-  );
+  static final sCumulDureeForfait = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[17]);
 
   /// See [VolTraiteModel.sCumulMepForfait].
-  static final sCumulMepForfait = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[18],
-  );
+  static final sCumulMepForfait = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[18]);
 
   /// See [VolTraiteModel.sCumulNuitVol].
-  static final sCumulNuitVol = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[19],
-  );
+  static final sCumulNuitVol = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[19]);
 
   /// See [VolTraiteModel.sCumulNuitForfait].
-  static final sCumulNuitForfait = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[20],
-  );
+  static final sCumulNuitForfait = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[20]);
 
   /// See [VolTraiteModel.moisReference].
-  static final moisReference = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[21],
-  );
+  static final moisReference = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[21]);
 
   /// See [VolTraiteModel.depIcao].
-  static final depIcao = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[22],
-  );
+  static final depIcao = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[22]);
 
   /// See [VolTraiteModel.arrIcao].
-  static final arrIcao = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[23],
-  );
+  static final arrIcao = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[23]);
 
   /// See [VolTraiteModel.sDebut].
-  static final sDebut = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[24],
-  );
+  static final sDebut = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[24]);
 
   /// See [VolTraiteModel.sFin].
-  static final sFin = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[25],
-  );
+  static final sFin = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[25]);
 
   /// See [VolTraiteModel.sArrForfait].
-  static final sArrForfait = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[26],
-  );
+  static final sArrForfait = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[26]);
 
   /// See [VolTraiteModel.sArrMepForfait].
-  static final sArrMepForfait = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[27],
-  );
+  static final sArrMepForfait = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[27]);
 
   /// See [VolTraiteModel.sSunrise].
-  static final sSunrise = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[28],
-  );
+  static final sSunrise = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[28]);
 
   /// See [VolTraiteModel.sSunset].
-  static final sSunset = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[29],
-  );
+  static final sSunset = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[29]);
 
   /// See [VolTraiteModel.sDateTraitement].
-  static final sDateTraitement = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[30],
-  );
+  static final sDateTraitement = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[30]);
 
   /// See [VolTraiteModel.crews].
-  static final crews = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[31],
-  );
+  static final crews = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[31]);
 
   /// See [VolTraiteModel.tsv].
-  static final tsv = obx.QueryStringProperty<VolTraiteModel>(
-    _entities[10].properties[32],
-  );
+  static final tsv = obx.QueryStringProperty<VolTraiteModel>(_entities[10].properties[32]);
 }
 
 /// [VolTraiteMoisModel] entity fields to define ObjectBox queries.
 class VolTraiteMoisModel_ {
   /// See [VolTraiteMoisModel.id].
-  static final id = obx.QueryIntegerProperty<VolTraiteMoisModel>(
-    _entities[11].properties[0],
-  );
+  static final id = obx.QueryIntegerProperty<VolTraiteMoisModel>(_entities[11].properties[0]);
 
   /// See [VolTraiteMoisModel.premierJourMois].
-  static final premierJourMois = obx.QueryDateProperty<VolTraiteMoisModel>(
-    _entities[11].properties[1],
-  );
+  static final premierJourMois = obx.QueryDateProperty<VolTraiteMoisModel>(_entities[11].properties[1]);
 
   /// See [VolTraiteMoisModel.moisReference].
-  static final moisReference = obx.QueryStringProperty<VolTraiteMoisModel>(
-    _entities[11].properties[2],
-  );
+  static final moisReference = obx.QueryStringProperty<VolTraiteMoisModel>(_entities[11].properties[2]);
 
   /// See [VolTraiteMoisModel.annee].
-  static final annee = obx.QueryIntegerProperty<VolTraiteMoisModel>(
-    _entities[11].properties[3],
-  );
+  static final annee = obx.QueryIntegerProperty<VolTraiteMoisModel>(_entities[11].properties[3]);
 
   /// See [VolTraiteMoisModel.mois].
-  static final mois = obx.QueryIntegerProperty<VolTraiteMoisModel>(
-    _entities[11].properties[4],
-  );
+  static final mois = obx.QueryIntegerProperty<VolTraiteMoisModel>(_entities[11].properties[4]);
 
   /// See [VolTraiteMoisModel.cumulTotalDureeVol].
-  static final cumulTotalDureeVol = obx.QueryStringProperty<VolTraiteMoisModel>(
-    _entities[11].properties[5],
-  );
+  static final cumulTotalDureeVol = obx.QueryStringProperty<VolTraiteMoisModel>(_entities[11].properties[5]);
 
   /// See [VolTraiteMoisModel.cumulTotalDureeMep].
-  static final cumulTotalDureeMep = obx.QueryStringProperty<VolTraiteMoisModel>(
-    _entities[11].properties[6],
-  );
+  static final cumulTotalDureeMep = obx.QueryStringProperty<VolTraiteMoisModel>(_entities[11].properties[6]);
 
   /// See [VolTraiteMoisModel.cumulTotalDureeForfait].
-  static final cumulTotalDureeForfait =
-      obx.QueryStringProperty<VolTraiteMoisModel>(_entities[11].properties[7]);
+  static final cumulTotalDureeForfait = obx.QueryStringProperty<VolTraiteMoisModel>(
+    _entities[11].properties[7],
+  );
 
   /// See [VolTraiteMoisModel.cumulTotalMepForfait].
-  static final cumulTotalMepForfait =
-      obx.QueryStringProperty<VolTraiteMoisModel>(_entities[11].properties[8]);
+  static final cumulTotalMepForfait = obx.QueryStringProperty<VolTraiteMoisModel>(
+    _entities[11].properties[8],
+  );
 
   /// See [VolTraiteMoisModel.cumulTotalNuitVol].
-  static final cumulTotalNuitVol = obx.QueryStringProperty<VolTraiteMoisModel>(
-    _entities[11].properties[9],
-  );
+  static final cumulTotalNuitVol = obx.QueryStringProperty<VolTraiteMoisModel>(_entities[11].properties[9]);
 
   /// See [VolTraiteMoisModel.cumulTotalNuitForfait].
-  static final cumulTotalNuitForfait =
-      obx.QueryStringProperty<VolTraiteMoisModel>(_entities[11].properties[10]);
+  static final cumulTotalNuitForfait = obx.QueryStringProperty<VolTraiteMoisModel>(
+    _entities[11].properties[10],
+  );
 
   /// See [VolTraiteMoisModel.nombreVolsTotal].
-  static final nombreVolsTotal = obx.QueryIntegerProperty<VolTraiteMoisModel>(
-    _entities[11].properties[11],
-  );
+  static final nombreVolsTotal = obx.QueryIntegerProperty<VolTraiteMoisModel>(_entities[11].properties[11]);
 
   /// See [VolTraiteMoisModel.nombreVolsVol].
-  static final nombreVolsVol = obx.QueryIntegerProperty<VolTraiteMoisModel>(
-    _entities[11].properties[12],
-  );
+  static final nombreVolsVol = obx.QueryIntegerProperty<VolTraiteMoisModel>(_entities[11].properties[12]);
 
   /// See [VolTraiteMoisModel.nombreVolsMep].
-  static final nombreVolsMep = obx.QueryIntegerProperty<VolTraiteMoisModel>(
-    _entities[11].properties[13],
-  );
+  static final nombreVolsMep = obx.QueryIntegerProperty<VolTraiteMoisModel>(_entities[11].properties[13]);
 
   /// See [VolTraiteMoisModel.nombreVolsTax].
-  static final nombreVolsTax = obx.QueryIntegerProperty<VolTraiteMoisModel>(
-    _entities[11].properties[14],
-  );
+  static final nombreVolsTax = obx.QueryIntegerProperty<VolTraiteMoisModel>(_entities[11].properties[14]);
 
   /// See [VolTraiteMoisModel.dateTraitement].
-  static final dateTraitement = obx.QueryDateProperty<VolTraiteMoisModel>(
-    _entities[11].properties[15],
-  );
+  static final dateTraitement = obx.QueryDateProperty<VolTraiteMoisModel>(_entities[11].properties[15]);
 
   /// See [VolTraiteMoisModel.estAJour].
-  static final estAJour = obx.QueryBooleanProperty<VolTraiteMoisModel>(
-    _entities[11].properties[16],
-  );
+  static final estAJour = obx.QueryBooleanProperty<VolTraiteMoisModel>(_entities[11].properties[16]);
 
   /// see [VolTraiteMoisModel.volsTraites]
-  static final volsTraites =
-      obx.QueryRelationToMany<VolTraiteMoisModel, VolTraiteModel>(
-        _entities[11].relations[0],
-      );
+  static final volsTraites = obx.QueryRelationToMany<VolTraiteMoisModel, VolTraiteModel>(
+    _entities[11].relations[0],
+  );
 }
 
 /// [VolPdf] entity fields to define ObjectBox queries.
 class VolPdf_ {
   /// See [VolPdf.id].
-  static final id = obx.QueryIntegerProperty<VolPdf>(
-    _entities[12].properties[0],
-  );
+  static final id = obx.QueryIntegerProperty<VolPdf>(_entities[12].properties[0]);
 
   /// See [VolPdf.volPdfList].
-  static final volPdfList = obx.QueryRelationToOne<VolPdf, VolPdfList>(
-    _entities[12].properties[1],
-  );
+  static final volPdfList = obx.QueryRelationToOne<VolPdf, VolPdfList>(_entities[12].properties[1]);
 
   /// See [VolPdf.dateVol].
-  static final dateVol = obx.QueryDateProperty<VolPdf>(
-    _entities[12].properties[2],
-  );
+  static final dateVol = obx.QueryDateProperty<VolPdf>(_entities[12].properties[2]);
 
   /// See [VolPdf.month].
-  static final month = obx.QueryStringProperty<VolPdf>(
-    _entities[12].properties[3],
-  );
+  static final month = obx.QueryStringProperty<VolPdf>(_entities[12].properties[3]);
 
   /// See [VolPdf.datej].
-  static final datej = obx.QueryStringProperty<VolPdf>(
-    _entities[12].properties[4],
-  );
+  static final datej = obx.QueryStringProperty<VolPdf>(_entities[12].properties[4]);
 
   /// See [VolPdf.dateM].
-  static final dateM = obx.QueryStringProperty<VolPdf>(
-    _entities[12].properties[5],
-  );
+  static final dateM = obx.QueryStringProperty<VolPdf>(_entities[12].properties[5]);
 
   /// See [VolPdf.myDepDate].
-  static final myDepDate = obx.QueryStringProperty<VolPdf>(
-    _entities[12].properties[6],
-  );
+  static final myDepDate = obx.QueryStringProperty<VolPdf>(_entities[12].properties[6]);
 
   /// See [VolPdf.myArrDate].
-  static final myArrDate = obx.QueryStringProperty<VolPdf>(
-    _entities[12].properties[7],
-  );
+  static final myArrDate = obx.QueryStringProperty<VolPdf>(_entities[12].properties[7]);
 
   /// See [VolPdf.myChInDate].
-  static final myChInDate = obx.QueryStringProperty<VolPdf>(
-    _entities[12].properties[8],
-  );
+  static final myChInDate = obx.QueryStringProperty<VolPdf>(_entities[12].properties[8]);
 
   /// See [VolPdf.report].
-  static final report = obx.QueryStringProperty<VolPdf>(
-    _entities[12].properties[9],
-  );
+  static final report = obx.QueryStringProperty<VolPdf>(_entities[12].properties[9]);
 
   /// See [VolPdf.tags].
-  static final tags = obx.QueryStringProperty<VolPdf>(
-    _entities[12].properties[10],
-  );
+  static final tags = obx.QueryStringProperty<VolPdf>(_entities[12].properties[10]);
 
   /// See [VolPdf.pos].
-  static final pos = obx.QueryStringProperty<VolPdf>(
-    _entities[12].properties[11],
-  );
+  static final pos = obx.QueryStringProperty<VolPdf>(_entities[12].properties[11]);
 
   /// See [VolPdf.path].
-  static final path = obx.QueryStringProperty<VolPdf>(
-    _entities[12].properties[12],
-  );
+  static final path = obx.QueryStringProperty<VolPdf>(_entities[12].properties[12]);
 
   /// See [VolPdf.activity].
-  static final activity = obx.QueryStringProperty<VolPdf>(
-    _entities[12].properties[13],
-  );
+  static final activity = obx.QueryStringProperty<VolPdf>(_entities[12].properties[13]);
 
   /// See [VolPdf.from].
-  static final from = obx.QueryStringProperty<VolPdf>(
-    _entities[12].properties[14],
-  );
+  static final from = obx.QueryStringProperty<VolPdf>(_entities[12].properties[14]);
 
   /// See [VolPdf.to].
-  static final to = obx.QueryStringProperty<VolPdf>(
-    _entities[12].properties[15],
-  );
+  static final to = obx.QueryStringProperty<VolPdf>(_entities[12].properties[15]);
 
   /// See [VolPdf.start].
-  static final start = obx.QueryStringProperty<VolPdf>(
-    _entities[12].properties[16],
-  );
+  static final start = obx.QueryStringProperty<VolPdf>(_entities[12].properties[16]);
 
   /// See [VolPdf.end].
-  static final end = obx.QueryStringProperty<VolPdf>(
-    _entities[12].properties[17],
-  );
+  static final end = obx.QueryStringProperty<VolPdf>(_entities[12].properties[17]);
 
   /// See [VolPdf.aC].
-  static final aC = obx.QueryStringProperty<VolPdf>(
-    _entities[12].properties[18],
-  );
+  static final aC = obx.QueryStringProperty<VolPdf>(_entities[12].properties[18]);
 
   /// See [VolPdf.layover].
-  static final layover = obx.QueryStringProperty<VolPdf>(
-    _entities[12].properties[19],
-  );
+  static final layover = obx.QueryStringProperty<VolPdf>(_entities[12].properties[19]);
 
   /// See [VolPdf.duty].
-  static final duty = obx.QueryStringProperty<VolPdf>(
-    _entities[12].properties[20],
-  );
+  static final duty = obx.QueryStringProperty<VolPdf>(_entities[12].properties[20]);
 }
 
 /// [VolPdfList] entity fields to define ObjectBox queries.
 class VolPdfList_ {
   /// See [VolPdfList.id].
-  static final id = obx.QueryIntegerProperty<VolPdfList>(
-    _entities[13].properties[0],
-  );
+  static final id = obx.QueryIntegerProperty<VolPdfList>(_entities[13].properties[0]);
 
   /// See [VolPdfList.month].
-  static final month = obx.QueryDateProperty<VolPdfList>(
-    _entities[13].properties[1],
-  );
+  static final month = obx.QueryDateProperty<VolPdfList>(_entities[13].properties[1]);
 
   /// See [VolPdfList.tags].
-  static final tags = obx.QueryStringProperty<VolPdfList>(
-    _entities[13].properties[2],
-  );
+  static final tags = obx.QueryStringProperty<VolPdfList>(_entities[13].properties[2]);
 
   /// See [VolPdfList.path].
-  static final path = obx.QueryStringProperty<VolPdfList>(
-    _entities[13].properties[3],
-  );
+  static final path = obx.QueryStringProperty<VolPdfList>(_entities[13].properties[3]);
 
   /// see [VolPdfList.volPdfs]
-  static final volPdfs = obx.QueryBacklinkToMany<VolPdf, VolPdfList>(
-    VolPdf_.volPdfList,
-  );
+  static final volPdfs = obx.QueryBacklinkToMany<VolPdf, VolPdfList>(VolPdf_.volPdfList);
 }

@@ -1,7 +1,8 @@
 import 'package:mystrip25/Models/ActsModels/typ_const.dart';
 import 'package:objectbox/objectbox.dart';
-import 'vol_traite.dart';
 import 'vol.dart';
+import 'vol_traite.dart';
+
 import '../volpdfs/vol_pdf_list.dart';
 import '../../helpers/fct.dart';
 

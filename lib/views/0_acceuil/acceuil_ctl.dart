@@ -68,8 +68,8 @@ class AcceuilController extends GetxController {
         if (dbController.duties.isEmpty) {
           Routes.toWebview();
         } else {
-          // Routes.toHome();
-          Routes.toTableScreen();
+          Routes.toHome();
+          //Routes.toTableScreen();
         }
       } else {
         // Users exist but no current user set, go to register

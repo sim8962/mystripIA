@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:hexcolor/hexcolor.dart';
 
-import 'package:intl/intl.dart';
-
 import '../../../Models/ActsModels/myduty.dart';
 import '../../../helpers/constants.dart';
 import '../../../theming/app_color.dart';
@@ -23,6 +21,7 @@ class Cardeduty extends StatelessWidget {
           width: AppTheme.getWidth(iphoneSize: 55, ipadsize: 65),
           height: AppTheme.getWidth(iphoneSize: 80, ipadsize: 93),
           color: (AppTheme.isDark != true) ? Colors.white : AppColors.darkBackground,
+
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -31,9 +30,9 @@ class Cardeduty extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(DateFormat("EEE").format(duty.startTime), style: AppStylingConstant.dutyDayStyle),
-                    Text(DateFormat("dd").format(duty.startTime), style: AppStylingConstant.dutyDateStyle),
-                    Text(DateFormat("MMM").format(duty.startTime), style: AppStylingConstant.dutyMonthStyle),
+                    Text(dateFormatEE.format(duty.startTime), style: AppStylingConstant.dutyDayStyle),
+                    Text(dateFormatdd.format(duty.startTime), style: AppStylingConstant.dutyDateStyle),
+                    Text(dateFormatMM.format(duty.startTime), style: AppStylingConstant.dutyMonthStyle),
                   ],
                 ),
               ),

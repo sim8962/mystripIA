@@ -1,10 +1,11 @@
 import 'package:objectbox/objectbox.dart';
 import 'dart:convert';
 import '../../controllers/database_controller.dart';
+import '../../helpers/constants.dart';
 import '../../helpers/fct.dart';
 import '../ActsModels/typ_const.dart';
+import '../VolsModels/vol.dart';
 import '../jsonModels/datas/airport_model.dart';
-import 'vol.dart';
 
 /// Modèle ObjectBox pour stocker les données de VolModel en format String
 /// Optimisé pour le stockage en base de données avec tous les champs en String
@@ -24,7 +25,9 @@ class StringVolModel {
   // ========== DATES (format "dd/MM/yyyy HH:mm") ==========
   final String sDebut; // Departure date/time
   final String sFin; // Arrival date/time
-
+  // ========== Heure (format "HH:mm") ==========
+  final String sSunrise;
+  final String sSunset;
   // ========== CODES AEROPORTS ==========
   final String depIata; // Departure IATA code
   final String arrIata; // Arrival IATA code
@@ -61,6 +64,8 @@ class StringVolModel {
     required this.arrIata,
     required this.depIcao,
     required this.arrIcao,
+    required this.sSunrise,
+    required this.sSunset,
     required this.sDureevol,
     required this.sDureeMep,
     required this.sDureeForfait,
@@ -97,31 +102,17 @@ class StringVolModel {
       DateTime? sunrise;
       DateTime? sunset;
       if (volModel.typ == tVol.typ) {
-        sunrise = volModel.sunrise ??
-            AeroportModel.calculateSunrise(
-              volModel.typ,
-              depIcao,
-              arrIcao,
-              volModel.dtDebut,
-            );
-        sunset = volModel.sunset ??
-            AeroportModel.calculateSunset(
-              volModel.typ,
-              depIcao,
-              arrIcao,
-              volModel.dtDebut,
-            );
+        sunrise =
+            volModel.sunrise ??
+            AeroportModel.calculateSunrise(volModel.typ, depIcao, arrIcao, volModel.dtDebut);
+        sunset =
+            volModel.sunset ??
+            AeroportModel.calculateSunset(volModel.typ, depIcao, arrIcao, volModel.dtDebut);
       }
 
       // Calculate night flight time for Vol type
       final sNuitVol = (volModel.typ == tVol.typ)
-          ? _calculateNightFlightTime(
-              volModel.typ,
-              sunrise,
-              sunset,
-              volModel.dtDebut,
-              volModel.dtFin,
-            )
+          ? _calculateNightFlightTime(volModel.typ, sunrise, sunset, volModel.dtDebut, volModel.dtFin)
           : Fct.durationToString(Duration.zero);
 
       // Get forfait value if user is PNT and Vol type
@@ -132,42 +123,21 @@ class StringVolModel {
       String sNuitForfait = '';
 
       if (isPnt && volModel.typ == tVol.typ) {
-        sDureeForfait = _getForfaitValue(
-          volModel.typ,
-          depIcao,
-          arrIcao,
-          volModel.dtDebut,
-          volModel.dtFin,
-        );
-        arrForfait = _calculateArrForfait(
-          volModel.typ,
-          volModel.dtDebut,
-          sDureeForfait,
-        );
-        sNuitForfait = _calculateNightFlightTime(
-          volModel.typ,
-          sunrise,
-          sunset,
-          volModel.dtDebut,
-          arrForfait,
-        );
+        sDureeForfait = _getForfaitValue(volModel.typ, depIcao, arrIcao, volModel.dtDebut, volModel.dtFin);
+        arrForfait = _calculateArrForfait(volModel.typ, volModel.dtDebut, sDureeForfait);
+        sNuitForfait = _calculateNightFlightTime(volModel.typ, sunrise, sunset, volModel.dtDebut, arrForfait);
       } else if (isPnt && (volModel.typ == tMEP.typ || volModel.typ == tTAX.typ)) {
-        sMepForfait = _getForfaitValue(
-          volModel.typ,
-          depIcao,
-          arrIcao,
-          volModel.dtDebut,
-          volModel.dtFin,
-        );
+        sMepForfait = _getForfaitValue(volModel.typ, depIcao, arrIcao, volModel.dtDebut, volModel.dtFin);
       }
 
       return StringVolModel(
-        id: volModel.id,
         cle: volModel.cle,
         typ: volModel.typ,
         nVol: volModel.nVol,
         sAvion: volModel.sAvion,
         tsv: volModel.tsv,
+        sSunrise: sunrise != null ? dateFormatHH.format(sunrise) : '00:00',
+        sSunset: sunset != null ? dateFormatHH.format(sunset) : '00:00',
         crews: volModel.crews.isEmpty ? '[]' : _crewsToJson(volModel.crews),
         sDebut: Fct.formatDateTimeToString(volModel.dtDebut),
         sFin: Fct.formatDateTimeToString(volModel.dtFin),
@@ -195,10 +165,7 @@ class StringVolModel {
 
   /// Factory: Create StringVolModel with monthly cumulative calculations
   /// Calculates cumulative values from the start of the month to the current flight (inclusive)
-  factory StringVolModel.withMonthlyCumuls(
-    VolModel volModel,
-    List<VolModel> allVolsInMonth,
-  ) {
+  factory StringVolModel.withMonthlyCumuls(VolModel volModel, List<VolModel> allVolsInMonth) {
     // First create the base StringVolModel
     final baseStringVol = StringVolModel.fromVolModel(volModel);
 
@@ -212,8 +179,9 @@ class StringVolModel {
 
     // Return new instance with cumuls
     return StringVolModel(
-      id: baseStringVol.id,
       cle: baseStringVol.cle,
+      sSunrise: baseStringVol.sSunrise,
+      sSunset: baseStringVol.sSunset,
       typ: baseStringVol.typ,
       nVol: baseStringVol.nVol,
       sAvion: baseStringVol.sAvion,
@@ -245,8 +213,15 @@ class StringVolModel {
   /// Convert crews to JSON string
   static String _crewsToJson(dynamic crews) {
     try {
-      if (crews is List) {
-        return jsonEncode(crews);
+      if (crews is List && crews.isNotEmpty) {
+        // Convert each crew to JSON map using toJson() method
+        final crewsJson = crews.map((crew) {
+          if (crew.toJson != null) {
+            return crew.toJson();
+          }
+          return crew;
+        }).toList();
+        return jsonEncode(crewsJson);
       }
       return '[]';
     } catch (e) {
@@ -270,7 +245,9 @@ class StringVolModel {
 
     try {
       final saison = (dtDebut.month >= 5 && dtDebut.month <= 10) ? "ETE" : "HIVER";
-      final cle = '$saison' 'MACHMC$depIcao$arrIcao';
+      final cle =
+          '$saison'
+          'MACHMC$depIcao$arrIcao';
       final forfaitModel = DatabaseController.instance.getForfaitByKey(cle);
 
       // If forfait not found in database, use durationString as fallback

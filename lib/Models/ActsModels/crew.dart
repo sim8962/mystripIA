@@ -1,9 +1,9 @@
 import 'package:objectbox/objectbox.dart';
 
+import '../VolsModels/vol.dart';
 import 'myetape.dart';
 import '../jsonModels/basicModels/assigned_crew.dart';
 import 'myduty.dart';
-import '../VolsModels/vol.dart';
 
 @Entity()
 class Crew {
@@ -15,7 +15,7 @@ class Crew {
   String crewId;
   String firstname;
   String lastname;
-  String matricule;
+  String sen;
   String pos;
   String base;
 
@@ -24,7 +24,7 @@ class Crew {
     required this.crewId,
     required this.firstname,
     required this.lastname,
-    required this.matricule,
+    required this.sen,
     required this.pos,
     required this.base,
   });
@@ -32,8 +32,23 @@ class Crew {
     crewId: crew.crewId ?? '',
     firstname: crew.givenNames ?? '',
     lastname: crew.surname ?? '',
-    matricule: crew.seniority ?? '',
+    sen: crew.seniority ?? '',
     pos: crew.position ?? '',
     base: crew.base ?? '',
   );
+
+  /// Convert to JSON map for serialization
+  Map<String, String> toJson() => {
+    'crewId': crewId,
+    'firstname': firstname,
+    'lastname': lastname,
+    'sen': sen,
+    'pos': pos,
+    'base': base,
+  };
+
+  @override
+  String toString() {
+    return 'Crew{crewId: $crewId, firstname: $firstname, lastname: $lastname, sen: $sen, pos: $pos, base: $base}';
+  }
 }

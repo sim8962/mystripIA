@@ -1,7 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:objectbox/objectbox.dart';
 
-import '../../helpers/fct.dart';
 import 'vol_pdf_list.dart';
 
 @Entity()
@@ -10,9 +9,7 @@ class VolPdf {
   int id;
 
   final volPdfList = ToOne<VolPdfList>();
-  VolPdf({
-    this.id = 0,
-  });
+  VolPdf({this.id = 0});
   @Property(type: PropertyType.date)
   DateTime dateVol = DateFormat('dd/MM/yyyy HH:mm').parse('01/01/2002 00:00');
   String month = '';
@@ -41,16 +38,15 @@ class VolPdf {
 
   /// Parse une chaîne de date/heure au format "dd/MM/yyyy HH:mm" en DateTime
   /// Utilise Fct.parseDateTimeFromString pour la centralisation
-  static DateTime parseDateTimeFromString(String dateTimeStr, DateTime fallbackDate) {
-    return Fct.parseDateTimeFromString(dateTimeStr, fallbackDate: fallbackDate);
-  }
+  // static DateTime parseDateTimeFromString(String dateTimeStr, DateTime fallbackDate) {
+  //   return Fct.parseDateTimeFromString(dateTimeStr, fallbackDate: fallbackDate);
+  // }
 
   @override
   String toString() {
     String result =
-
-        // """ Act:$activity,dateM:$dateM ,datej:$datej Hdep :$myDepDate, from:$from,to:$to,HArr :$myArrDate, dateVol:${DateFormat('dd/MM/yyyy').format(dateVol)},
-        """ dateM:$dateM, datej:$datej, Report:$report, Tags:$tags, Pos:$pos, Activity:$activity, From:$from, To:$to, Start:$start, End:$end, A/CLayover :$layover,Hdep :$myDepDate,dateVol:${DateFormat('dd/MM/yyyy').format(dateVol)}       
+        """ Act:$activity,dateM:$dateM ,datej:$datej Hdep :$myDepDate, from:$from,to:$to,HArr :$myArrDate, dateVol:${DateFormat('dd/MM/yyyy').format(dateVol)},
+         dateM:$dateM, datej:$datej, Report:$report, Tags:$tags, Pos:$pos, Activity:$activity, From:$from, To:$to, Start:$start, End:$end, A/CLayover :$layover,Hdep :$myDepDate,dateVol:${DateFormat('dd/MM/yyyy').format(dateVol)}       
                    -----------------------------------------------------------------------------------------""";
     return result;
   }

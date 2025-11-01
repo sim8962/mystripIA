@@ -119,10 +119,10 @@ class HomeIphoneScreen extends GetView<HomeController> {
         );
         break;
 
-      // case 4:
-      //   Routes.toPdfScreen();
-      //   break;
       case 4:
+        Routes.toTableScreen();
+        break;
+      case 5:
         HomeController.instance.iphonePageIndex = 3;
         break;
       // case 6:

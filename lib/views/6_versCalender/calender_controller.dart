@@ -231,18 +231,18 @@ class VersCalenderCtl extends GetxController {
       if (myVolTraite.crewsList.isNotEmpty) {
         description1 += 'Crew:\n ';
         for (final crew in myVolTraite.crewsList) {
-          final matricule = crew['matricule'] ?? '';
+          final sen = crew['sen'] ?? '';
           final pos = crew['pos'] ?? '';
           final firstname = crew['firstname'] ?? '';
           final lastname = crew['lastname'] ?? '';
           
           event.attendees?.add(
             Attendee(
-              name: '${matricule.padLeft(5, ' ')} ${pos.padRight(3, ' ')} $firstname $lastname',
+              name: '${sen.padLeft(5, ' ')} ${pos.padRight(3, ' ')} $firstname $lastname',
             ),
           );
           description1 +=
-              '   ${matricule.padLeft(5, ' ')} ${pos.padRight(3, ' ')} $firstname $lastname\n';
+              '   ${sen.padLeft(5, ' ')} ${pos.padRight(3, ' ')} $firstname $lastname\n';
         }
       }
       event
@@ -273,18 +273,18 @@ class VersCalenderCtl extends GetxController {
       if (myVolTraite.crewsList.isNotEmpty) {
         description1 += 'Crew:\n ';
         for (final crew in myVolTraite.crewsList) {
-          final matricule = crew['matricule'] ?? '';
+          final sen = crew['sen'] ?? '';
           final pos = crew['pos'] ?? '';
           final firstname = crew['firstname'] ?? '';
           final lastname = crew['lastname'] ?? '';
           
           event.attendees?.add(
             Attendee(
-              name: '${matricule.padLeft(5, ' ')} ${pos.padRight(3, ' ')} $firstname $lastname',
+              name: '${sen.padLeft(5, ' ')} ${pos.padRight(3, ' ')} $firstname $lastname',
             ),
           );
           description1 +=
-              '   ${matricule.padLeft(5, ' ')} ${pos.padRight(3, ' ')} $firstname $lastname \n';
+              '   ${sen.padLeft(5, ' ')} ${pos.padRight(3, ' ')} $firstname $lastname \n';
         }
       }
       event

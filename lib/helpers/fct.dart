@@ -184,16 +184,16 @@ class Fct {
 
   /// Parse une chaîne de date/heure au format "dd/MM/yyyy HH:mm" en DateTime.
   /// Retourne [fallbackDate] si le parsing échoue.
-  static DateTime parseDateTimeFromString(String dateTimeStr, {DateTime? fallbackDate}) {
-    try {
-      if (dateTimeStr.isEmpty) {
-        return fallbackDate ?? DateTime.now();
-      }
-      return DateFormat('dd/MM/yyyy HH:mm').parse(dateTimeStr);
-    } catch (e) {
-      return fallbackDate ?? DateTime.now();
-    }
-  }
+  // static DateTime parseDateTimeFromString(String dateTimeStr, {DateTime? fallbackDate}) {
+  //   try {
+  //     if (dateTimeStr.isEmpty) {
+  //       return fallbackDate ?? DateTime.now();
+  //     }
+  //     return DateFormat('dd/MM/yyyy HH:mm').parse(dateTimeStr);
+  //   } catch (e) {
+  //     return fallbackDate ?? DateTime.now();
+  //   }
+  // }
 
   /// Parse une chaîne de date au format "dd/MM/yyyy" en DateTime.
   /// Retourne [fallbackDate] si le parsing échoue.

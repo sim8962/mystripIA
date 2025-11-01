@@ -7,12 +7,15 @@ import 'package:path_provider/path_provider.dart';
 
 import '../../Models/ActsModels/typ_const.dart';
 import '../../Models/VolsModels/vol.dart';
-import '../../Models/VolsModels/vol_traite.dart';
-import '../../Models/VolsModels/vol_traite_mois.dart';
+
 import '../../Models/volpdfs/chechplatform.dart';
+import '../../controllers/database_controller.dart';
+import '../../helpers/constants.dart';
 import '../../helpers/myerrorinfo.dart';
 import '../../Models/volpdfs/vol_pdf.dart';
 import '../../Models/volpdfs/vol_pdf_list.dart';
+import '../../Models/stringvols/svolmodel.dart';
+import '../../Models/stringvols/stringvolmois.dart';
 
 class ImportrosterCtl extends GetxController {
   static ImportrosterCtl instance = Get.find();
@@ -73,6 +76,9 @@ class ImportrosterCtl extends GetxController {
 
   List<ChechPlatFormMonth> myList = [];
   List<VolPdfList> volPdfLists = [];
+  // String versions computed from final VolModels
+  final RxList<StringVolModel> stringVolModels = <StringVolModel>[].obs;
+  final RxList<StringVolModelMois> stringVolMois = <StringVolModelMois>[].obs;
 
   /// Stream qui traite les fichiers PDF sélectionnés et retourne les mois extraits
   Stream<List<ChechPlatFormMonth>> getStreamPlatformFile() async* {
@@ -80,7 +86,9 @@ class ImportrosterCtl extends GetxController {
     volPdfLists = [];
     final rosterPath = await _createRosterFolder();
     for (var file in platformFiles) {
+      //on extrait les strips des les  fichiers
       await _processRosterFile(file: file, path: '$rosterPath/${tRoster.typ}_');
+
       await Future.delayed(_processingDelay);
       myList = myList.toSet().toList();
       yield myList;
@@ -97,8 +105,10 @@ class ImportrosterCtl extends GetxController {
     }
     return '${appStorage.path}/$_rosterFolder';
   }
-
+  // ============================================================================
   /// Traite un fichier PDF roster et extrait les données mensuelles
+  // ============================================================================
+
   Future<void> _processRosterFile({required PlatformFile file, required String path}) async {
     final filePath = file.path;
     if (filePath == null) return;
@@ -117,15 +127,13 @@ class ImportrosterCtl extends GetxController {
           final textLines = extractor.extractTextLines(startPageIndex: pageIndex);
           final periods = PdfTextExtractor(document).findText([_periodMarker]);
 
-          if (pageIndex == 0) {
-            await _extractMonthDataFromFirstPage(
-              textLines: textLines,
-              periods: periods,
-              file: file,
-              filePath: filePath,
-              path: path,
-            );
-          }
+          await _processRosterFileExtractMonthDataFromPage(
+            textLines: textLines,
+            periods: periods,
+            file: file,
+            filePath: filePath,
+            path: path,
+          );
         } catch (e) {
           MyErrorInfo.erreurInos(
             label: 'ImportrosterCtl',
@@ -140,14 +148,17 @@ class ImportrosterCtl extends GetxController {
   }
 
   /// Extrait les données du mois depuis la première page du PDF
-  Future<void> _extractMonthDataFromFirstPage({
+  Future<void> _processRosterFileExtractMonthDataFromPage({
     required List<TextLine> textLines,
     required List<MatchedItem> periods,
     required PlatformFile file,
     required String filePath,
     required String path,
   }) async {
-    final monthText = _extractMonthText(textLines: textLines, periods: periods);
+    final monthText = _extractMonthText(textLines: textLines, periods: periods).trim();
+    if (monthText.isEmpty) {
+      return;
+    }
     final monthDate = DateFormat(_dateFormat).parse(monthText);
     final monthStr = monthDate.month.toString().padLeft(2, '0');
     final yearStr = monthDate.year.toString();
@@ -170,12 +181,15 @@ class ImportrosterCtl extends GetxController {
     }
     myList.sort((a, b) => b.datefile.millisecondsSinceEpoch.compareTo(a.datefile.millisecondsSinceEpoch));
     volPdfLists.add(myVolPdfList);
-    // print('volPdfLists: ${volPdfLists.length} volPdf:${myVolPdfList.volPdfs.length}');
+    
   }
 
   /// Extrait le texte du mois depuis les lignes de texte du PDF
   String _extractMonthText({required List<TextLine> textLines, required List<MatchedItem> periods}) {
     var monthText = '';
+    if (periods.isEmpty) {
+      return monthText;
+    }
     for (int i = 0; i < textLines.length; i++) {
       List<TextWord> wordCollection = textLines[i].wordCollection;
       for (int j = 0; j < wordCollection.length; j++) {
@@ -232,6 +246,10 @@ class ImportrosterCtl extends GetxController {
 
     final PdfDocument document = PdfDocument(inputBytes: pdfFile.readAsBytesSync());
     final textBlock = PdfTextExtractor(document).findText([_blockMarker]);
+    if (textBlock.isEmpty) {
+      document.dispose();
+      return volumes;
+    }
 
     final pageCount = textBlock[0].pageIndex;
     final blockLinePosition = textBlock[0].bounds.top.round();
@@ -297,6 +315,9 @@ class ImportrosterCtl extends GetxController {
     List<int> rowBounds = [];
 
     final dateBlock = PdfTextExtractor(document).findText(['Date'], startPageIndex: pageIndex);
+    if (dateBlock.isEmpty) {
+      return [columnBounds, rowBounds];
+    }
     final dateLinePosition = dateBlock[0].bounds.top.round();
 
     for (var line in textLines) {
@@ -355,8 +376,10 @@ class ImportrosterCtl extends GetxController {
 
               if (colIndex < columnBounds.length - 1) {
                 if (columnBounds[colIndex] <= wordLeft && wordLeft < columnBounds[colIndex + 1]) {
+                  if (colIndex == 0) {
+                    columnCounter++;
+                  }
                   _assignVolumeFieldByColumn(volume, colIndex, word.text.trim(), columnCounter);
-                  columnCounter++;
                 }
               } else {
                 if (columnBounds[colIndex] <= wordLeft) {
@@ -533,12 +556,11 @@ class ImportrosterCtl extends GetxController {
       if (vol.layover.contains(':')) {
         final hotelVol = _createHotelVolume(vol, transitDate);
         volumes.insert(i + 1, hotelVol);
-        transitDate = DateTime(
-          transitDate.year,
-          transitDate.month,
-          transitDate.day,
-          int.parse(vol.layover.split(':')[0]),
-          int.parse(vol.layover.split(':')[1]),
+        transitDate = transitDate.add(
+          Duration(
+            hours: int.parse(vol.layover.split(':')[0]),
+            minutes: int.parse(vol.layover.split(':')[1]),
+          ),
         );
         i++;
       }
@@ -650,10 +672,15 @@ class ImportrosterCtl extends GetxController {
       for (var volPdfList in volPdfLists) {
         // Parcourir tous les VolPdf de chaque liste
         for (var volPdf in volPdfList.volPdfs) {
-          // Créer un VolModel à partir du VolPdf en utilisant la factory
           try {
-            final volModel = VolModel.fromVolPdf(volPdf);
-            volModels.add(volModel);
+            final dtDebut = dateFormatDDHH.tryParse(volPdf.myDepDate);
+
+            final dtFin = dateFormatDDHH.tryParse(volPdf.myArrDate);
+            if (dtFin != null && dtDebut != null) {
+              final volModel = VolModel.fromVolPdf(volPdf);
+
+              volModels.add(volModel);
+            }
           } catch (e) {
             // Logger l'erreur mais continuer le traitement
             MyErrorInfo.erreurInos(
@@ -674,7 +701,6 @@ class ImportrosterCtl extends GetxController {
 
       // Trier par date de départ
       volModels.sort((a, b) => a.dtDebut.compareTo(b.dtDebut));
-
       return volModels;
     } catch (e) {
       MyErrorInfo.erreurInos(label: 'ImportrosterCtl', content: 'getvolTraitesFromVolpdfs: ${e.toString()}');
@@ -682,235 +708,68 @@ class ImportrosterCtl extends GetxController {
     }
   }
 
-  // ============================================================================
-  // ETAPE 3 : Conversion des VolModel en VolTraiteMoisModel
-  // ============================================================================
-  final RxList<VolTraiteMoisModel> volTraiteMoisModels = <VolTraiteMoisModel>[].obs;
-
-  /// Convertit une liste de VolModel en liste de VolTraiteMoisModel groupés par mois
-  /// Chaque VolTraiteMoisModel contient tous les vols d'un mois avec leurs cumuls
-  List<VolTraiteMoisModel> getVolTraiteMoisModelsFromVolModels(List<VolModel> volModels) {
-    List<VolTraiteMoisModel> volTraiteMoisModels = [];
-
+  /// Sauvegarde les VolPdfList nouveaux puis calcule les listes StringVolModel et StringVolModelMois
+  void saveVolpdfsList() {
     try {
-      if (volModels.isEmpty) {
-        return [];
-      }
+      // 1) Persister seulement les VolPdfList nouveaux (par mois)
+      DatabaseController.instance.getAllVolPdfLists();
+      final existingMonthKeys = DatabaseController.instance.volPdfLists
+          .map((e) => '${e.month.year}-${e.month.month.toString().padLeft(2, '0')}')
+          .toSet();
 
-      // Grouper les vols par mois
-      final Map<String, List<VolModel>> volsByMonth = {};
-      for (var vol in volModels) {
-        final monthKey = '${vol.dtDebut.year}-${vol.dtDebut.month.toString().padLeft(2, '0')}';
-        volsByMonth.putIfAbsent(monthKey, () => []).add(vol);
-      }
-
-      // Créer un VolTraiteMoisModel pour chaque mois
-      for (var monthEntry in volsByMonth.entries) {
-        final monthKey = monthEntry.key;
-        final volsOfMonth = monthEntry.value;
-
-        // Parser la clé du mois (YYYY-MM)
-        final parts = monthKey.split('-');
-        final year = int.parse(parts[0]);
-        final month = int.parse(parts[1]);
-
-        // Convertir les VolModel en VolTraiteModel
-        final volsTraites = <VolTraiteModel>[];
-        for (var vol in volsOfMonth) {
-          final volTraite = VolTraiteModel.fromVolModel(vol, volModels);
-          volsTraites.add(volTraite);
-        }
-
-        // Créer le VolTraiteMoisModel
-        if (volsTraites.isNotEmpty) {
-          final volTraiteMois = VolTraiteMoisModel.fromVolsTraites(year, month, volsTraites);
-          volTraiteMoisModels.add(volTraiteMois);
+      final List<VolPdfList> toAdd = [];
+      for (final v in volPdfLists) {
+        final key = '${v.month.year}-${v.month.month.toString().padLeft(2, '0')}';
+        if (!existingMonthKeys.contains(key)) {
+          toAdd.add(v);
         }
       }
-
-      // Trier par date (mois les plus récents en premier)
-      volTraiteMoisModels.sort((a, b) => b.premierJourMois.compareTo(a.premierJourMois));
-
-      return volTraiteMoisModels;
-    } catch (e) {
-      MyErrorInfo.erreurInos(
-        label: 'ImportrosterCtl',
-        content: 'getVolTraiteMoisModelsFromVolModels: ${e.toString()}',
-      );
-      return [];
-    }
-  }
-
-  /// Convertit directement une liste de VolPdfList en VolTraiteMoisModel
-  /// Utile pour traiter les données PDF sans passer par VolModel
-  List<VolTraiteMoisModel> getVolTraiteMoisModelsFromVolPdfLists(List<VolPdfList> volPdfLists) {
-    try {
-      if (volPdfLists.isEmpty) {
-        return [];
+      if (toAdd.isNotEmpty) {
+        DatabaseController.instance.addVolPdfLists(toAdd);
       }
 
-      // Convertir tous les VolPdf en VolModel d'abord
-      final allVolModels = getvolTraitesFromVolpdfs();
-
-      final result = <VolTraiteMoisModel>[];
-      for (var volPdfList in volPdfLists) {
-        try {
-          final volTraiteMois = VolTraiteMoisModel.fromVolPdfList(volPdfList, allVolModels);
-          result.add(volTraiteMois);
-        } catch (e) {
-          MyErrorInfo.erreurInos(
-            label: 'ImportrosterCtl',
-            content: 'Erreur conversion VolPdfList: ${e.toString()}',
-          );
-          continue;
-        }
-      }
-
-      // Trier par date décroissante
-      result.sort((a, b) => b.premierJourMois.compareTo(a.premierJourMois));
-      return result;
-    } catch (e) {
-      MyErrorInfo.erreurInos(
-        label: 'ImportrosterCtl',
-        content: 'getVolTraiteMoisModelsFromVolPdfLists: ${e.toString()}',
-      );
-      return [];
-    }
-  }
-
-  /// Stream pour traiter et afficher les mois au fur et à mesure
-  Stream<List<VolTraiteMoisModel>> getStreamVolTraiteMoisModels() async* {
-    try {
-      // Convertir les PDFs en VolModel
+      // 2) Construire StringVolModel et StringVolModelMois à partir des vols finaux
       final volModels = getvolTraitesFromVolpdfs();
-
-      if (volModels.isEmpty) {
-        yield [];
-        return;
+      final Map<String, List<VolModel>> byMonth = {};
+      for (final v in volModels) {
+        final key = '${v.dtDebut.year}-${v.dtDebut.month.toString().padLeft(2, '0')}';
+        byMonth.putIfAbsent(key, () => <VolModel>[]).add(v);
       }
 
-      // Grouper par mois
-      final Map<String, List<VolModel>> groupedByMonth = {};
-      for (var volModel in volModels) {
-        final monthKey = '${volModel.dtDebut.year}-${volModel.dtDebut.month.toString().padLeft(2, '0')}';
-        groupedByMonth.putIfAbsent(monthKey, () => []).add(volModel);
-      }
-
-      // Trier les clés de mois en ordre décroissant
-      final sortedMonthKeys = groupedByMonth.keys.toList()..sort((a, b) => b.compareTo(a));
-
-      // Traiter et émettre les mois un par un
-      final result = <VolTraiteMoisModel>[];
-      for (var monthKey in sortedMonthKeys) {
-        await Future.delayed(const Duration(milliseconds: 300)); // Délai pour l'effet visuel
-
-        try {
-          final monthVolModels = groupedByMonth[monthKey]!;
-
-          // Créer un VolPdfList temporaire pour la conversion
-          final monthDate = DateTime(int.parse(monthKey.split('-')[0]), int.parse(monthKey.split('-')[1]));
-
-          final tempVolPdfList = VolPdfList(tags: '', month: monthDate, path: '');
-
-          // Ajouter les VolPdf au VolPdfList
-          for (var volModel in monthVolModels) {
-            // Créer un VolPdf depuis le VolModel
-            final volPdf = VolPdf();
-            volPdf.dateVol = volModel.dtDebut;
-            volPdf.myDepDate = DateFormat('dd/MM/yyyy HH:mm').format(volModel.dtDebut);
-            volPdf.myArrDate = DateFormat('dd/MM/yyyy HH:mm').format(volModel.dtFin);
-            volPdf.from = volModel.depIata;
-            volPdf.to = volModel.arrIata;
-            volPdf.aC = volModel.sAvion;
-            volPdf.duty = volModel.typ;
-            volPdf.activity = volModel.nVol;
-            volPdf.start = DateFormat('HH:mm').format(volModel.dtDebut);
-            volPdf.end = DateFormat('HH:mm').format(volModel.dtFin);
-            volPdf.tags = '';
-
-            tempVolPdfList.volPdfs.add(volPdf);
-          }
-
-          final volTraiteMois = VolTraiteMoisModel.fromVolPdfList(tempVolPdfList, volModels);
-          result.add(volTraiteMois);
-
-          // Émettre la liste mise à jour
-          yield List.from(result);
-        } catch (e) {
-          MyErrorInfo.erreurInos(
-            label: 'ImportrosterCtl',
-            content: 'Erreur traitement mois $monthKey: ${e.toString()}',
-          );
-          continue;
+      final List<StringVolModel> sVols = [];
+      for (final entry in byMonth.entries) {
+        final monthVols = entry.value..sort((a, b) => a.dtDebut.compareTo(b.dtDebut));
+        for (final v in monthVols) {
+          sVols.add(StringVolModel.withMonthlyCumuls(v, monthVols));
         }
       }
+      final Map<String, StringVolModel> unique = {for (final sv in sVols) sv.cle: sv};
+      final finalSVols = unique.values.toList()
+        ..sort((a, b) {
+          final ad = dateFormatDDHH.tryParse(a.sDebut) ?? DateTime.fromMillisecondsSinceEpoch(0);
+          final bd = dateFormatDDHH.tryParse(b.sDebut) ?? DateTime.fromMillisecondsSinceEpoch(0);
+          return ad.compareTo(bd);
+        });
+      stringVolModels.assignAll(finalSVols);
+
+      final months = StringVolModelMois.fromStringVols(finalSVols);
+      stringVolMois.assignAll(months);
     } catch (e) {
-      MyErrorInfo.erreurInos(
-        label: 'ImportrosterCtl',
-        content: 'getStreamVolTraiteMoisModels: ${e.toString()}',
-      );
-      yield [];
+      MyErrorInfo.erreurInos(label: 'ImportrosterCtl', content: 'saveVolpdfsList: ${e.toString()}');
     }
   }
 
-  /// Gets a specific month's data
-  VolTraiteMoisModel? getMonthData(String moisReference) {
-    try {
-      return volTraiteMoisModels.firstWhere((m) => m.moisReference == moisReference);
-    } catch (e) {
-      return null;
-    }
-  }
+  /// Parse les tags BLC depuis une chaîne de caractères
+  List<String> _parseBlcTagsFromString(String tagsString) {
+    if (tagsString.isEmpty) return [];
 
-  /// Gets total statistics across all months
-  Map<String, String> getTotalStatistics() {
-    if (volTraiteMoisModels.isEmpty) {
-      return {'totalVols': '0', 'totalDureeVol': '00h00', 'totalDureeMep': '00h00', 'totalNuitVol': '00h00'};
-    }
+    final tags = tagsString
+        .split(RegExp(r'[,;]'))
+        .map((tag) => tag.trim())
+        .where((tag) => tag.isNotEmpty && tag.contains('BH'))
+        .toList();
 
-    // Sum all durations
-    int totalVolsCount = 0;
-    Duration totalDureeVol = Duration.zero;
-    Duration totalDureeMep = Duration.zero;
-    Duration totalNuitVol = Duration.zero;
-
-    for (var mois in volTraiteMoisModels) {
-      totalVolsCount += mois.nombreVolsTotal;
-      totalDureeVol += _parseDuration(mois.cumulTotalDureeVol);
-      totalDureeMep += _parseDuration(mois.cumulTotalDureeMep);
-      totalNuitVol += _parseDuration(mois.cumulTotalNuitVol);
-    }
-
-    return {
-      'totalVols': totalVolsCount.toString(),
-      'totalDureeVol': _formatDuration(totalDureeVol),
-      'totalDureeMep': _formatDuration(totalDureeMep),
-      'totalNuitVol': _formatDuration(totalNuitVol),
-    };
-  }
-
-  /// Parses duration string "XXhYY" to Duration
-  Duration _parseDuration(String durationString) {
-    if (durationString.isEmpty) return Duration.zero;
-
-    try {
-      final parts = durationString.toLowerCase().split('h');
-      if (parts.length == 2) {
-        final hours = int.tryParse(parts[0]) ?? 0;
-        final minutes = int.tryParse(parts[1]) ?? 0;
-        return Duration(hours: hours, minutes: minutes);
-      }
-    } catch (e) {
-      return Duration.zero;
-    }
-    return Duration.zero;
-  }
-
-  /// Formats Duration to "XXhYY" string
-  String _formatDuration(Duration duration) {
-    final hours = duration.inHours;
-    final minutes = duration.inMinutes.remainder(60);
-    return '${hours.toString().padLeft(2, '0')}h${minutes.toString().padLeft(2, '0')}';
+    return tags;
   }
 
   /// Récupère les tags BLC groupés par mois (format YYYY-MM)
@@ -924,7 +783,6 @@ class ImportrosterCtl extends GetxController {
         blcByMonth[monthRef] = [];
       }
 
-      // Ajouter les BLC tags du mois (parsés depuis le champ tags)
       if (volPdfList.tags.isNotEmpty) {
         final blcTagsList = _parseBlcTagsFromString(volPdfList.tags);
         blcByMonth[monthRef]!.addAll(blcTagsList);
@@ -948,19 +806,5 @@ class ImportrosterCtl extends GetxController {
     } catch (e) {
       return [];
     }
-  }
-
-  /// Parse les tags BLC depuis une chaîne de caractères
-  List<String> _parseBlcTagsFromString(String tagsString) {
-    if (tagsString.isEmpty) return [];
-
-    // Les tags sont séparés par des virgules ou des points-virgules
-    final tags = tagsString
-        .split(RegExp(r'[,;]'))
-        .map((tag) => tag.trim())
-        .where((tag) => tag.isNotEmpty && tag.contains('BH'))
-        .toList();
-
-    return tags;
   }
 }
